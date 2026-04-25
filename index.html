@@ -3,26 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Website cá nhân Kim Thắm - Digital Marketing Portfolio phục vụ học tập, thực tập và xây dựng thương hiệu cá nhân.">
+    <meta name="keywords" content="Kim Thắm, Digital Marketing, portfolio, CV, marketing cá nhân">
+    <meta name="author" content="Kim Thắm">
+    <meta property="og:title" content="Kim Thắm | Digital Marketing Portfolio">
+    <meta property="og:description" content="Portfolio cá nhân của Kim Thắm trong lĩnh vực Digital Marketing.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kimtham.id.vn">
     <title>Kim Thắm | Digital Marketing Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header class="site-header">
-        <nav class="navbar">
+        <nav class="navbar" aria-label="Điều hướng chính">
             <a class="brand" href="#home">Kim Thắm</a>
-            <button class="menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false">
+            <button class="menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="primary-menu">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-            <ul class="nav-links">
+            <ul class="nav-links" id="primary-menu">
                 <li><a href="#home">Trang chủ</a></li>
                 <li><a href="#about">Giới thiệu</a></li>
                 <li><a href="#skills">Kỹ năng</a></li>
-                <li><a href="#portfolio">Dự án</a></li>
+                <li><a href="#projects">Dự án</a></li>
+                <li><a href="#cv">CV</a></li>
                 <li><a href="#contact">Liên hệ</a></li>
             </ul>
         </nav>
@@ -31,57 +39,61 @@
     <main>
         <section class="hero section" id="home">
             <div class="hero-content reveal">
-                <p class="eyebrow">Digital Marketing Student</p>
-                <h1>Xin chào, mình là Kim Thắm</h1>
-                <p>
-                    Mình là sinh viên ngành Digital Marketing, yêu thích sáng tạo nội dung,
-                    thiết kế truyền thông và xây dựng thương hiệu cá nhân.
+                <p class="eyebrow">Digital Marketing Portfolio</p>
+                <h1>Kim Thắm</h1>
+                <p class="hero-lead">
+                    Mình là sinh viên theo định hướng Digital Marketing, yêu thích sáng tạo nội dung,
+                    xây dựng thương hiệu và biến ý tưởng truyền thông thành kế hoạch có thể triển khai.
                 </p>
-                <p>
-                    Mục tiêu của mình là phát triển kỹ năng marketing số, SEO, content
-                    marketing và quản lý dự án truyền thông.
-                </p>
-                <div class="hero-actions">
-                    <a class="btn primary" href="#portfolio">Xem dự án của tôi</a>
-                    <a class="btn secondary" href="#contact">Liên hệ với tôi</a>
+                <div class="hero-actions" aria-label="Hành động chính">
+                    <a class="btn primary" href="#projects">Xem dự án</a>
+                    <a class="btn secondary" href="#contact">Liên hệ</a>
+                    <a class="btn ghost" href="files/cv-kim-tham.pdf" download>Tải CV</a>
                 </div>
             </div>
-            <div class="hero-card reveal">
-                <div class="avatar">KT</div>
+
+            <aside class="profile-card reveal" aria-label="Thông tin nhanh về Kim Thắm">
+                <div class="portrait-wrap">
+                    <div class="portrait" role="img" aria-label="Ảnh đại diện chữ viết tắt Kim Thắm">
+                        <span>KT</span>
+                    </div>
+                </div>
                 <h2>Kim Thắm</h2>
-                <p>Content • SEO • Social Media</p>
-                <div class="mini-stats">
-                    <span>4 dự án</span>
-                    <span>6 lĩnh vực</span>
-                    <span>Marketing</span>
+                <p>Content Marketing • SEO • Social Media</p>
+                <div class="profile-stats">
+                    <span><strong>4+</strong>Dự án</span>
+                    <span><strong>6</strong>Kỹ năng</span>
+                    <span><strong>2026</strong>Portfolio</span>
                 </div>
-            </div>
+            </aside>
         </section>
 
         <section class="section about" id="about">
             <div class="section-heading reveal">
                 <p class="eyebrow">Giới thiệu</p>
-                <h2>Hành trình học tập và phát triển</h2>
+                <h2>Hồ sơ cá nhân rõ ràng, gần gũi và chuyên nghiệp.</h2>
             </div>
             <div class="about-grid">
-                <div class="about-text reveal">
+                <div class="about-copy reveal">
                     <p>
-                        Mình là Kim Thắm, hiện đang học chuyên ngành Digital Marketing.
-                        Mình luôn mong muốn học hỏi, phát triển bản thân và ứng dụng kiến
-                        thức marketing vào các dự án thực tế.
+                        Website này được xây dựng để giới thiệu hành trình học tập, kỹ năng và các dự án
+                        tiêu biểu của Kim Thắm trong lĩnh vực Digital Marketing. Mục tiêu là tạo một hồ sơ
+                        trực tuyến dễ xem, đáng tin cậy và phù hợp khi gửi cho nhà tuyển dụng, giảng viên,
+                        bạn bè hoặc khách hàng cá nhân.
                     </p>
                     <p>
-                        Mình quan tâm đến việc kết hợp tư duy sáng tạo với dữ liệu, từ đó
-                        tạo ra nội dung phù hợp với khách hàng và mục tiêu thương hiệu.
+                        Định hướng phát triển của mình là kết hợp tư duy sáng tạo với dữ liệu, từ đó xây
+                        dựng nội dung đúng insight, đúng nền tảng và đúng mục tiêu thương hiệu.
                     </p>
                 </div>
-                <div class="interest-list reveal">
-                    <span>Content Marketing</span>
-                    <span>SEO</span>
-                    <span>Social Media</span>
-                    <span>Thiết kế nội dung</span>
-                    <span>Phân tích thị trường</span>
-                    <span>Xây dựng thương hiệu</span>
+                <div class="audience-panel reveal">
+                    <h3>Người xem website</h3>
+                    <ul>
+                        <li><strong>Nhà tuyển dụng:</strong> xem kỹ năng, dự án và CV.</li>
+                        <li><strong>Giảng viên:</strong> theo dõi quá trình học tập và định hướng.</li>
+                        <li><strong>Bạn bè:</strong> kết nối và xem hoạt động cá nhân.</li>
+                        <li><strong>Khách hàng:</strong> tìm hiểu năng lực hỗ trợ truyền thông.</li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -89,72 +101,205 @@
         <section class="section skills" id="skills">
             <div class="section-heading reveal">
                 <p class="eyebrow">Kỹ năng</p>
-                <h2>Nền tảng mình đang rèn luyện</h2>
+                <h2>Nền tảng Digital Marketing đang rèn luyện.</h2>
             </div>
-            <div class="skills-table reveal">
-                <div class="skill-row">
-                    <h3>Marketing</h3>
-                    <p>Digital Marketing, SEO, Content Marketing</p>
-                </div>
-                <div class="skill-row">
-                    <h3>Thiết kế</h3>
-                    <p>Canva, PowerPoint, hình ảnh truyền thông</p>
-                </div>
-                <div class="skill-row">
-                    <h3>Công cụ</h3>
-                    <p>Word, Excel, PowerPoint, ChatGPT</p>
-                </div>
-                <div class="skill-row">
-                    <h3>Cá nhân</h3>
-                    <p>Giao tiếp, làm việc nhóm, sáng tạo</p>
-                </div>
+            <div class="skills-grid">
+                <article class="skill-card reveal">
+                    <span>01</span>
+                    <h3>Content Marketing</h3>
+                    <p>Lên ý tưởng, viết nội dung, xây dựng thông điệp và lịch đăng bài theo mục tiêu truyền thông.</p>
+                </article>
+                <article class="skill-card reveal">
+                    <span>02</span>
+                    <h3>Social Media</h3>
+                    <p>Hiểu cách vận hành nội dung trên Facebook, Instagram, TikTok và cách tăng tương tác cơ bản.</p>
+                </article>
+                <article class="skill-card reveal">
+                    <span>03</span>
+                    <h3>SEO cơ bản</h3>
+                    <p>Nghiên cứu từ khóa, tối ưu tiêu đề, mô tả, cấu trúc nội dung và trải nghiệm đọc.</p>
+                </article>
+                <article class="skill-card reveal">
+                    <span>04</span>
+                    <h3>Canva & Thiết kế</h3>
+                    <p>Thiết kế ấn phẩm truyền thông đơn giản, nhất quán màu sắc và phù hợp nhận diện thương hiệu.</p>
+                </article>
+                <article class="skill-card reveal">
+                    <span>05</span>
+                    <h3>Facebook Ads cơ bản</h3>
+                    <p>Nắm các khái niệm về mục tiêu quảng cáo, nhóm đối tượng, nội dung quảng cáo và chỉ số đo lường.</p>
+                </article>
+                <article class="skill-card reveal">
+                    <span>06</span>
+                    <h3>Phân tích dữ liệu</h3>
+                    <p>Đọc số liệu cơ bản, so sánh hiệu quả nội dung và rút ra đề xuất cải thiện.</p>
+                </article>
             </div>
         </section>
 
-        <section class="section portfolio" id="portfolio">
+        <section class="section projects" id="projects">
             <div class="section-heading reveal">
-                <p class="eyebrow">Portfolio</p>
-                <h2>Dự án tiêu biểu</h2>
+                <p class="eyebrow">Dự án</p>
+                <h2>Một số dự án học tập và thực hành nổi bật.</h2>
             </div>
             <div class="project-grid">
                 <article class="project-card reveal">
-                    <span class="project-number">01</span>
-                    <h3>Dự án SEO Shopee - Mắt kính Titanus</h3>
-                    <p>Nghiên cứu và đề xuất giải pháp hoàn thiện hoạt động SEO trên sàn thương mại điện tử Shopee.</p>
+                    <div class="project-tag">SEO</div>
+                    <h3>SEO Shopee - Mắt kính Titanus</h3>
+                    <p>Nghiên cứu từ khóa, phân tích gian hàng và đề xuất cải thiện nội dung sản phẩm trên sàn thương mại điện tử.</p>
+                    <ul>
+                        <li>Vai trò: nghiên cứu và đề xuất tối ưu.</li>
+                        <li>Công cụ: Shopee, Excel, Google Search.</li>
+                    </ul>
                 </article>
                 <article class="project-card reveal">
-                    <span class="project-number">02</span>
-                    <h3>Dự án VietJet Air</h3>
-                    <p>Xây dựng ý tưởng cải thiện cảm xúc tích cực của khách hàng khi chuyến bay bị delay.</p>
+                    <div class="project-tag">Customer Insight</div>
+                    <h3>VietJet Air - Trải nghiệm delay</h3>
+                    <p>Xây dựng ý tưởng cải thiện cảm xúc tích cực của khách hàng khi chuyến bay bị trễ.</p>
+                    <ul>
+                        <li>Vai trò: phân tích insight và ý tưởng truyền thông.</li>
+                        <li>Kết quả: đề xuất giải pháp chăm sóc khách hàng.</li>
+                    </ul>
                 </article>
                 <article class="project-card reveal">
-                    <span class="project-number">03</span>
-                    <h3>Dự án SHOOTING Kombucha</h3>
+                    <div class="project-tag">Social Media</div>
+                    <h3>SHOOTING Kombucha</h3>
                     <p>Lập kế hoạch tăng nhận diện thương hiệu và tăng tương tác trên Facebook, Instagram.</p>
+                    <ul>
+                        <li>Vai trò: kế hoạch nội dung và concept hình ảnh.</li>
+                        <li>Công cụ: Canva, Facebook, Instagram.</li>
+                    </ul>
                 </article>
                 <article class="project-card reveal">
-                    <span class="project-number">04</span>
-                    <h3>Dự án Joy Cine</h3>
-                    <p>Xây dựng kế hoạch marketing năm đầu tiên hướng đến Gen Z.</p>
+                    <div class="project-tag">Marketing Plan</div>
+                    <h3>Joy Cine - Kế hoạch năm đầu</h3>
+                    <p>Xây dựng kế hoạch marketing hướng đến Gen Z, tập trung vào trải nghiệm rạp phim và hoạt động cộng đồng.</p>
+                    <ul>
+                        <li>Vai trò: lập kế hoạch và phân tích khách hàng.</li>
+                        <li>Mục tiêu: tăng nhận diện và lượng khách trẻ.</li>
+                    </ul>
                 </article>
+            </div>
+        </section>
+
+        <section class="section cv-section" id="cv">
+            <div class="section-heading reveal">
+                <p class="eyebrow">CV</p>
+                <h2>Thông tin học tập, kỹ năng và định hướng nghề nghiệp.</h2>
+            </div>
+            <div class="cv-layout">
+                <div class="cv-card reveal">
+                    <h3>Tóm tắt hồ sơ</h3>
+                    <p>
+                        Sinh viên Digital Marketing, quan tâm đến Content, SEO, Social Media và xây dựng
+                        thương hiệu cá nhân. Mong muốn tìm cơ hội thực tập để học hỏi quy trình làm việc
+                        thực tế và đóng góp vào các chiến dịch truyền thông.
+                    </p>
+                    <a class="btn primary" href="files/cv-kim-tham.pdf" download>Tải CV PDF</a>
+                </div>
+                <div class="timeline reveal">
+                    <div>
+                        <span>Học vấn</span>
+                        <p>Chuyên ngành Digital Marketing.</p>
+                    </div>
+                    <div>
+                        <span>Chứng chỉ</span>
+                        <p>Cập nhật chứng chỉ marketing, tin học hoặc ngoại ngữ khi có.</p>
+                    </div>
+                    <div>
+                        <span>Mục tiêu</span>
+                        <p>Phát triển năng lực triển khai nội dung, SEO và quản lý kênh truyền thông.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section class="section contact" id="contact">
             <div class="section-heading reveal">
                 <p class="eyebrow">Liên hệ</p>
-                <h2>Cùng kết nối nhé</h2>
+                <h2>Kết nối với Kim Thắm.</h2>
             </div>
-            <div class="contact-panel reveal">
-                <a href="mailto:your-email@gmail.com">your-email@gmail.com</a>
-                <a href="https://facebook.com/yourname" target="_blank" rel="noopener">facebook.com/yourname</a>
-                <a href="tel:0972295710">0972295710</a>
+            <div class="contact-grid">
+                <div class="contact-card reveal">
+                    <h3>Thông tin liên hệ</h3>
+                    <a href="mailto:your-email@gmail.com">your-email@gmail.com</a>
+                    <a href="tel:0972295710">0972295710</a>
+                    <a href="https://facebook.com/yourname" target="_blank" rel="noopener">facebook.com/yourname</a>
+                    <a href="https://linkedin.com/in/yourname" target="_blank" rel="noopener">linkedin.com/in/yourname</a>
+                </div>
+                <form class="contact-form reveal" action="mailto:your-email@gmail.com" method="post" enctype="text/plain">
+                    <label>
+                        Họ và tên
+                        <input type="text" name="name" placeholder="Nhập họ tên của bạn">
+                    </label>
+                    <label>
+                        Email
+                        <input type="email" name="email" placeholder="email@example.com">
+                    </label>
+                    <label>
+                        Nội dung
+                        <textarea name="message" rows="5" placeholder="Bạn muốn trao đổi điều gì?"></textarea>
+                    </label>
+                    <button class="btn primary" type="submit">Gửi liên hệ</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="section guide" id="hosting">
+            <div class="section-heading reveal">
+                <p class="eyebrow">Triển khai hosting</p>
+                <h2>Checklist trước và sau khi upload lên public_html.</h2>
+            </div>
+            <div class="guide-grid">
+                <article class="guide-card reveal">
+                    <h3>Trước khi upload</h3>
+                    <ul>
+                        <li>Đảm bảo có `index.html`, `style.css`, `script.js` ở thư mục gốc.</li>
+                        <li>Ảnh đặt trong `images/`, CV đặt trong `files/`.</li>
+                        <li>Không dùng đường dẫn máy tính như `D:\IT\...`.</li>
+                        <li>Test giao diện trên điện thoại bằng DevTools.</li>
+                    </ul>
+                </article>
+                <article class="guide-card reveal">
+                    <h3>Upload qua DirectAdmin</h3>
+                    <ol>
+                        <li>Đăng nhập DirectAdmin và mở File Manager.</li>
+                        <li>Vào domain `kimtham.id.vn`, mở `public_html`.</li>
+                        <li>Upload toàn bộ file/thư mục của website.</li>
+                        <li>Kiểm tra `index.html` nằm trực tiếp trong `public_html`.</li>
+                    </ol>
+                </article>
+                <article class="guide-card reveal">
+                    <h3>Sau khi online</h3>
+                    <ul>
+                        <li>Mở `https://kimtham.id.vn` và kiểm tra giao diện.</li>
+                        <li>Kiểm tra menu, ảnh, CSS, JS, link CV và liên hệ.</li>
+                        <li>Test trên điện thoại, máy tính và thử Ctrl + F5 nếu còn cache.</li>
+                        <li>Rà soát chính tả, email, số điện thoại và link mạng xã hội.</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section class="section upgrades" id="future">
+            <div class="section-heading reveal">
+                <p class="eyebrow">Nâng cấp tương lai</p>
+                <h2>Các hướng phát triển tiếp theo.</h2>
+            </div>
+            <div class="upgrade-list reveal">
+                <span>Blog Digital Marketing</span>
+                <span>Trang dự án chi tiết</span>
+                <span>Form liên hệ chuyên nghiệp</span>
+                <span>Google Analytics</span>
+                <span>Tối ưu SEO nâng cao</span>
+                <span>Ảnh WebP tải nhanh</span>
             </div>
         </section>
     </main>
 
     <footer class="site-footer">
         <p>© 2026 Kim Thắm. Digital Marketing Portfolio.</p>
+        <p>kimtham.id.vn</p>
     </footer>
 
     <script src="script.js"></script>
