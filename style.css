@@ -1,17 +1,17 @@
 :root {
     --pink: #f48fb1;
     --pink-light: #fff0f5;
+    --pink-lighter: #fff7fa;
     --pink-soft: #f8bbd0;
+    --pink-blush: #ffd6e6;
+    --pink-powder: #ffe4ef;
     --pink-dark: #d81b60;
     --rose-deep: #9d174d;
-    --mint: #d9f2e6;
-    --sky: #e4f3ff;
-    --lavender: #f0e7ff;
     --white: #ffffff;
     --ink: #2d2d2d;
     --muted: #666666;
-    --line: rgba(248, 187, 208, 0.72);
-    --shadow: 0 18px 44px rgba(216, 27, 96, 0.12);
+    --line: rgba(244, 143, 177, 0.42);
+    --shadow: 0 18px 44px rgba(216, 27, 96, 0.16);
 }
 
 * {
@@ -27,8 +27,8 @@ body {
     font-family: "Poppins", Arial, sans-serif;
     color: var(--ink);
     background:
-        linear-gradient(180deg, rgba(255, 240, 245, 0.92), rgba(255, 255, 255, 0.95) 42%),
-        var(--white);
+        linear-gradient(180deg, rgba(255, 228, 239, 0.98), rgba(255, 240, 245, 0.96) 38%, rgba(255, 247, 250, 0.98)),
+        var(--pink-light);
     line-height: 1.7;
 }
 
@@ -56,7 +56,7 @@ textarea {
     position: sticky;
     top: 0;
     z-index: 20;
-    background: rgba(255, 255, 255, 0.88);
+    background: rgba(255, 240, 245, 0.9);
     border-bottom: 1px solid var(--line);
     backdrop-filter: blur(18px);
 }
@@ -231,9 +231,9 @@ h3 {
 }
 
 .btn.primary {
-    background: var(--pink-dark);
+    background: linear-gradient(135deg, var(--pink), var(--pink-dark));
     color: var(--white);
-    box-shadow: 0 14px 28px rgba(216, 27, 96, 0.24);
+    box-shadow: 0 14px 28px rgba(216, 27, 96, 0.28);
 }
 
 .btn.secondary {
@@ -243,7 +243,7 @@ h3 {
 }
 
 .btn.ghost {
-    background: rgba(255, 240, 245, 0.75);
+    background: var(--pink-powder);
     color: var(--rose-deep);
     border-color: var(--pink-soft);
 }
@@ -257,7 +257,7 @@ h3 {
 .contact-card,
 .contact-form,
 .guide-card {
-    background: rgba(255, 255, 255, 0.9);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 247, 250, 0.96));
     border: 1px solid var(--line);
     border-radius: 8px;
     box-shadow: var(--shadow);
@@ -276,7 +276,7 @@ h3 {
     place-items: center;
     border-radius: 8px;
     background:
-        linear-gradient(135deg, rgba(248, 187, 208, 0.65), rgba(228, 243, 255, 0.82)),
+        linear-gradient(135deg, rgba(248, 187, 208, 0.78), rgba(255, 228, 239, 0.94)),
         var(--pink-light);
     border: 1px solid var(--line);
 }
@@ -320,7 +320,7 @@ h3 {
     place-items: center;
     padding: 10px 8px;
     border-radius: 8px;
-    background: var(--pink-light);
+    background: linear-gradient(135deg, var(--pink-light), var(--pink-powder));
     color: var(--muted);
     font-size: 0.78rem;
 }
@@ -406,12 +406,12 @@ h3 {
 
 .skill-card:nth-child(2n) span,
 .project-card:nth-child(2n) .project-tag {
-    background: var(--sky);
+    background: var(--pink-powder);
 }
 
 .skill-card:nth-child(3n) span,
 .project-card:nth-child(3n) .project-tag {
-    background: var(--mint);
+    background: var(--pink-blush);
 }
 
 .skill-card p,
@@ -442,7 +442,7 @@ h3 {
 
 .timeline div {
     padding-left: 18px;
-    border-left: 3px solid var(--pink);
+    border-left: 3px solid var(--pink-dark);
 }
 
 .timeline span {
@@ -466,7 +466,7 @@ h3 {
     align-items: center;
     padding: 10px 12px;
     border-radius: 8px;
-    background: var(--pink-light);
+    background: linear-gradient(135deg, var(--pink-light), var(--pink-powder));
     color: var(--pink-dark);
     font-weight: 700;
     overflow-wrap: anywhere;
@@ -507,7 +507,7 @@ h3 {
     max-width: none;
     padding-right: max(16px, calc((100% - 1140px) / 2));
     padding-left: max(16px, calc((100% - 1140px) / 2));
-    background: linear-gradient(135deg, rgba(255, 240, 245, 0.95), rgba(240, 231, 255, 0.72));
+    background: linear-gradient(135deg, rgba(255, 228, 239, 0.98), rgba(255, 240, 245, 0.94));
 }
 
 .guide .section-heading {
@@ -538,7 +538,7 @@ h3 {
     padding: 0 16px;
     border: 1px solid var(--line);
     border-radius: 8px;
-    background: var(--white);
+    background: linear-gradient(135deg, var(--white), var(--pink-lighter));
     color: var(--pink-dark);
     font-weight: 700;
     box-shadow: 0 10px 24px rgba(216, 27, 96, 0.08);
