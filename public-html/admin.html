@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Kim Thắm Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-page">
+    <header class="site-header">
+        <nav class="navbar" aria-label="Điều hướng admin">
+            <a class="brand" href="index.html">Kim Thắm</a>
+            <div class="admin-nav-actions">
+                <button class="btn ghost" type="button" id="logoutButton" hidden>Đăng xuất</button>
+                <a class="btn secondary" href="index.html">Xem website</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="admin-shell">
+        <section class="admin-hero">
+            <div>
+                <p class="eyebrow">Bảng quản trị</p>
+                <h1>Quản lý nội dung website</h1>
+                <p>Đăng nhập để sửa nội dung portfolio. Dữ liệu được lưu bằng backend PHP trong thư mục storage.</p>
+            </div>
+            <div class="admin-status" id="adminStatus" role="status">Đang kiểm tra đăng nhập</div>
+        </section>
+
+        <form class="admin-panel login-panel" id="loginForm">
+            <h2>Đăng nhập admin</h2>
+            <label>
+                Tài khoản
+                <input type="text" name="username" autocomplete="username" required>
+            </label>
+            <label>
+                Mật khẩu
+                <input type="password" name="password" autocomplete="current-password" required>
+            </label>
+            <button class="btn primary" type="submit">Đăng nhập</button>
+        </form>
+
+        <form class="admin-form" id="contentForm" hidden>
+            <section class="admin-panel">
+                <h2>Trang chủ</h2>
+                <label>
+                    Dòng mô tả nhỏ
+                    <input type="text" name="heroEyebrow">
+                </label>
+                <label>
+                    Tên hiển thị
+                    <input type="text" name="heroTitle">
+                </label>
+                <label>
+                    Mô tả chính
+                    <textarea name="heroLead" rows="4"></textarea>
+                </label>
+                <label>
+                    Tên trên thẻ cá nhân
+                    <input type="text" name="profileName">
+                </label>
+                <label>
+                    Tóm tắt trên thẻ cá nhân
+                    <input type="text" name="profileSummary">
+                </label>
+            </section>
+
+            <section class="admin-panel">
+                <h2>Giới thiệu</h2>
+                <label>
+                    Tiêu đề phần giới thiệu
+                    <textarea name="aboutTitle" rows="3"></textarea>
+                </label>
+                <label>
+                    Đoạn giới thiệu 1
+                    <textarea name="aboutParagraph1" rows="5"></textarea>
+                </label>
+                <label>
+                    Đoạn giới thiệu 2
+                    <textarea name="aboutParagraph2" rows="5"></textarea>
+                </label>
+            </section>
+
+            <section class="admin-panel">
+                <h2>Liên hệ</h2>
+                <label>
+                    Email
+                    <input type="email" name="email">
+                </label>
+                <label>
+                    Số điện thoại
+                    <input type="tel" name="phone">
+                </label>
+                <label>
+                    Facebook
+                    <input type="url" name="facebook">
+                </label>
+                <label>
+                    LinkedIn
+                    <input type="url" name="linkedin">
+                </label>
+            </section>
+
+            <div class="admin-actions">
+                <button class="btn primary" type="submit">Lưu nội dung</button>
+                <button class="btn secondary" type="button" id="reloadContent">Tải lại</button>
+            </div>
+        </form>
+    </main>
+
+    <script src="admin.js"></script>
+</body>
+</html>
