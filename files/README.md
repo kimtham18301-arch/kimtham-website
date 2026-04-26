@@ -1,7 +1,9 @@
-Đặt file CV PDF tại đây với tên:
+# Thư mục files
+
+Đặt CV PDF thật tại:
 
 ```text
-cv-kim-tham.pdf
+files/cv-kim-tham.pdf
 ```
 
-Nút "Tải CV" trên website đang trỏ tới đường dẫn `files/cv-kim-tham.pdf`.
+Link tải CV trên website đang trỏ đến đúng đường dẫn này.

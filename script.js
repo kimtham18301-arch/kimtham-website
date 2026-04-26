@@ -2,6 +2,49 @@ const menuToggle = document.querySelector(".menu-toggle");
 const navLinks = document.querySelector(".nav-links");
 const navItems = document.querySelectorAll(".nav-links a");
 const sections = document.querySelectorAll("main section[id]");
+const savedSiteContent = JSON.parse(localStorage.getItem("kimthamSiteContent") || "{}");
+
+const contentBindings = {
+    heroTitle: ".hero h1",
+    heroEyebrow: ".hero .eyebrow",
+    heroLead: ".hero-lead",
+    profileName: ".profile-card h2",
+    profileSummary: ".profile-card > p",
+    aboutTitle: "#about .section-heading h2",
+    aboutParagraph1: ".about-copy p:nth-child(1)",
+    aboutParagraph2: ".about-copy p:nth-child(2)",
+    email: ".contact-card a[href^='mailto:']",
+    phone: ".contact-card a[href^='tel:']",
+    facebook: ".contact-card a[href*='facebook.com']",
+    linkedin: ".contact-card a[href*='linkedin.com']"
+};
+
+function applySavedContent() {
+    Object.entries(contentBindings).forEach(([key, selector]) => {
+        const value = savedSiteContent[key];
+        const element = document.querySelector(selector);
+
+        if (!value || !element) {
+            return;
+        }
+
+        if (key === "email") {
+            element.href = `mailto:${value}`;
+        }
+
+        if (key === "phone") {
+            element.href = `tel:${value}`;
+        }
+
+        if (key === "facebook" || key === "linkedin") {
+            element.href = value;
+        }
+
+        element.firstChild.textContent = value;
+    });
+}
+
+applySavedContent();
 
 function closeMenu() {
     navLinks.classList.remove("open");
