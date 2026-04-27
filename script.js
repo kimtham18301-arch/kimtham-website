@@ -1,6 +1,7 @@
 const menuToggle = document.querySelector(".menu-toggle");
 const navLinks = document.querySelector(".nav-links");
 const navItems = document.querySelectorAll(".nav-links a");
+const samePageNavItems = [...navItems].filter((link) => (link.getAttribute("href") || "").startsWith("#"));
 const sections = document.querySelectorAll("main section[id]");
 const contactForm = document.querySelector("#contactForm");
 const contactStatus = document.querySelector("#contactStatus");
@@ -182,13 +183,15 @@ function observeReveal() {
 const activeObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        navItems.forEach((link) => {
+        samePageNavItems.forEach((link) => {
             link.classList.toggle("active", link.getAttribute("href") === `#${entry.target.id}`);
         });
     });
 }, { rootMargin: "-35% 0px -55% 0px", threshold: 0 });
 
-sections.forEach((section) => activeObserver.observe(section));
+if (samePageNavItems.length) {
+    sections.forEach((section) => activeObserver.observe(section));
+}
 
 function trackEvent(name, payload = {}) {
     const events = JSON.parse(localStorage.getItem("kimthamAnalytics") || "[]");
