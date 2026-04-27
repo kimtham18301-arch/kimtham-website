@@ -7,54 +7,56 @@ const contactForm = document.querySelector("#contactForm");
 const contactStatus = document.querySelector("#contactStatus");
 
 const fallbackContent = {
-    heroEyebrow: "Content Marketing - Social Media - SEO cơ bản",
-    heroTitle: "Kim Thắm giúp thương hiệu nhỏ biến ý tưởng rời rạc thành nội dung có kế hoạch.",
-    heroLead: "Mình hỗ trợ xây dựng thông điệp, lịch nội dung, bài viết và tối ưu SEO cơ bản để kênh số của bạn rõ ràng hơn, đăng đều hơn và dễ theo dõi hiệu quả hơn.",
-    primaryCta: "Gửi brief tư vấn",
-    secondaryCta: "Xem case study",
-    profileCta: "Tải profile/CV",
+    heroEyebrow: "Tư vấn nước hoa cá nhân",
+    heroTitle: "Chọn nước hoa hợp gu, đúng dịp và vừa ngân sách.",
+    heroLead: "Kim Thắm giúp bạn tìm mùi hương dễ dùng cho đi làm, đi chơi, hẹn hò hoặc làm quà tặng. Chỉ cần gửi gu mùi, người dùng và ngân sách, mình sẽ gợi ý vài lựa chọn phù hợp qua Zalo.",
+    primaryCta: "Nhắn Zalo tư vấn",
+    secondaryCta: "Gọi 0972295710",
+    profileCta: "Xem profile",
     profileUrl: "files/profile-kim-tham.html",
     profileName: "Kim Thắm",
-    profileSummary: "Freelance Content & Social Media Marketer",
-    servicesTitle: "Những phần mình có thể hỗ trợ ngay.",
-    servicesIntro: "Phù hợp với cá nhân, cửa hàng nhỏ hoặc dự án mới cần người triển khai nội dung có cấu trúc, dễ phối hợp và biết đo lường cơ bản.",
-    packagesTitle: "Chọn phạm vi vừa đủ để bắt đầu rõ ràng.",
-    projectsTitle: "Dự án được trình bày theo vấn đề, vai trò và đầu ra.",
-    processTitle: "Làm việc gọn, rõ đầu việc và có phản hồi theo từng bước.",
-    aboutTitle: "Một người làm nội dung đang xây nền tảng marketing bằng sự chỉn chu và tinh thần học nhanh.",
-    aboutParagraph1: "Mình quan tâm đến cách nội dung giúp một thương hiệu được hiểu đúng hơn: từ thông điệp, lịch đăng, góc nhìn khách hàng đến cách đo hiệu quả sau mỗi chiến dịch nhỏ.",
-    aboutParagraph2: "Khi làm việc, mình ưu tiên brief rõ, timeline thực tế, tài liệu dễ theo dõi và nội dung có thể triển khai được trên kênh thật.",
-    proofTitle: "Điểm mạnh khi phối hợp",
-    contactTitle: "Gửi brief ngắn, mình sẽ phản hồi hướng triển khai phù hợp.",
+    profileSummary: "Tư vấn nước hoa theo gu cá nhân",
+    servicesTitle: "Không cần nhớ thuật ngữ mùi hương, chỉ cần nói bạn muốn dùng trong hoàn cảnh nào.",
+    servicesIntro: "Mỗi gợi ý sẽ dựa trên người dùng, môi trường sử dụng, độ nổi bật mong muốn và mức ngân sách bạn thấy thoải mái.",
+    packagesTitle: "Dễ chọn hơn khi bắt đầu từ người nhận và dịp sử dụng.",
+    projectsTitle: "Câu hỏi thường gặp",
+    processTitle: "Gửi vài thông tin cơ bản, nhận gợi ý mùi hương rõ ràng và dễ quyết định.",
+    aboutTitle: "Những câu hỏi thường gặp trước khi chọn nước hoa.",
+    aboutParagraph1: "Kim Thắm tư vấn nước hoa theo gu, dịp sử dụng và ngân sách.",
+    aboutParagraph2: "Bạn có thể nhắn Zalo để được gợi ý nhanh trước khi đặt mua.",
+    proofTitle: "Vì sao nên tư vấn trước khi mua",
+    contactTitle: "Bạn gửi gu mùi và ngân sách, mình sẽ gợi ý lựa chọn phù hợp.",
     email: "hello@kimtham.id.vn",
     phone: "0972295710",
     facebook: "",
     linkedin: "",
     csrfToken: "",
     services: [
-        { title: "Content Marketing", text: "Lên ý tưởng, viết bài, xây lịch nội dung và điều chỉnh thông điệp theo nhóm khách hàng mục tiêu." },
-        { title: "Social Media", text: "Sắp xếp tuyến nội dung Facebook, Instagram hoặc TikTok để kênh nhìn nhất quán và dễ duy trì." },
-        { title: "SEO cơ bản", text: "Nghiên cứu từ khóa, tối ưu tiêu đề, mô tả và cấu trúc nội dung cho trang bán hàng hoặc bài viết." }
+        { tag: "Đi làm", title: "Sạch, gọn và dễ gần", text: "Gợi ý các mùi tươi mát, nhẹ nhàng, không quá nồng để dùng trong văn phòng hoặc lớp học." },
+        { tag: "Đi chơi", title: "Nổi bật vừa đủ", text: "Chọn mùi có cá tính hơn nhưng vẫn dễ dùng, hợp cà phê, dạo phố hoặc gặp bạn bè." },
+        { tag: "Hẹn hò", title: "Ấm, mềm và cuốn hút", text: "Ưu tiên nhóm ngọt ấm, hoa, gỗ hoặc xạ hương để tạo cảm giác gần gũi và có dấu ấn." },
+        { tag: "Quà tặng", title: "An toàn nhưng tinh tế", text: "Tư vấn theo độ tuổi, giới tính, phong cách và thông điệp bạn muốn gửi đến người nhận." },
+        { tag: "Unisex", title: "Hiện đại và linh hoạt", text: "Phù hợp người thích mùi ít ranh giới nam nữ, dùng được nhiều hoàn cảnh và nhiều mùa." }
     ],
     packages: [
-        { title: "Content Plan Starter", text: "Phù hợp khi bạn cần định hướng nội dung 2-4 tuần, gồm trụ cột nội dung, lịch đăng và gợi ý định dạng." },
-        { title: "Social Media Care", text: "Dành cho kênh cần đăng đều: lên ý tưởng, viết caption, checklist hình ảnh và ghi chú tối ưu sau mỗi tuần." },
-        { title: "SEO & Channel Audit", text: "Rà soát website, bài viết hoặc gian hàng để tìm điểm cần sửa về từ khóa, tiêu đề, mô tả và trải nghiệm đọc." }
+        { title: "Mua cho bản thân", text: "Bắt đầu từ thói quen dùng hằng ngày, phong cách ăn mặc, môi trường làm việc và những mùi bạn từng thích." },
+        { title: "Mua làm quà", text: "Chọn mùi dễ tạo thiện cảm, có câu chuyện rõ ràng và phù hợp độ tuổi, tính cách, dịp tặng." },
+        { title: "Mua theo ngân sách", text: "Khoanh vùng lựa chọn theo mức chi mong muốn để tránh lan man và dễ chốt sản phẩm hơn." }
     ],
     projects: [
-        { tag: "SEO / E-commerce", title: "SEO Shopee - Mắt kính Titanus", context: "Sản phẩm cần dễ được tìm thấy hơn trên sàn thương mại điện tử.", role: "Nghiên cứu từ khóa, nhóm nhu cầu tìm kiếm và đề xuất cấu trúc nội dung sản phẩm.", result: "Bộ gợi ý tiêu đề, mô tả và nhóm từ khóa có thể áp dụng cho trang sản phẩm." },
-        { tag: "Customer Insight", title: "VietJet Air - Trải nghiệm khi chuyến bay delay", context: "Khách hàng dễ có cảm xúc tiêu cực trong thời gian chờ chuyến.", role: "Phân tích điểm đau và đề xuất hướng truyền thông hỗ trợ trải nghiệm.", result: "Ý tưởng hoạt động giúp khách hàng được cập nhật, trấn an và cảm thấy được quan tâm hơn." },
-        { tag: "Social Media", title: "SHOOTING Kombucha", context: "Thương hiệu đồ uống cần tăng nhận diện và tương tác trên kênh xã hội.", role: "Xây dựng concept nội dung, lịch đăng và hướng hình ảnh trẻ trung.", result: "Khung triển khai social media dễ dùng cho Facebook và Instagram." }
+        { tag: "Tư vấn có mất phí không?", title: "Tư vấn nhanh qua Zalo", context: "Bạn có thể nhắn nhu cầu, gu mùi và ngân sách để nhận gợi ý ban đầu.", role: "Kim Thắm sẽ hỏi thêm vài chi tiết nếu cần.", result: "Sau đó bạn nhận 2-4 hướng mùi phù hợp để cân nhắc." },
+        { tag: "Có chọn được quà không?", title: "Có, chỉ cần mô tả người nhận", context: "Hãy gửi giới tính, độ tuổi, phong cách, dịp tặng và ngân sách.", role: "Mình sẽ ưu tiên các mùi dễ dùng, lịch sự và có cảm giác tinh tế.", result: "Phù hợp sinh nhật, kỷ niệm, lễ tết hoặc quà cảm ơn." },
+        { tag: "Nếu chưa biết gu?", title: "Bắt đầu từ cảm giác muốn có", context: "Bạn chỉ cần nói thích sạch, ngọt, sang, nhẹ, nổi bật hoặc trưởng thành.", role: "Mình sẽ chuyển cảm giác đó thành nhóm hương dễ hiểu.", result: "Bạn không cần biết quá nhiều thuật ngữ nước hoa." }
     ],
     process: [
-        { title: "Nhận brief", text: "Làm rõ mục tiêu, khách hàng, kênh triển khai, timeline, ngân sách và tài nguyên đang có." },
-        { title: "Đề xuất hướng làm", text: "Gửi khung nội dung, thông điệp chính và đầu việc ưu tiên để thống nhất trước khi triển khai." },
-        { title: "Triển khai & tối ưu", text: "Hoàn thiện nội dung, tiếp nhận phản hồi và ghi chú điểm cải thiện cho lần tiếp theo." }
+        { title: "Gửi gu và ngân sách", text: "Nhắn Zalo hoặc điền form: mua cho ai, dịp dùng, ngân sách và cảm giác mùi mong muốn." },
+        { title: "Nhận gợi ý phù hợp", text: "Mình đề xuất vài lựa chọn theo nhóm hương, độ dễ dùng và hoàn cảnh sử dụng." },
+        { title: "Chốt mùi và cách dùng", text: "Sau khi chọn, bạn được hướng dẫn cách xịt, bảo quản và dùng sao cho mùi lên đẹp hơn." }
     ],
     proofs: [
-        "Biết tổ chức thông tin thành kế hoạch dễ theo dõi.",
-        "Viết nội dung rõ ràng, đúng mục tiêu và có thể chỉnh theo giọng thương hiệu.",
-        "Có nền tảng SEO, social media và phân tích hiệu quả cơ bản."
+        "Tư vấn theo nhu cầu thật, không bắt đầu bằng danh sách sản phẩm quá dài.",
+        "Ưu tiên các mùi dễ dùng, hợp hoàn cảnh và vừa ngân sách.",
+        "Có thể hỗ trợ chọn quà cho người chưa biết rõ về nước hoa."
     ]
 };
 
@@ -85,13 +87,14 @@ function escapeHtml(value) {
 function renderCards(selector, items, type = "service") {
     const container = document.querySelector(selector);
     if (!container || !Array.isArray(items)) return;
+
     container.innerHTML = items.map((item, index) => {
         const tag = item.tag ? `<span class="tag">${escapeHtml(item.tag)}</span>` : `<span class="number">${String(index + 1).padStart(2, "0")}</span>`;
         const body = item.context || item.role || item.result
             ? `<dl class="case-details">
                 ${item.context ? `<div><dt>Bối cảnh</dt><dd>${escapeHtml(item.context)}</dd></div>` : ""}
-                ${item.role ? `<div><dt>Vai trò</dt><dd>${escapeHtml(item.role)}</dd></div>` : ""}
-                ${item.result ? `<div><dt>Đầu ra</dt><dd>${escapeHtml(item.result)}</dd></div>` : ""}
+                ${item.role ? `<div><dt>Cách tư vấn</dt><dd>${escapeHtml(item.role)}</dd></div>` : ""}
+                ${item.result ? `<div><dt>Kết quả</dt><dd>${escapeHtml(item.result)}</dd></div>` : ""}
             </dl>`
             : `<p>${escapeHtml(item.text || "")}</p>`;
 
@@ -122,13 +125,6 @@ function applyContent(content) {
     setLink("[data-link='phone']", data.phone, data.phone);
     setLink("[data-link='facebook']", data.facebook, "Facebook");
     setLink("[data-link='linkedin']", data.linkedin, "LinkedIn");
-
-    const profileLink = document.querySelector(".optional-profile-link");
-    if (profileLink) {
-        const profileUrl = String(data.profileUrl || "").trim();
-        profileLink.hidden = !profileUrl;
-        if (profileUrl) profileLink.href = profileUrl;
-    }
 
     renderCards("[data-list='services']", data.services, "service");
     renderCards("[data-list='packages']", data.packages, "package");
@@ -206,7 +202,7 @@ document.addEventListener("click", (event) => {
 
 contactForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
-    contactStatus.textContent = "Đang gửi liên hệ...";
+    contactStatus.textContent = "Đang gửi yêu cầu tư vấn...";
     contactStatus.classList.remove("success");
     trackEvent("contact-form-attempt");
 
@@ -223,10 +219,10 @@ contactForm?.addEventListener("submit", async (event) => {
         });
         const data = await response.json();
 
-        if (!response.ok || !data.ok) throw new Error(data.message || "Không thể gửi liên hệ.");
+        if (!response.ok || !data.ok) throw new Error(data.message || "Không thể gửi yêu cầu tư vấn.");
 
         contactForm.reset();
-        contactStatus.textContent = "Đã nhận thông tin. Mình sẽ phản hồi sớm.";
+        contactStatus.textContent = "Đã nhận thông tin. Mình sẽ liên hệ lại qua Zalo/điện thoại sớm.";
         contactStatus.classList.add("success");
         trackEvent("contact-form-success");
     } catch (error) {

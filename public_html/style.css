@@ -224,12 +224,13 @@ h3 { margin-bottom: 10px; line-height: 1.35; }
     background: var(--accent-soft);
 }
 
-.project-grid {
+.project-grid, .faq-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 18px;
 }
 .project-card { padding: 24px; min-height: 250px; }
+.faq-grid .project-card { min-height: 280px; }
 .case-details { display: grid; gap: 12px; margin: 0; color: var(--muted); }
 .case-details div { display: grid; gap: 3px; }
 .case-details dt { color: var(--accent-dark); font-size: 0.78rem; font-weight: 800; text-transform: uppercase; }
@@ -251,6 +252,11 @@ h3 { margin-bottom: 10px; line-height: 1.35; }
     padding: 13px 0;
     border-bottom: 1px solid var(--line);
     overflow-wrap: anywhere;
+}
+.contact-card p { margin: 8px 0 0; color: var(--muted); }
+.contact-zalo {
+    color: var(--accent-dark);
+    font-weight: 800;
 }
 .contact-form { display: grid; gap: 16px; }
 .contact-form label { display: grid; gap: 8px; color: var(--ink); font-weight: 700; }
@@ -326,6 +332,26 @@ h3 { margin-bottom: 10px; line-height: 1.35; }
     object-fit: cover;
 }
 
+.trust-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.trust-strip span {
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 12px;
+    border: 1px solid rgba(15, 118, 110, 0.18);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.74);
+    color: var(--accent-dark);
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+
 .perfume-feature-grid, .note-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -360,6 +386,23 @@ h3 { margin-bottom: 10px; line-height: 1.35; }
 
 .perfume-contact-actions { display: grid; gap: 12px; }
 
+.sticky-zalo {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 30;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px;
+    border-radius: 8px;
+    background: #0068ff;
+    color: #fff;
+    font-weight: 800;
+    box-shadow: 0 14px 28px rgba(0, 104, 255, 0.28);
+}
+
 @media (max-width: 900px) {
     .menu-toggle { display: block; }
     .nav-links {
@@ -377,7 +420,7 @@ h3 { margin-bottom: 10px; line-height: 1.35; }
     .nav-links a { min-height: 48px; border-bottom: 1px solid var(--line); }
     .hero, .about-grid, .contact-grid, .perfume-hero, .perfume-contact-panel { grid-template-columns: 1fr; }
     .hero, .perfume-hero { min-height: auto; padding-top: 64px; }
-    .card-grid, .project-grid, .process-grid, .package-grid, .perfume-feature-grid, .note-grid { grid-template-columns: 1fr; }
+    .card-grid, .project-grid, .faq-grid, .process-grid, .package-grid, .perfume-feature-grid, .note-grid { grid-template-columns: 1fr; }
     .profile-card { max-width: 520px; margin: 0 auto; }
     .perfume-visual { max-width: 620px; margin: 0 auto; }
 }
@@ -392,4 +435,10 @@ h3 { margin-bottom: 10px; line-height: 1.35; }
     .profile-stats { grid-template-columns: 1fr; }
     .form-row { grid-template-columns: 1fr; }
     .about-copy, .focus-panel, .contact-card, .contact-form, .service-card, .project-card, .process-card, .package-card, .note-card, .perfume-contact-panel { padding: 20px; }
+    .sticky-zalo {
+        right: 12px;
+        left: 12px;
+        bottom: 12px;
+    }
+    .site-footer { padding-bottom: 82px; }
 }

@@ -156,7 +156,7 @@ function clean_content(array $input): array
         $content[$key] = trim((string) ($input[$key] ?? ''));
     }
 
-    $content['services'] = clean_list(is_array($input['services'] ?? null) ? $input['services'] : [], ['title', 'text']);
+    $content['services'] = clean_list(is_array($input['services'] ?? null) ? $input['services'] : [], ['tag', 'title', 'text']);
     $content['packages'] = clean_list(is_array($input['packages'] ?? null) ? $input['packages'] : [], ['title', 'text']);
     $content['projects'] = clean_list(is_array($input['projects'] ?? null) ? $input['projects'] : [], ['tag', 'title', 'context', 'role', 'result']);
     $content['process'] = clean_list(is_array($input['process'] ?? null) ? $input['process'] : [], ['title', 'text']);

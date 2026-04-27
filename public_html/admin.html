@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="admin.css?v=20260427-growth">
+    <link rel="stylesheet" href="admin.css?v=20260427-perfume-shop">
 </head>
 <body class="admin-page">
     <header class="site-header">
@@ -42,7 +42,7 @@
         <section class="admin-workspace" id="adminWorkspace" hidden>
             <div class="admin-tabs" role="tablist" aria-label="Khu vực quản trị">
                 <button class="tab-button active" type="button" data-tab="contentForm">Nội dung</button>
-                <button class="tab-button" type="button" data-tab="leadsPanel">Lead liên hệ</button>
+                <button class="tab-button" type="button" data-tab="leadsPanel">Lead tư vấn</button>
             </div>
 
             <form class="admin-form tab-panel active" id="contentForm">
@@ -54,27 +54,27 @@
                     <label>CTA chính<input type="text" name="primaryCta"></label>
                     <label>CTA phụ<input type="text" name="secondaryCta"></label>
                     <label>CTA profile<input type="text" name="profileCta"></label>
-                    <label>Đường dẫn profile/CV<input type="text" name="profileUrl" placeholder="Ví dụ: files/cv-kim-tham.pdf"></label>
+                    <label>Đường dẫn profile/CV<input type="text" name="profileUrl" placeholder="Ví dụ: files/profile-kim-tham.html"></label>
                     <label>Tên profile<input type="text" name="profileName"></label>
                     <label>Tóm tắt profile<input type="text" name="profileSummary"></label>
                 </section>
 
                 <section class="admin-panel">
-                    <h2>Dịch vụ, gói hợp tác, case study</h2>
-                    <label>Tiêu đề dịch vụ<textarea name="servicesTitle" rows="2"></textarea></label>
-                    <label>Mô tả dịch vụ<textarea name="servicesIntro" rows="3"></textarea></label>
-                    <label>Dịch vụ (JSON)<textarea name="services" rows="8" data-json="true"></textarea></label>
-                    <label>Tiêu đề gói hợp tác<textarea name="packagesTitle" rows="2"></textarea></label>
-                    <label>Gói hợp tác (JSON)<textarea name="packages" rows="8" data-json="true"></textarea></label>
-                    <label>Tiêu đề case study<textarea name="projectsTitle" rows="2"></textarea></label>
-                    <label>Case study (JSON)<textarea name="projects" rows="10" data-json="true"></textarea></label>
+                    <h2>Nội dung nước hoa</h2>
+                    <label>Tiêu đề chọn mùi<textarea name="servicesTitle" rows="2"></textarea></label>
+                    <label>Mô tả chọn mùi<textarea name="servicesIntro" rows="3"></textarea></label>
+                    <label>Nhóm nhu cầu (JSON)<textarea name="services" rows="8" data-json="true"></textarea></label>
+                    <label>Tiêu đề dịp mua<textarea name="packagesTitle" rows="2"></textarea></label>
+                    <label>Dịp mua (JSON)<textarea name="packages" rows="8" data-json="true"></textarea></label>
+                    <label>Tiêu đề FAQ<textarea name="projectsTitle" rows="2"></textarea></label>
+                    <label>FAQ (JSON)<textarea name="projects" rows="10" data-json="true"></textarea></label>
                     <label>Tiêu đề quy trình<textarea name="processTitle" rows="2"></textarea></label>
                     <label>Quy trình (JSON)<textarea name="process" rows="7" data-json="true"></textarea></label>
                 </section>
 
                 <section class="admin-panel">
                     <h2>Giới thiệu và liên hệ</h2>
-                    <label>Tiêu đề giới thiệu<textarea name="aboutTitle" rows="3"></textarea></label>
+                    <label>Tiêu đề giới thiệu/FAQ<textarea name="aboutTitle" rows="3"></textarea></label>
                     <label>Đoạn giới thiệu 1<textarea name="aboutParagraph1" rows="4"></textarea></label>
                     <label>Đoạn giới thiệu 2<textarea name="aboutParagraph2" rows="4"></textarea></label>
                     <label>Tiêu đề điểm mạnh<input type="text" name="proofTitle"></label>
@@ -95,7 +95,7 @@
             <section class="tab-panel" id="leadsPanel">
                 <div class="admin-panel">
                     <div class="panel-heading">
-                        <h2>Lead liên hệ</h2>
+                        <h2>Lead tư vấn nước hoa</h2>
                         <button class="btn secondary" type="button" id="reloadLeads">Tải lead</button>
                     </div>
                     <div class="leads-list" id="leadsList"></div>
@@ -104,6 +104,6 @@
         </section>
     </main>
 
-    <script src="admin.js?v=20260427-growth"></script>
+    <script src="admin.js?v=20260427-perfume-shop"></script>
 </body>
 </html>
