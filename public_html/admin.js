@@ -86,16 +86,14 @@ function renderLead(lead) {
         <article class="lead-card">
             <small>${escapeHtml(lead.createdAt || "")}</small>
             <h3>${escapeHtml(lead.name || "Không có tên")}</h3>
-            <p><strong>Điện thoại/Zalo:</strong> ${escapeHtml(lead.phone || "Không cung cấp")}</p>
-            <p><strong>Email:</strong> ${escapeHtml(lead.email || "Không cung cấp")}</p>
-            <p><strong>Dịch vụ:</strong> ${escapeHtml(lead.service || "Tư vấn nước hoa")}</p>
-            <p><strong>Mua cho:</strong> ${escapeHtml(lead.recipient || "Chưa cung cấp")}</p>
-            <p><strong>Dịp dùng:</strong> ${escapeHtml(lead.occasion || "Chưa cung cấp")}</p>
+            <p><strong>Email:</strong> ${escapeHtml(lead.email || "")}</p>
+            <p><strong>Điện thoại:</strong> ${escapeHtml(lead.phone || "Không cung cấp")}</p>
+            <p><strong>Dịch vụ:</strong> ${escapeHtml(lead.service || "")}</p>
+            <p><strong>Mục tiêu:</strong> ${escapeHtml(lead.goal || "Chưa cung cấp")}</p>
+            <p><strong>Kênh:</strong> ${escapeHtml(lead.channels || "Chưa cung cấp")}</p>
+            <p><strong>Timeline:</strong> ${escapeHtml(lead.timeline || "Chưa cung cấp")}</p>
             <p><strong>Ngân sách:</strong> ${escapeHtml(lead.budget || "Chưa cung cấp")}</p>
-            <p><strong>Gu mùi:</strong> ${escapeHtml(lead.scent || lead.message || "Chưa cung cấp")}</p>
-            ${lead.goal ? `<p><strong>Mục tiêu:</strong> ${escapeHtml(lead.goal)}</p>` : ""}
-            ${lead.channels ? `<p><strong>Kênh:</strong> ${escapeHtml(lead.channels)}</p>` : ""}
-            ${lead.timeline ? `<p><strong>Timeline:</strong> ${escapeHtml(lead.timeline)}</p>` : ""}
+            <p>${escapeHtml(lead.message || "")}</p>
         </article>
     `;
 }

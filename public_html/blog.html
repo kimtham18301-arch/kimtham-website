@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Blog Kim Thắm – The Editorial Room. Chia sẻ về marketing, yoga, mùi hương và hành trình phát triển bản thân.">
+    <meta name="author" content="Kim Thắm">
+    <meta property="og:title" content="Blog | Kim Thắm – The Editorial Room">
+    <link rel="canonical" href="https://kimtham.id.vn/blog.html">
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+    <title>Blog | Kim Thắm – The Editorial Room</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=20260427-pinkgu">
+</head>
+<body data-page="blog">
+    <header class="site-header">
+        <nav class="navbar" aria-label="Điều hướng chính">
+            <a class="brand" href="index.html">Kim Thắm</a>
+            <button class="menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="primary-menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="primary-menu">
+                <li><a href="index.html">Trang chủ</a></li>
+                <li><a href="about.html">Về mình</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="store.html">Store</a></li>
+                <li><a href="contact.html">Liên hệ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section" id="blog-hero">
+            <div class="section-heading reveal">
+                <p class="eyebrow">The Editorial Room</p>
+                <h1>Blog</h1>
+                <p style="color:var(--muted);max-width:560px;">Nơi mình chia sẻ về marketing, lifestyle, mùi hương và hành trình trưởng thành. Mỗi bài viết là một góc nhìn chân thật.</p>
+            </div>
+
+            <div class="blog-filters" id="blogFilters">
+                <button class="filter-btn active" data-filter="all">Tất cả</button>
+                <button class="filter-btn" data-filter="marketing">#MarketingMindset</button>
+                <button class="filter-btn" data-filter="yoga">#YogaFlow</button>
+                <button class="filter-btn" data-filter="scent">#ScentStories</button>
+                <button class="filter-btn" data-filter="mentoring">#MentoringDiary</button>
+            </div>
+
+            <div class="blog-grid" id="blogGrid">
+                <!-- Blog cards rendered by JS -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2026 Kim Thắm. Marketer sống có gu.</p>
+        <p>kimtham.id.vn</p>
+    </footer>
+
+    <script src="script.js?v=20260427-pinkgu"></script>
+</body>
+</html>

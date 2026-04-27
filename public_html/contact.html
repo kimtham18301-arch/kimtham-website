@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Liên hệ Kim Thắm – Học marketing, chọn nước hoa, hoặc hỏi chung. Mình sẵn sàng hỗ trợ bạn.">
+    <meta name="author" content="Kim Thắm">
+    <meta property="og:title" content="Liên hệ | Kim Thắm">
+    <link rel="canonical" href="https://kimtham.id.vn/contact.html">
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+    <title>Liên hệ | Kim Thắm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=20260427-pinkgu">
+</head>
+<body data-page="contact">
+    <header class="site-header">
+        <nav class="navbar" aria-label="Điều hướng chính">
+            <a class="brand" href="index.html">Kim Thắm</a>
+            <button class="menu-toggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="primary-menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="primary-menu">
+                <li><a href="index.html">Trang chủ</a></li>
+                <li><a href="about.html">Về mình</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="store.html">Store</a></li>
+                <li><a href="contact.html" class="active">Liên hệ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section">
+            <div class="section-heading reveal">
+                <p class="eyebrow">Liên hệ</p>
+                <h1>Bạn đang cần gì?</h1>
+                <p style="color:var(--muted);">Chọn một chủ đề bên dưới, mình sẽ hỗ trợ nhanh nhất có thể.</p>
+            </div>
+
+            <div class="intent-grid" id="intentGrid">
+                <div class="intent-card" data-intent="marketing" tabindex="0">
+                    <div class="intent-icon">📚</div>
+                    <h3>Học marketing</h3>
+                    <p>Tư vấn, gia sư, hoặc hợp tác marketing</p>
+                </div>
+                <div class="intent-card" data-intent="perfume" tabindex="0">
+                    <div class="intent-icon">🌸</div>
+                    <h3>Chọn nước hoa</h3>
+                    <p>Tư vấn mùi hương theo gu và dịp sử dụng</p>
+                </div>
+                <div class="intent-card" data-intent="general" tabindex="0">
+                    <div class="intent-icon">💬</div>
+                    <h3>Hỏi chung</h3>
+                    <p>Chat, hỏi thăm, hoặc đơn giản là chào</p>
+                </div>
+            </div>
+
+            <div class="contact-grid">
+                <form class="contact-form reveal" id="contactForm">
+                    <label class="hp-field" aria-hidden="true">Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+                    <input type="hidden" name="intent" id="intentField" value="general">
+                    <label>Họ và tên<input type="text" name="name" autocomplete="name" required></label>
+                    <label>Email<input type="email" name="email" autocomplete="email" required></label>
+                    <div class="form-row">
+                        <label>Số điện thoại<input type="tel" name="phone" autocomplete="tel"></label>
+                        <label>Chủ đề
+                            <select name="service" id="serviceSelect">
+                                <option value="Hỏi chung">Hỏi chung</option>
+                                <option value="Học marketing">Học marketing</option>
+                                <option value="Gia sư">Gia sư</option>
+                                <option value="Hợp tác marketing">Hợp tác marketing</option>
+                                <option value="Tư vấn nước hoa">Tư vấn nước hoa</option>
+                                <option value="Mua nước hoa">Mua nước hoa</option>
+                            </select>
+                        </label>
+                    </div>
+                    <label>Nội dung<textarea name="message" rows="5" required placeholder="Bạn muốn mình hỗ trợ điều gì?"></textarea></label>
+                    <button class="btn primary" type="submit" data-track="contact-submit">Gửi liên hệ</button>
+                    <p class="form-status" id="contactStatus" role="status"></p>
+                </form>
+
+                <div class="contact-info reveal reveal-delay-1">
+                    <a href="mailto:hello@kimtham.id.vn" class="contact-info-card">
+                        <div class="contact-info-icon">✉️</div>
+                        <div class="contact-info-text">Email<small>hello@kimtham.id.vn</small></div>
+                    </a>
+                    <a href="tel:0972295710" class="contact-info-card">
+                        <div class="contact-info-icon">📞</div>
+                        <div class="contact-info-text">Điện thoại<small>0972 295 710</small></div>
+                    </a>
+                    <a href="https://zalo.me/0972295710" target="_blank" rel="noopener" class="contact-info-card">
+                        <div class="contact-info-icon">💬</div>
+                        <div class="contact-info-text">Zalo<small>Chat nhanh với mình</small></div>
+                    </a>
+                    <div class="contact-info-card" style="cursor:default;">
+                        <div class="contact-info-icon">⏰</div>
+                        <div class="contact-info-text">Phản hồi<small>Trong vòng 24h</small></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2026 Kim Thắm. Marketer sống có gu.</p>
+        <p>kimtham.id.vn</p>
+    </footer>
+
+    <script src="script.js?v=20260427-pinkgu"></script>
+</body>
+</html>
