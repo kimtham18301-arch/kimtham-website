@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Admin | Kim Thắm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css?v=20260427-growth">
+</head>
+<body class="admin-page">
+    <header class="site-header">
+        <nav class="navbar" aria-label="Điều hướng admin">
+            <a class="brand" href="index.html">Kim Thắm</a>
+            <div class="admin-nav-actions">
+                <button class="btn ghost" type="button" id="logoutButton" hidden>Đăng xuất</button>
+                <a class="btn secondary" href="index.html">Xem website</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="admin-shell">
+        <section class="admin-hero">
+            <div>
+                <p class="eyebrow">Bảng quản trị</p>
+                <h1>Quản lý nội dung và lead</h1>
+                <p>Dữ liệu được lưu bằng backend PHP trong thư mục storage. Hãy cấu hình biến môi trường <code>KIMTHAM_ADMIN_PASSWORD_HASH</code> trước khi dùng admin.</p>
+            </div>
+            <div class="admin-status" id="adminStatus" role="status">Đang kiểm tra đăng nhập</div>
+        </section>
+
+        <form class="admin-panel login-panel" id="loginForm">
+            <h2>Đăng nhập admin</h2>
+            <label>Tài khoản<input type="text" name="username" autocomplete="username" required></label>
+            <label>Mật khẩu<input type="password" name="password" autocomplete="current-password" required></label>
+            <button class="btn primary" type="submit">Đăng nhập</button>
+        </form>
+
+        <section class="admin-workspace" id="adminWorkspace" hidden>
+            <div class="admin-tabs" role="tablist" aria-label="Khu vực quản trị">
+                <button class="tab-button active" type="button" data-tab="contentForm">Nội dung</button>
+                <button class="tab-button" type="button" data-tab="leadsPanel">Lead liên hệ</button>
+            </div>
+
+            <form class="admin-form tab-panel active" id="contentForm">
+                <section class="admin-panel">
+                    <h2>Trang chính</h2>
+                    <label>Eyebrow<input type="text" name="heroEyebrow"></label>
+                    <label>Tiêu đề hero<textarea name="heroTitle" rows="3"></textarea></label>
+                    <label>Mô tả hero<textarea name="heroLead" rows="4"></textarea></label>
+                    <label>CTA chính<input type="text" name="primaryCta"></label>
+                    <label>CTA phụ<input type="text" name="secondaryCta"></label>
+                    <label>CTA profile<input type="text" name="profileCta"></label>
+                    <label>Đường dẫn profile/CV<input type="text" name="profileUrl" placeholder="Ví dụ: files/cv-kim-tham.pdf"></label>
+                    <label>Tên profile<input type="text" name="profileName"></label>
+                    <label>Tóm tắt profile<input type="text" name="profileSummary"></label>
+                </section>
+
+                <section class="admin-panel">
+                    <h2>Dịch vụ, gói hợp tác, case study</h2>
+                    <label>Tiêu đề dịch vụ<textarea name="servicesTitle" rows="2"></textarea></label>
+                    <label>Mô tả dịch vụ<textarea name="servicesIntro" rows="3"></textarea></label>
+                    <label>Dịch vụ (JSON)<textarea name="services" rows="8" data-json="true"></textarea></label>
+                    <label>Tiêu đề gói hợp tác<textarea name="packagesTitle" rows="2"></textarea></label>
+                    <label>Gói hợp tác (JSON)<textarea name="packages" rows="8" data-json="true"></textarea></label>
+                    <label>Tiêu đề case study<textarea name="projectsTitle" rows="2"></textarea></label>
+                    <label>Case study (JSON)<textarea name="projects" rows="10" data-json="true"></textarea></label>
+                    <label>Tiêu đề quy trình<textarea name="processTitle" rows="2"></textarea></label>
+                    <label>Quy trình (JSON)<textarea name="process" rows="7" data-json="true"></textarea></label>
+                </section>
+
+                <section class="admin-panel">
+                    <h2>Giới thiệu và liên hệ</h2>
+                    <label>Tiêu đề giới thiệu<textarea name="aboutTitle" rows="3"></textarea></label>
+                    <label>Đoạn giới thiệu 1<textarea name="aboutParagraph1" rows="4"></textarea></label>
+                    <label>Đoạn giới thiệu 2<textarea name="aboutParagraph2" rows="4"></textarea></label>
+                    <label>Tiêu đề điểm mạnh<input type="text" name="proofTitle"></label>
+                    <label>Điểm mạnh (JSON)<textarea name="proofs" rows="5" data-json="true"></textarea></label>
+                    <label>Tiêu đề liên hệ<textarea name="contactTitle" rows="2"></textarea></label>
+                    <label>Email<input type="email" name="email"></label>
+                    <label>Số điện thoại<input type="tel" name="phone"></label>
+                    <label>Facebook<input type="url" name="facebook"></label>
+                    <label>LinkedIn<input type="url" name="linkedin"></label>
+                </section>
+
+                <div class="admin-actions">
+                    <button class="btn primary" type="submit">Lưu nội dung</button>
+                    <button class="btn secondary" type="button" id="reloadContent">Tải lại</button>
+                </div>
+            </form>
+
+            <section class="tab-panel" id="leadsPanel">
+                <div class="admin-panel">
+                    <div class="panel-heading">
+                        <h2>Lead liên hệ</h2>
+                        <button class="btn secondary" type="button" id="reloadLeads">Tải lead</button>
+                    </div>
+                    <div class="leads-list" id="leadsList"></div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script src="admin.js?v=20260427-growth"></script>
+</body>
+</html>
