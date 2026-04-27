@@ -1,6 +1,7 @@
 Options -Indexes
 DirectoryIndex index.html
 AddDefaultCharset UTF-8
+AddCharset UTF-8 .html .htm .css .js .json .xml .txt
 
 RewriteEngine On
 RewriteRule ^https?:/+/kimtham\.id\.vn/(.*)$ /$1 [R=301,L,NE]
