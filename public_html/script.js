@@ -2,7 +2,6 @@ const menuToggle = document.querySelector(".menu-toggle");
 const navLinks = document.querySelector(".nav-links");
 const navItems = document.querySelectorAll(".nav-links a");
 const sections = document.querySelectorAll("main section[id]");
-const savedSiteContent = JSON.parse(localStorage.getItem("kimthamSiteContent") || "{}");
 
 const contentBindings = {
     heroTitle: ".hero h1",
@@ -19,9 +18,18 @@ const contentBindings = {
     linkedin: ".contact-card a[href*='linkedin.com']"
 };
 
-function applySavedContent() {
+function updateTextElement(element, value) {
+    if (element.firstChild && element.firstChild.nodeType === Node.TEXT_NODE) {
+        element.firstChild.textContent = value;
+        return;
+    }
+
+    element.textContent = value;
+}
+
+function applyContent(content) {
     Object.entries(contentBindings).forEach(([key, selector]) => {
-        const value = savedSiteContent[key];
+        const value = content[key];
         const element = document.querySelector(selector);
 
         if (!value || !element) {
@@ -40,11 +48,27 @@ function applySavedContent() {
             element.href = value;
         }
 
-        element.firstChild.textContent = value;
+        updateTextElement(element, value);
     });
 }
 
-applySavedContent();
+async function loadContent() {
+    try {
+        const response = await fetch("api/content.php", {
+            headers: { Accept: "application/json" }
+        });
+        const data = await response.json();
+
+        if (data.ok) {
+            applyContent(data.content);
+        }
+    } catch (error) {
+        const localContent = JSON.parse(localStorage.getItem("kimthamSiteContent") || "{}");
+        applyContent(localContent);
+    }
+}
+
+loadContent();
 
 function closeMenu() {
     navLinks.classList.remove("open");
