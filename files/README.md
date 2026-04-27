@@ -6,4 +6,4 @@
 files/cv-kim-tham.pdf
 ```
 
-Link tải CV trên website đang trỏ đến đúng đường dẫn này.
+Sau khi có file thật, nhập `profileUrl` là `files/cv-kim-tham.pdf` trong admin để hiện nút tải profile/CV trên website.

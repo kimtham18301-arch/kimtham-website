@@ -1,65 +1,208 @@
-const storageKey = "kimthamSiteContent";
-const form = document.querySelector("#contentForm");
+const loginForm = document.querySelector("#loginForm");
+const adminWorkspace = document.querySelector("#adminWorkspace");
+const contentForm = document.querySelector("#contentForm");
 const statusBox = document.querySelector("#adminStatus");
-const loadDemoButton = document.querySelector("#loadDemo");
-const resetButton = document.querySelector("#resetContent");
+const logoutButton = document.querySelector("#logoutButton");
+const reloadButton = document.querySelector("#reloadContent");
+const reloadLeadsButton = document.querySelector("#reloadLeads");
+const leadsList = document.querySelector("#leadsList");
+const tabButtons = document.querySelectorAll(".tab-button");
 
-const demoContent = {
-    heroEyebrow: "Digital Marketing Intern / Content & Social Media",
-    heroTitle: "Kim Thắm",
-    heroLead: "Mình đang phát triển năng lực trong Digital Marketing, tập trung vào lập kế hoạch nội dung, quản lý mạng xã hội, SEO cơ bản và phân tích hiệu quả truyền thông.",
-    profileName: "Kim Thắm",
-    profileSummary: "Content Marketing • Social Media • SEO cơ bản",
-    aboutTitle: "Hồ sơ cá nhân rõ ràng, đáng tin cậy và hướng đến môi trường thực tế.",
-    aboutParagraph1: "Website này giới thiệu hành trình học tập, kỹ năng và các dự án thực hành của Kim Thắm trong lĩnh vực Digital Marketing.",
-    aboutParagraph2: "Mình quan tâm đến cách nội dung có thể kết nối thương hiệu với đúng nhóm khách hàng và tạo ra kế hoạch truyền thông có thể triển khai.",
-    email: "your-email@gmail.com",
-    phone: "0972295710",
-    facebook: "https://facebook.com/yourname",
-    linkedin: "https://linkedin.com/in/yourname"
-};
+let csrfToken = "";
+
+function escapeHtml(value) {
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
 
 function setStatus(message, isSaved = false) {
     statusBox.textContent = message;
     statusBox.classList.toggle("saved", isSaved);
 }
 
+async function apiRequest(url, options = {}) {
+    const response = await fetch(url, {
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            ...(csrfToken ? { "X-CSRF-Token": csrfToken } : {}),
+            ...(options.headers || {})
+        },
+        ...options
+    });
+    const data = await response.json();
+
+    if (!response.ok || !data.ok) throw new Error(data.message || "Có lỗi xảy ra.");
+    return data;
+}
+
 function fillForm(content) {
     Object.entries(content).forEach(([key, value]) => {
-        const field = form.elements[key];
-
-        if (field) {
-            field.value = value;
-        }
+        const field = contentForm.elements[key];
+        if (!field) return;
+        field.value = field.dataset.json === "true" ? JSON.stringify(value || [], null, 2) : (value || "");
     });
 }
 
 function getFormContent() {
-    return Array.from(new FormData(form).entries()).reduce((content, [key, value]) => {
-        content[key] = value.trim();
+    return Array.from(new FormData(contentForm).entries()).reduce((content, [key, value]) => {
+        const field = contentForm.elements[key];
+        const trimmed = value.trim();
+
+        if (field?.dataset.json === "true") {
+            content[key] = trimmed ? JSON.parse(trimmed) : [];
+            return content;
+        }
+
+        content[key] = trimmed;
         return content;
     }, {});
 }
 
-fillForm(JSON.parse(localStorage.getItem(storageKey) || "{}"));
+function showAdmin() {
+    loginForm.hidden = true;
+    adminWorkspace.hidden = false;
+    logoutButton.hidden = false;
+}
 
-form.addEventListener("input", () => {
-    setStatus("Có thay đổi chưa lưu");
-});
+function showLogin() {
+    loginForm.hidden = false;
+    adminWorkspace.hidden = true;
+    logoutButton.hidden = true;
+}
 
-form.addEventListener("submit", (event) => {
+async function loadContent() {
+    const data = await apiRequest("api/content.php");
+    csrfToken = data.csrfToken || csrfToken;
+    fillForm(data.content);
+}
+
+function renderLead(lead) {
+    return `
+        <article class="lead-card">
+            <small>${escapeHtml(lead.createdAt || "")}</small>
+            <h3>${escapeHtml(lead.name || "Không có tên")}</h3>
+            <p><strong>Email:</strong> ${escapeHtml(lead.email || "")}</p>
+            <p><strong>Điện thoại:</strong> ${escapeHtml(lead.phone || "Không cung cấp")}</p>
+            <p><strong>Dịch vụ:</strong> ${escapeHtml(lead.service || "")}</p>
+            <p><strong>Mục tiêu:</strong> ${escapeHtml(lead.goal || "Chưa cung cấp")}</p>
+            <p><strong>Kênh:</strong> ${escapeHtml(lead.channels || "Chưa cung cấp")}</p>
+            <p><strong>Timeline:</strong> ${escapeHtml(lead.timeline || "Chưa cung cấp")}</p>
+            <p><strong>Ngân sách:</strong> ${escapeHtml(lead.budget || "Chưa cung cấp")}</p>
+            <p>${escapeHtml(lead.message || "")}</p>
+        </article>
+    `;
+}
+
+async function loadLeads() {
+    const data = await apiRequest("api/leads.php");
+    const leads = data.leads || [];
+
+    leadsList.innerHTML = leads.length
+        ? leads.map(renderLead).join("")
+        : "<p>Chưa có lead liên hệ.</p>";
+}
+
+async function checkSession() {
+    try {
+        const session = await apiRequest("api/session.php");
+        csrfToken = session.csrfToken || csrfToken;
+
+        if (session.authenticated) {
+            showAdmin();
+            await loadContent();
+            setStatus(`Đã đăng nhập: ${session.username}`, true);
+            return;
+        }
+
+        showLogin();
+        setStatus("Vui lòng đăng nhập");
+    } catch (error) {
+        showLogin();
+        setStatus(error.message);
+    }
+}
+
+loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    localStorage.setItem(storageKey, JSON.stringify(getFormContent()));
-    setStatus("Đã lưu nội dung", true);
+    setStatus("Đang đăng nhập");
+
+    try {
+        const data = await apiRequest("api/login.php", {
+            method: "POST",
+            body: JSON.stringify(Object.fromEntries(new FormData(loginForm).entries()))
+        });
+        csrfToken = data.csrfToken || csrfToken;
+        showAdmin();
+        await loadContent();
+        loginForm.reset();
+        setStatus("Đăng nhập thành công", true);
+    } catch (error) {
+        setStatus(error.message);
+    }
 });
 
-loadDemoButton.addEventListener("click", () => {
-    fillForm(demoContent);
-    setStatus("Đã điền nội dung mẫu");
+contentForm.addEventListener("input", () => setStatus("Có thay đổi chưa lưu"));
+
+contentForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    setStatus("Đang lưu nội dung");
+
+    try {
+        await apiRequest("api/content.php", {
+            method: "POST",
+            body: JSON.stringify(getFormContent())
+        });
+        setStatus("Đã lưu nội dung", true);
+    } catch (error) {
+        setStatus(error.message);
+    }
 });
 
-resetButton.addEventListener("click", () => {
-    localStorage.removeItem(storageKey);
-    form.reset();
-    setStatus("Đã xóa dữ liệu đã lưu");
+reloadButton.addEventListener("click", async () => {
+    try {
+        await loadContent();
+        setStatus("Đã tải lại nội dung", true);
+    } catch (error) {
+        setStatus(error.message);
+    }
 });
+
+reloadLeadsButton.addEventListener("click", async () => {
+    try {
+        await loadLeads();
+        setStatus("Đã tải lead liên hệ", true);
+    } catch (error) {
+        setStatus(error.message);
+    }
+});
+
+logoutButton.addEventListener("click", async () => {
+    try {
+        await apiRequest("api/logout.php", { method: "POST", body: "{}" });
+    } finally {
+        csrfToken = "";
+        showLogin();
+        setStatus("Đã đăng xuất");
+    }
+});
+
+tabButtons.forEach((button) => {
+    button.addEventListener("click", async () => {
+        tabButtons.forEach((item) => item.classList.toggle("active", item === button));
+        document.querySelectorAll(".tab-panel").forEach((panel) => panel.classList.remove("active"));
+
+        const panel = document.querySelector(`#${button.dataset.tab}`);
+        panel?.classList.add("active");
+
+        if (button.dataset.tab === "leadsPanel") {
+            await loadLeads();
+        }
+    });
+});
+
+checkSession();

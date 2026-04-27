@@ -1,6 +1,19 @@
 Options -Indexes
 DirectoryIndex index.html
 
+RewriteEngine On
+RewriteRule ^https?:/+/kimtham\.id\.vn/(.*)$ /$1 [R=301,L,NE]
+
 <FilesMatch "^\.">
     Require all denied
 </FilesMatch>
+
+<FilesMatch "^(config\.php|content\.json|leads\.json)$">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

@@ -1,39 +1,33 @@
-# Kim Thắm - Digital Marketing Portfolio
+# Kim Thắm - Content & Social Media Freelancer Website
 
-Website cá nhân tĩnh cho domain `kimtham.id.vn`, triển khai bằng HTML, CSS và JavaScript cơ bản.
+Website cá nhân cho domain `kimtham.id.vn`, định hướng giới thiệu dịch vụ freelance về Content Marketing, Social Media và SEO cơ bản.
 
-## Cấu trúc
+## Bản deploy chính
+
+Chỉ upload nội dung trong thư mục `public_html/` lên hosting. Thư mục `config/` và `storage/` nên nằm cùng cấp với `public_html/`, nhưng không đặt bên trong vùng public nếu hosting cho phép tách riêng.
 
 ```text
 kimtham-website/
-├── index.html
-├── style.css
-├── script.js
-├── images/
-│   └── kim-tham.jpg
-├── files/
-│   └── cv-kim-tham.pdf
-└── README.md
+  public_html/        # Thư mục public deploy chính
+  config/             # Cấu hình admin, nên để ngoài public_html
+  storage/            # Nội dung và lead liên hệ, nên để ngoài public_html
+  DIRECTADMIN.md      # Hướng dẫn upload hosting
+  README-backend.md   # Ghi chú API PHP
 ```
 
-## Nội dung cần thay trước khi gửi portfolio
+## Tính năng
 
-1. Thêm ảnh cá nhân thật tại `images/kim-tham.jpg`.
-2. Thêm CV PDF thật tại `files/cv-kim-tham.pdf`.
-3. Thay email, Facebook và LinkedIn trong `index.html` bằng thông tin thật.
-4. Rà soát lại các dự án để bổ sung số liệu hoặc kết quả cụ thể nếu có.
+- Trang giới thiệu dịch vụ freelance với hero, dịch vụ, gói hợp tác, case study, quy trình, giới thiệu và liên hệ.
+- Nội dung public đọc từ `api/content.php`, có fallback khi API chưa chạy.
+- Form liên hệ có honeypot, giới hạn gửi theo IP và lưu lead vào `storage/leads.json`.
+- Trang admin đăng nhập bằng PHP session, CSRF token và mật khẩu qua `password_verify()`.
+- Admin quản lý nội dung chính và xem lead liên hệ.
+- Favicon, canonical URL, Open Graph metadata và ảnh đại diện SVG mặc định.
 
-## Cách upload lên hosting
+## Việc cần làm trước khi công khai
 
-1. Đăng nhập DirectAdmin.
-2. Mở File Manager.
-3. Vào domain `kimtham.id.vn`.
-4. Mở thư mục `public_html`.
-5. Upload `index.html`, `style.css`, `script.js`, `images/` và `files/`.
-6. Đảm bảo `index.html` nằm trực tiếp trong `public_html`.
-
-## Ghi chú
-
-- Website không dùng framework, có thể mở trực tiếp bằng trình duyệt.
-- Nếu chưa có ảnh cá nhân, website sẽ tự hiển thị avatar chữ `KT`.
-- Form liên hệ hiện dùng `mailto`, nên nên thay bằng form backend hoặc dịch vụ form nếu cần nhận liên hệ chuyên nghiệp hơn.
+1. Đặt biến môi trường `KIMTHAM_ADMIN_PASSWORD_HASH` bằng giá trị tạo từ `password_hash()` trên PHP.
+2. Cập nhật email, Facebook, LinkedIn nếu đã có link thật trong admin.
+3. Thay `public_html/images/kim-tham.svg` bằng ảnh thật nếu có.
+4. Thêm file CV/profile thật vào `public_html/files/cv-kim-tham.pdf`, rồi nhập `profileUrl` là `files/cv-kim-tham.pdf` trong admin.
+5. Upload đúng thư mục `public_html/` theo `DIRECTADMIN.md`.

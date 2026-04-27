@@ -1,36 +1,44 @@
-# Kim Thắm Website Backend
+# Backend Kim Thắm Website
 
-## Cấu trúc mới
+Backend dùng PHP thuần để phù hợp hosting DirectAdmin.
 
-```text
-kimtham-website/
-  public-html/        # Đưa thư mục này lên public_html của hosting
-    index.html        # Trang public
-    admin.html        # Trang quản trị
-    api/              # Backend PHP
-    images/
-    files/
-  storage/
-    content.json      # Dữ liệu website
-  config/
-    config.php        # Tài khoản admin
-```
+## API
 
-## Tài khoản admin mặc định
+- `GET /api/content.php`: trả nội dung website và CSRF token.
+- `POST /api/content.php`: lưu nội dung, yêu cầu admin và CSRF token.
+- `POST /api/login.php`: đăng nhập admin bằng `password_verify()`.
+- `POST /api/logout.php`: đăng xuất, yêu cầu CSRF token.
+- `GET /api/session.php`: kiểm tra phiên đăng nhập.
+- `POST /api/contact.php`: nhận form liên hệ, kiểm tra honeypot, giới hạn gửi theo IP, validate dữ liệu và lưu vào `storage/leads.json`.
+- `GET /api/leads.php`: admin xem lead liên hệ.
 
-```text
-Username: admin
-Password: admin123
-```
+## Dữ liệu
 
-Đổi tài khoản trong `config/config.php` trước khi đưa website lên mạng.
+- `storage/content.json`: nội dung public site.
+- `storage/leads.json`: danh sách lead từ form liên hệ.
+- `config/config.php`: tài khoản admin và password hash.
 
-## Chạy thử trên máy
+## Cấu hình admin
 
-Nếu máy có PHP:
+Admin không còn mật khẩu mặc định. Trước khi dùng, đặt biến môi trường:
 
 ```bash
-php -S localhost:8000 -t public-html
+KIMTHAM_ADMIN_PASSWORD_HASH="hash-tao-tu-password_hash"
+KIMTHAM_NOTIFICATION_EMAIL="email-nhan-lead"
+```
+
+`KIMTHAM_NOTIFICATION_EMAIL` là email nhận thông báo khi có lead mới. Tạo password hash trên máy hoặc hosting có PHP:
+
+```bash
+php -r "echo password_hash('mat-khau-moi', PASSWORD_DEFAULT);"
+```
+
+## Chạy local
+
+Máy cần có PHP trong PATH:
+
+```bash
+php -S localhost:8000 -t public_html
 ```
 
 Sau đó mở:
@@ -40,8 +48,4 @@ http://localhost:8000
 http://localhost:8000/admin.html
 ```
 
-## Khi upload lên hosting
-
-Đưa toàn bộ nội dung trong `public-html/` vào thư mục public của hosting. Nếu hosting dùng tên `public_html`, bạn có thể đổi `public-html` thành `public_html`.
-
-Giữ `storage/` và `config/` bên ngoài thư mục public nếu hosting cho phép. Nếu bắt buộc phải để cùng cấp public, cần cấu hình chặn truy cập trực tiếp vào hai thư mục này.
+Máy hiện tại của dự án chưa có `php` trong PATH, nên phần kiểm thử runtime cần chạy trên máy đã cài PHP hoặc trên hosting.

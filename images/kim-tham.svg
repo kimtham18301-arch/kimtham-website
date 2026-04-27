@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" role="img" aria-label="Ảnh đại diện Kim Thắm">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#dff5f1"/>
+      <stop offset="0.55" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#fff7ed"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="640" rx="48" fill="url(#bg)"/>
+  <circle cx="320" cy="248" r="108" fill="#115e59"/>
+  <path d="M162 548c28-112 88-168 158-168s130 56 158 168" fill="#0f766e"/>
+  <text x="320" y="268" text-anchor="middle" font-family="Georgia, serif" font-size="84" font-weight="700" fill="#ffffff">KT</text>
+  <text x="320" y="584" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#18212f">Kim Thắm</text>
+</svg>

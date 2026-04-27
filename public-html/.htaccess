@@ -1,6 +1,0 @@
-Options -Indexes
-DirectoryIndex index.html
-
-<FilesMatch "^\.">
-    Require all denied
-</FilesMatch>

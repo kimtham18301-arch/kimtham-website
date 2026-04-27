@@ -5,24 +5,22 @@ declare(strict_types=1);
 require __DIR__ . '/common.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    json_response(['ok' => true, 'content' => load_content()]);
+    $content = load_content();
+    $content['csrfToken'] = csrf_token();
+    json_response(['ok' => true, 'content' => $content, 'csrfToken' => csrf_token()]);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_admin();
+    require_csrf();
 
     $content = clean_content(request_json());
-    $saved = file_put_contents(
-        content_file(),
-        json_encode($content, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
-        LOCK_EX
-    );
 
-    if ($saved === false) {
+    if (!save_json_file(content_file(), $content)) {
         json_response(['ok' => false, 'message' => 'Không thể lưu nội dung.'], 500);
     }
 
-    json_response(['ok' => true, 'content' => $content]);
+    json_response(['ok' => true, 'content' => $content, 'csrfToken' => csrf_token()]);
 }
 
 json_response(['ok' => false, 'message' => 'Phương thức không được hỗ trợ.'], 405);
