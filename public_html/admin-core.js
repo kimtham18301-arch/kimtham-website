@@ -89,11 +89,15 @@ Admin.api = async (endpoint, opts = {}) => {
 
 Admin.apiUpload = async (file) => {
     await Admin._detectApi();
-    const fd = new FormData();
-    fd.append('file', file);
-    const headers = {};
+    const base64Data = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(file);
+    });
+    const headers = { 'Content-Type': 'application/json' };
     if (Admin.csrfToken) headers['X-CSRF-Token'] = Admin.csrfToken;
-    const res = await fetch(Admin.API + 'upload.php', { method: 'POST', headers, body: fd, credentials: 'include' });
+    const res = await fetch(Admin.API + 'upload.php', { method: 'POST', headers, body: JSON.stringify({ name: file.name, type: file.type, size: file.size, base64: base64Data }), credentials: 'include' });
     const raw = await res.text();
     let data = {};
     try {
