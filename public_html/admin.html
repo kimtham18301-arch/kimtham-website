@@ -5,105 +5,128 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex,nofollow">
     <title>Admin | Kim Thắm</title>
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="admin.css?v=20260427-growth">
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css?v=20260501-cms">
 </head>
-<body class="admin-page">
-    <header class="site-header">
-        <nav class="navbar" aria-label="Điều hướng admin">
-            <a class="brand" href="index.html">Kim Thắm</a>
-            <div class="admin-nav-actions">
-                <button class="btn ghost" type="button" id="logoutButton" hidden>Đăng xuất</button>
-                <a class="btn secondary" href="index.html">Xem website</a>
+<body class="admin-body">
+    <!-- TOAST NOTIFICATIONS -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- CONFIRM DIALOG -->
+    <div class="modal-overlay" id="confirmModal" hidden>
+        <div class="modal-dialog">
+            <div class="modal-icon">⚠️</div>
+            <h3 id="confirmTitle">Xác nhận</h3>
+            <p id="confirmMessage">Bạn có chắc chắn?</p>
+            <div class="modal-actions">
+                <button class="btn btn--ghost" id="confirmCancel">Hủy</button>
+                <button class="btn btn--danger" id="confirmOk">Xác nhận</button>
             </div>
-        </nav>
-    </header>
+        </div>
+    </div>
 
-    <main class="admin-shell">
-        <section class="admin-hero">
-            <div>
-                <p class="eyebrow">Bảng quản trị</p>
-                <h1>Quản lý nội dung và lead</h1>
-                <p>Dữ liệu được lưu bằng backend PHP trong thư mục storage. Hãy cấu hình biến môi trường <code>KIMTHAM_ADMIN_PASSWORD_HASH</code> trước khi dùng admin.</p>
+    <!-- LOGIN SCREEN -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-card">
+            <div class="login-brand">
+                <span class="login-logo">K</span>
+                <h1>Kim Thắm</h1>
+                <p>Bảng quản trị nội dung</p>
             </div>
-            <div class="admin-status" id="adminStatus" role="status">Đang kiểm tra đăng nhập</div>
-        </section>
-
-        <form class="admin-panel login-panel" id="loginForm">
-            <h2>Đăng nhập admin</h2>
-            <label>Tài khoản<input type="text" name="username" autocomplete="username" required></label>
-            <label>Mật khẩu<input type="password" name="password" autocomplete="current-password" required></label>
-            <button class="btn primary" type="submit">Đăng nhập</button>
-        </form>
-
-        <section class="admin-workspace" id="adminWorkspace" hidden>
-            <div class="admin-tabs" role="tablist" aria-label="Khu vực quản trị">
-                <button class="tab-button active" type="button" data-tab="contentForm">Nội dung</button>
-                <button class="tab-button" type="button" data-tab="leadsPanel">Lead liên hệ</button>
-            </div>
-
-            <form class="admin-form tab-panel active" id="contentForm">
-                <section class="admin-panel">
-                    <h2>Trang chính</h2>
-                    <label>Eyebrow<input type="text" name="heroEyebrow"></label>
-                    <label>Tiêu đề hero<textarea name="heroTitle" rows="3"></textarea></label>
-                    <label>Mô tả hero<textarea name="heroLead" rows="4"></textarea></label>
-                    <label>CTA chính<input type="text" name="primaryCta"></label>
-                    <label>CTA phụ<input type="text" name="secondaryCta"></label>
-                    <label>CTA profile<input type="text" name="profileCta"></label>
-                    <label>Đường dẫn profile/CV<input type="text" name="profileUrl" placeholder="Ví dụ: files/cv-kim-tham.pdf"></label>
-                    <label>Tên profile<input type="text" name="profileName"></label>
-                    <label>Tóm tắt profile<input type="text" name="profileSummary"></label>
-                </section>
-
-                <section class="admin-panel">
-                    <h2>Dịch vụ, gói hợp tác, case study</h2>
-                    <label>Tiêu đề dịch vụ<textarea name="servicesTitle" rows="2"></textarea></label>
-                    <label>Mô tả dịch vụ<textarea name="servicesIntro" rows="3"></textarea></label>
-                    <label>Dịch vụ (JSON)<textarea name="services" rows="8" data-json="true"></textarea></label>
-                    <label>Tiêu đề gói hợp tác<textarea name="packagesTitle" rows="2"></textarea></label>
-                    <label>Gói hợp tác (JSON)<textarea name="packages" rows="8" data-json="true"></textarea></label>
-                    <label>Tiêu đề case study<textarea name="projectsTitle" rows="2"></textarea></label>
-                    <label>Case study (JSON)<textarea name="projects" rows="10" data-json="true"></textarea></label>
-                    <label>Tiêu đề quy trình<textarea name="processTitle" rows="2"></textarea></label>
-                    <label>Quy trình (JSON)<textarea name="process" rows="7" data-json="true"></textarea></label>
-                </section>
-
-                <section class="admin-panel">
-                    <h2>Giới thiệu và liên hệ</h2>
-                    <label>Tiêu đề giới thiệu<textarea name="aboutTitle" rows="3"></textarea></label>
-                    <label>Đoạn giới thiệu 1<textarea name="aboutParagraph1" rows="4"></textarea></label>
-                    <label>Đoạn giới thiệu 2<textarea name="aboutParagraph2" rows="4"></textarea></label>
-                    <label>Tiêu đề điểm mạnh<input type="text" name="proofTitle"></label>
-                    <label>Điểm mạnh (JSON)<textarea name="proofs" rows="5" data-json="true"></textarea></label>
-                    <label>Tiêu đề liên hệ<textarea name="contactTitle" rows="2"></textarea></label>
-                    <label>Email<input type="email" name="email"></label>
-                    <label>Số điện thoại<input type="tel" name="phone"></label>
-                    <label>Facebook<input type="url" name="facebook"></label>
-                    <label>LinkedIn<input type="url" name="linkedin"></label>
-                </section>
-
-                <div class="admin-actions">
-                    <button class="btn primary" type="submit">Lưu nội dung</button>
-                    <button class="btn secondary" type="button" id="reloadContent">Tải lại</button>
-                </div>
+            <form id="loginForm">
+                <label>
+                    <span>Tài khoản</span>
+                    <input type="text" name="username" autocomplete="username" required placeholder="admin">
+                </label>
+                <label>
+                    <span>Mật khẩu</span>
+                    <input type="password" name="password" autocomplete="current-password" required placeholder="••••••••">
+                </label>
+                <button class="btn btn--primary btn--full" type="submit">Đăng nhập</button>
+                <p class="login-status" id="loginStatus"></p>
             </form>
+        </div>
+    </div>
 
-            <section class="tab-panel" id="leadsPanel">
-                <div class="admin-panel">
-                    <div class="panel-heading">
-                        <h2>Lead liên hệ</h2>
-                        <button class="btn secondary" type="button" id="reloadLeads">Tải lead</button>
-                    </div>
-                    <div class="leads-list" id="leadsList"></div>
-                </div>
-            </section>
-        </section>
-    </main>
+    <!-- ADMIN SHELL -->
+    <div class="admin-shell" id="adminShell" hidden>
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <span class="sidebar-logo">K</span>
+                <span class="sidebar-name">Kim Thắm</span>
+                <button class="sidebar-close" id="sidebarClose" aria-label="Đóng menu">✕</button>
+            </div>
+            <nav class="sidebar-nav" id="sidebarNav">
+                <a href="#/dashboard" class="sidebar-link active" data-route="dashboard">
+                    <span class="sidebar-icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <div class="sidebar-section">Nội dung</div>
+                <a href="#/blogs" class="sidebar-link" data-route="blogs">
+                    <span class="sidebar-icon">✍️</span>
+                    <span>Blog</span>
+                </a>
+                <a href="#/portfolio" class="sidebar-link" data-route="portfolio">
+                    <span class="sidebar-icon">💼</span>
+                    <span>Portfolio</span>
+                </a>
+                <a href="#/products" class="sidebar-link" data-route="products">
+                    <span class="sidebar-icon">🌸</span>
+                    <span>Store</span>
+                </a>
+                <a href="#/pages" class="sidebar-link" data-route="pages">
+                    <span class="sidebar-icon">📄</span>
+                    <span>Trang</span>
+                </a>
+                <div class="sidebar-section">Quản lý</div>
+                <a href="#/leads" class="sidebar-link" data-route="leads">
+                    <span class="sidebar-icon">📬</span>
+                    <span>Leads</span>
+                </a>
+                <a href="#/media" class="sidebar-link" data-route="media">
+                    <span class="sidebar-icon">🖼️</span>
+                    <span>Media</span>
+                </a>
+                <a href="#/settings" class="sidebar-link" data-route="settings">
+                    <span class="sidebar-icon">⚙️</span>
+                    <span>Cài đặt</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="index.html" class="sidebar-link" target="_blank">
+                    <span class="sidebar-icon">🌐</span>
+                    <span>Xem website</span>
+                </a>
+                <button class="sidebar-link sidebar-logout" id="logoutBtn">
+                    <span class="sidebar-icon">🚪</span>
+                    <span>Đăng xuất</span>
+                </button>
+            </div>
+        </aside>
 
-    <script src="admin.js?v=20260427-growth"></script>
+        <!-- MOBILE TOP BAR -->
+        <header class="topbar" id="topbar">
+            <button class="topbar-toggle" id="sidebarToggle" aria-label="Mở menu">
+                <span></span><span></span><span></span>
+            </button>
+            <span class="topbar-title" id="topbarTitle">Dashboard</span>
+            <a href="index.html" class="topbar-site" target="_blank">🌐</a>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <main class="admin-main" id="adminMain">
+            <!-- Content injected by router -->
+        </main>
+    </div>
+
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+    <script src="admin-core.js?v=20260501b"></script>
+    <script src="admin-modules.js?v=20260501b"></script>
+    <script src="admin-app.js?v=20260501b"></script>
 </body>
 </html>
