@@ -127,7 +127,7 @@ Admin.apiUpload = async (file) => {
         reader.readAsDataURL(uploadFile);
     });
     const base64Payload = String(base64Data).split(';base64,')[1] || '';
-    const chunkSize = 48 * 1024;
+    const chunkSize = 4 * 1024;
     const total = Math.max(1, Math.ceil(base64Payload.length / chunkSize));
     const uploadId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
     let data = {};

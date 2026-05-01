@@ -40,10 +40,10 @@ if (($input['mode'] ?? '') === 'chunk') {
     $mimeType = (string) ($input['type'] ?? '');
     $fileSize = (int) ($input['size'] ?? 0);
 
-    if ($uploadId === '' || $index < 0 || $total < 1 || $total > 80 || $chunk === '') {
+    if ($uploadId === '' || $index < 0 || $total < 1 || $total > 800 || $chunk === '') {
         json_response(['ok' => false, 'message' => 'Du lieu upload tung phan khong hop le.'], 400);
     }
-    if (strlen($chunk) > 320 * 1024) {
+    if (strlen($chunk) > 12 * 1024) {
         json_response(['ok' => false, 'message' => 'Mot phan upload qua lon, hay tai lai trang admin roi thu lai.'], 413);
     }
     if (!isset($allowedTypes[$mimeType])) {
@@ -95,7 +95,7 @@ if (($input['mode'] ?? '') === 'chunk') {
 if (empty($_FILES['file']) && empty($_FILES['image']) && empty($input['base64'])) {
     $contentLength = (int) ($_SERVER['CONTENT_LENGTH'] ?? 0);
     if ($contentLength > 0) {
-        json_response(['ok' => false, 'message' => 'Request upload bị rỗng khi tới PHP. Thường là do ảnh vượt giới hạn post_max_size trên hosting; hãy dùng ảnh nhỏ hơn hoặc tăng post_max_size/upload_max_filesize.'], 413);
+        json_response(['ok' => false, 'message' => 'Request upload bị rỗng khi tới PHP (upload engine: chunks-4kb). Nếu ảnh chỉ vài trăm KB, hãy hard refresh admin hoặc kiểm tra hosting có chặn request JSON/body POST.'], 413);
     }
     json_response(['ok' => false, 'message' => 'Không tìm thấy file upload. Hãy tải lại trang admin rồi thử lại.'], 400);
 }
