@@ -46,10 +46,18 @@ function generate_slug(string $title): string
     ];
 
     $slug = strtr($title, $map);
+    if (function_exists('iconv')) {
+        $ascii = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $title);
+        if ($ascii !== false) {
+            $slug = $ascii;
+        }
+    }
     $slug = strtolower($slug);
     $slug = preg_replace('/[^a-z0-9\s-]/', '', $slug);
     $slug = preg_replace('/[\s-]+/', '-', $slug);
-    return trim($slug, '-');
+    $slug = trim($slug, '-');
+
+    return $slug !== '' ? $slug : 'bai-viet';
 }
 
 function generate_blog_id(): string

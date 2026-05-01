@@ -56,6 +56,7 @@ Admin.confirm = (title, msg) => new Promise(resolve => {
 
 // --- API ---
 Admin.api = async (endpoint, opts = {}) => {
+    await Admin._detectApi();
     const headers = { 'Accept': 'application/json' };
     // Only set Content-Type for requests with body
     if (opts.method && opts.method !== 'GET') {
@@ -67,7 +68,13 @@ Admin.api = async (endpoint, opts = {}) => {
         credentials: 'include',
         headers: { ...headers, ...(opts.headers || {}) }
     });
-    const data = await res.json();
+    const raw = await res.text();
+    let data = {};
+    try {
+        data = raw ? JSON.parse(raw) : {};
+    } catch {
+        throw new Error('API khong tra ve JSON hop le. Hay kiem tra loi PHP hoac quyen ghi tren hosting.');
+    }
     // Always update CSRF token if provided in response
     if (data.csrfToken) Admin.csrfToken = data.csrfToken;
     // Handle auth failure

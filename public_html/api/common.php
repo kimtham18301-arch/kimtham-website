@@ -126,11 +126,22 @@ function load_json_file(string $path, array $fallback): array
 
 function save_json_file(string $path, array $payload): bool
 {
-    return file_put_contents(
-        $path,
-        json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
-        LOCK_EX
-    ) !== false;
+    $dir = dirname($path);
+
+    if (!is_dir($dir) && !mkdir($dir, 0755, true)) {
+        return false;
+    }
+
+    if ((is_file($path) && !is_writable($path)) || (!is_file($path) && !is_writable($dir))) {
+        return false;
+    }
+
+    $json = json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    if ($json === false) {
+        return false;
+    }
+
+    return file_put_contents($path, $json, LOCK_EX) !== false;
 }
 
 function load_content(): array
