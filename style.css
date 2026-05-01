@@ -267,34 +267,215 @@ h3{margin-bottom:10px;font-size:1.15rem;line-height:1.35}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 @keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 var(--primary-glow)}50%{box-shadow:0 0 0 12px transparent}}
 
-/* ===== RESPONSIVE ===== */
+/* ===== GLOBAL TOUCH OPTIMIZATION ===== */
+@media(hover:none) and (pointer:coarse){
+    *{-webkit-tap-highlight-color:rgba(212,97,123,.12)}
+    .btn,.filter-btn,.quiz-option,.intent-card,.category-card,.bento-card,.nav-links a,.contact-info-card{-webkit-tap-highlight-color:transparent}
+    /* Disable hover-only effects on touch */
+    .card:hover,.bento-card:hover,.blog-card:hover,.product-card:hover,.combo-card:hover{transform:none}
+}
+
+/* ===== SCROLL TO TOP BUTTON ===== */
+.scroll-top{position:fixed;bottom:24px;right:24px;width:48px;height:48px;border-radius:50%;border:none;background:var(--primary);color:#fff;font-size:1.2rem;cursor:pointer;box-shadow:var(--shadow-md);z-index:90;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .3s,visibility .3s,transform .3s,background .2s;display:grid;place-items:center}
+.scroll-top.visible{opacity:1;visibility:visible;transform:translateY(0)}
+.scroll-top:hover{background:var(--primary-dark)}
+.scroll-top:active{transform:scale(.92)}
+
+/* ===== RESPONSIVE – TABLET (max-width: 900px) ===== */
 @media(max-width:900px){
     .menu-toggle{display:block}
-    .nav-links{position:fixed;inset:var(--nav-h) 0 auto;display:none;padding:16px 20px 24px;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow-lg);flex-direction:column;gap:0}
-    .nav-links.open{display:flex}
-    .nav-links a{min-height:48px;width:100%;border-bottom:1px solid var(--line);border-radius:0;padding:0 8px}
 
+    /* Full-screen overlay mobile menu */
+    .nav-links{position:fixed;inset:var(--nav-h) 0 0 0;display:flex;flex-direction:column;gap:0;padding:12px 20px 32px;background:rgba(255,255,255,.98);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:var(--shadow-lg);overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .28s ease,visibility .28s ease,transform .28s ease;z-index:99}
+    .nav-links.open{opacity:1;visibility:visible;transform:translateY(0)}
+    .nav-links li{border-bottom:1px solid var(--line)}
+    .nav-links li:last-child{border-bottom:none}
+    .nav-links a{min-height:56px;width:100%;border-radius:0;padding:0 12px;font-size:.95rem;display:flex;align-items:center;transition:background .15s}
+    .nav-links a:active{background:var(--primary-soft)}
+
+    /* Layout stacking */
     .hero,.about-hero,.store-hero,.contact-grid{grid-template-columns:1fr}
-    .hero,.store-hero{min-height:auto;padding-top:48px}
-    .hero-portrait{width:200px;margin:0 auto}
+    .hero,.store-hero{min-height:auto;padding-top:40px}
+    .hero-content{order:2}
+    .hero-portrait{order:1;width:180px;margin:0 auto}
+    .about-portrait{max-width:320px;margin:0 auto;order:-1}
+
     .bento{grid-template-columns:1fr 1fr}
     .bento-card--profile{grid-column:1/-1;grid-row:auto}
     .bento-card--blog,.bento-card--scent,.bento-card--stat,.bento-card--start{grid-column:auto;grid-row:auto}
+
     .category-strip,.combo-grid,.intent-grid,.values-grid{grid-template-columns:1fr 1fr}
     .blog-grid{grid-template-columns:1fr}
     .case-card-body{grid-template-columns:1fr}
-    .about-portrait{max-width:400px;margin:0 auto}
+
+    /* nuoc-hoa.html responsive */
+    .perfume-hero{display:grid;grid-template-columns:1fr}
+    .perfume-visual{max-width:360px;margin:0 auto;order:-1}
+    .perfume-feature-grid,.note-grid,.process-grid{grid-template-columns:1fr 1fr}
+
+    /* Store page responsive */
+    .store-hero-visual{max-width:360px;margin:0 auto;order:-1}
+
+    /* Contact page */
+    .contact-info{order:-1}
+
+    /* CV section */
+    .cv-section{flex-direction:column;text-align:center;gap:16px}
 }
 
-@media(max-width:560px){
-    .section{width:min(100% - 24px,var(--max-w));padding:56px 0}
-    .navbar,.site-footer{width:min(100% - 24px,var(--max-w))}
-    h1{font-size:2.2rem}
-    h2{font-size:1.6rem}
-    .hero-actions,.site-footer{flex-direction:column}
-    .btn{width:100%}
+/* ===== RESPONSIVE – SMALL TABLET / LARGE PHONE (max-width: 680px) ===== */
+@media(max-width:680px){
+    :root{--nav-h:64px}
+
+    .section{width:min(100% - 28px,var(--max-w));padding:56px 0}
+    .navbar,.site-footer{width:min(100% - 28px,var(--max-w))}
+
+    h1{font-size:clamp(2rem,7vw,2.6rem)}
+    h2{font-size:clamp(1.5rem,5vw,1.9rem)}
+    h3{font-size:1.05rem}
+    .eyebrow{font-size:.72rem}
+
+    .hero-portrait{width:160px}
+    .hero-lead{font-size:.95rem}
+
+    /* Bento + Grids single column */
     .bento,.category-strip,.combo-grid,.intent-grid,.values-grid{grid-template-columns:1fr}
+    .bento-card{padding:22px}
+    .bento-stat-number{font-size:2.2rem}
+
+    .blog-card-body{padding:18px}
+    .blog-card h3{font-size:1rem}
+
+    .category-card{padding:14px 16px}
+    .category-card-icon{width:38px;height:38px;font-size:1.1rem}
+
+    .combo-card{padding:22px}
+    .combo-icon{font-size:2rem}
+
+    /* Intent cards */
+    .intent-card{padding:20px}
+    .intent-icon{font-size:1.6rem;margin-bottom:8px}
+
+    /* Form improvements */
     .form-row{grid-template-columns:1fr}
+    .contact-form{padding:22px}
+    .contact-form input,.contact-form textarea,.contact-form select{padding:14px;font-size:16px}/* 16px prevents iOS zoom */
+
+    /* Product grid */
     .product-grid{grid-template-columns:1fr}
-    .cv-section{flex-direction:column;text-align:center}
+    .product-card-body{padding:18px}
+
+    /* Quiz options */
+    .quiz-section{padding:28px 20px}
+    .quiz-options{grid-template-columns:1fr}
+    .quiz-option{padding:18px}
+
+    /* Hero actions */
+    .hero-actions{flex-direction:column}
+    .btn{width:100%;min-height:50px;font-size:.92rem}
+
+    /* Portfolio case cards */
+    .case-card-header{padding:22px 22px 0}
+    .case-card-body{padding:0 22px 22px;gap:16px}
+    .case-result{padding:18px 22px}
+
+    /* Footer */
+    .site-footer{flex-direction:column;text-align:center;gap:4px;padding:24px 0 32px}
+
+    /* nuoc-hoa.html responsive */
+    .perfume-feature-grid,.note-grid,.process-grid{grid-template-columns:1fr}
+    .perfume-contact-panel{flex-direction:column;text-align:center}
+    .perfume-contact-actions{flex-direction:column;gap:10px}
+    .perfume-contact-actions .btn{width:100%}
+
+    /* Author card on blog post */
+    .author-card{flex-direction:column;text-align:center;gap:14px;padding:20px}
+
+    /* Post content */
+    .post-content{font-size:.96rem}
+    .post-content blockquote{padding:16px 18px;margin:18px 0}
+
+    /* Timeline */
+    .timeline{padding-left:28px}
+    .timeline-dot{left:-28px;width:20px;height:20px}
+
+    /* About story */
+    .about-story{font-size:.98rem}
+
+    /* CV section inside tablet */
+    .cv-section{padding:24px}
+}
+
+/* ===== RESPONSIVE – PHONE (max-width: 480px) ===== */
+@media(max-width:480px){
+    .section{width:min(100% - 20px,var(--max-w));padding:44px 0}
+    .navbar,.site-footer{width:min(100% - 20px,var(--max-w))}
+
+    .brand{font-size:1.3rem}
+
+    h1{font-size:1.9rem}
+    h2{font-size:1.4rem}
+
+    .hero-portrait{width:140px}
+    .hero-lead{font-size:.9rem}
+    .hero-intro-list li{font-size:.9rem;padding:3px 0}
+
+    /* Tighter card padding */
+    .card{padding:22px}
+    .bento-card{padding:18px}
+    .bento-icon{width:38px;height:38px;font-size:1.1rem;margin-bottom:12px}
+    .bento-card h3{font-size:1rem}
+    .bento-card p{font-size:.84rem}
+    .bento-link{font-size:.82rem}
+
+    .category-card{padding:12px 14px;gap:10px}
+    .category-card-text{font-size:.86rem}
+    .category-card-text small{font-size:.74rem}
+
+    .intent-card{padding:18px}
+    .intent-card h3{font-size:.95rem}
+    .intent-card p{font-size:.8rem}
+
+    .combo-card{padding:18px}
+    .combo-icon{font-size:1.7rem;margin-bottom:8px}
+    .combo-card h3{font-size:1rem}
+    .combo-card p{font-size:.84rem;margin-bottom:12px}
+
+    .product-card-visual{aspect-ratio:4/3}
+
+    /* Blog filter pills - horizontal scroll */
+    .blog-filters{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;gap:6px}
+    .blog-filters::-webkit-scrollbar{display:none}
+    .filter-btn{white-space:nowrap;flex-shrink:0;min-height:36px;padding:0 14px;font-size:.82rem}
+
+    .section-heading{margin-bottom:28px}
+
+    /* Scroll to top - adjust position */
+    .scroll-top{bottom:20px;right:16px;width:44px;height:44px;font-size:1rem}
+
+    /* Safe bottom padding for rounded-corner phones */
+    body{padding-bottom:env(safe-area-inset-bottom,0)}
+}
+
+/* ===== RESPONSIVE – EXTRA SMALL (max-width: 360px) ===== */
+@media(max-width:360px){
+    h1{font-size:1.7rem}
+    h2{font-size:1.3rem}
+    .brand{font-size:1.2rem}
+    .hero-portrait{width:120px}
+    .btn{min-height:48px;padding:0 18px;font-size:.88rem}
+    .nav-links a{min-height:52px;font-size:.9rem}
+}
+
+/* ===== LANDSCAPE PHONE ===== */
+@media(max-height:500px) and (orientation:landscape){
+    .hero{min-height:auto;padding:32px 0}
+    .hero-portrait{width:120px}
+    .nav-links{max-height:calc(100vh - var(--nav-h));overflow-y:auto}
+}
+
+/* ===== REDUCED MOTION ===== */
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+    .reveal{opacity:1;transform:none}
 }

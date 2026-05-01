@@ -68,6 +68,11 @@ menuToggle?.addEventListener("click", () => {
 document.querySelectorAll(".nav-links a").forEach(l => l.addEventListener("click", closeMenu));
 document.addEventListener("keydown", e => e.key === "Escape" && closeMenu());
 
+/* Close menu when tapping outside (on the overlay background) */
+navLinks?.addEventListener("click", e => {
+    if (e.target === navLinks) closeMenu();
+});
+
 /* ===== REVEAL ANIMATIONS ===== */
 function observeReveal() {
     const obs = new IntersectionObserver((entries) => {
@@ -263,3 +268,29 @@ switch (page) {
 }
 
 observeReveal();
+
+/* ===== SCROLL TO TOP BUTTON ===== */
+(function initScrollTop() {
+    const btn = document.createElement("button");
+    btn.className = "scroll-top";
+    btn.setAttribute("aria-label", "Lên đầu trang");
+    btn.innerHTML = "↑";
+    document.body.appendChild(btn);
+
+    let ticking = false;
+    function onScroll() {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                btn.classList.toggle("visible", window.scrollY > 400);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    btn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        trackEvent("scroll-top");
+    });
+})();
