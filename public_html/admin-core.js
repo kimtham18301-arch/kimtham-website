@@ -13,7 +13,7 @@ Admin._apiDetected = false;
 Admin._detectApi = async () => {
     if (Admin._apiDetected) return;
     try {
-        const res = await fetch('api/session.php', { method: 'HEAD' });
+        const res = await fetch('api/session.php', { method: 'HEAD', credentials: 'same-origin' });
         if (res.status === 404) throw 0;
         Admin.API = 'api/';
     } catch {
@@ -54,7 +54,7 @@ Admin.confirm = (title, msg) => new Promise(resolve => {
 Admin.api = async (endpoint, opts = {}) => {
     const headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' };
     if (Admin.csrfToken) headers['X-CSRF-Token'] = Admin.csrfToken;
-    const res = await fetch(Admin.API + endpoint, { headers, ...opts });
+    const res = await fetch(Admin.API + endpoint, { ...opts, credentials: 'same-origin', headers: { ...headers, ...(opts.headers || {}) } });
     const data = await res.json();
     if (!res.ok || !data.ok) throw new Error(data.message || 'Có lỗi xảy ra');
     return data;
@@ -65,7 +65,7 @@ Admin.apiUpload = async (file) => {
     fd.append('image', file);
     const headers = {};
     if (Admin.csrfToken) headers['X-CSRF-Token'] = Admin.csrfToken;
-    const res = await fetch(Admin.API + 'upload.php', { method: 'POST', headers, body: fd });
+    const res = await fetch(Admin.API + 'upload.php', { method: 'POST', headers, body: fd, credentials: 'same-origin' });
     const data = await res.json();
     if (!res.ok || !data.ok) throw new Error(data.message || 'Upload thất bại');
     return data;

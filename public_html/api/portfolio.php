@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         json_response(['ok' => true, 'case' => $found[0]]);
     }
 
-    json_response(['ok' => true, 'cases' => $cases, 'total' => count($cases)]);
+    json_response(['ok' => true, 'cases' => $cases, 'items' => $cases, 'total' => count($cases)]);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

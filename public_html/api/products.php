@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         json_response(['ok' => true, 'product' => $found[0]]);
     }
 
-    json_response(['ok' => true, 'products' => $products, 'total' => count($products)]);
+    json_response(['ok' => true, 'products' => $products, 'items' => $products, 'total' => count($products)]);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
