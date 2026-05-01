@@ -14,7 +14,7 @@ require_csrf();
 $uploadDir = __DIR__ . '/../images/uploads/';
 
 if (!is_dir($uploadDir)) {
-    mkdir($uploadDir, 0755, true);
+    @mkdir($uploadDir, 0755, true);
 }
 
 if (empty($_FILES['file']) && empty($_FILES['image'])) {
@@ -24,7 +24,7 @@ if (empty($_FILES['file']) && empty($_FILES['image'])) {
 $file = $_FILES['file'] ?? $_FILES['image'];
 
 if ($file['error'] !== UPLOAD_ERR_OK) {
-    json_response(['ok' => false, 'message' => 'Lỗi upload file.'], 400);
+    json_response(['ok' => false, 'message' => 'Lỗi upload file (Mã lỗi: ' . $file['error'] . ').'], 400);
 }
 
 // Max 2MB
@@ -34,28 +34,41 @@ if ($file['size'] > 2 * 1024 * 1024) {
 
 $allowedTypes = [
     'image/jpeg' => 'jpg',
+    'image/pjpeg' => 'jpg',
     'image/png'  => 'png',
     'image/webp' => 'webp',
     'image/svg+xml' => 'svg',
     'image/gif'  => 'gif',
 ];
 
-$finfo = finfo_open(FILEINFO_MIME_TYPE);
-$mimeType = finfo_file($finfo, $file['tmp_name']);
-finfo_close($finfo);
+$mimeType = '';
+if (function_exists('finfo_open')) {
+    $finfo = @finfo_open(FILEINFO_MIME_TYPE);
+    if ($finfo) {
+        $mimeType = @finfo_file($finfo, $file['tmp_name']);
+        @finfo_close($finfo);
+    }
+}
+if (!$mimeType && function_exists('mime_content_type')) {
+    $mimeType = @mime_content_type($file['tmp_name']);
+}
+if (!$mimeType) {
+    $mimeType = $file['type'] ?? '';
+}
 
 if (!isset($allowedTypes[$mimeType])) {
-    json_response(['ok' => false, 'message' => 'Định dạng file không được hỗ trợ. Chỉ chấp nhận: JPG, PNG, WebP, SVG, GIF.'], 400);
+    json_response(['ok' => false, 'message' => 'Định dạng file không được hỗ trợ (' . htmlspecialchars($mimeType) . '). Chỉ chấp nhận: JPG, PNG, WebP, SVG, GIF.'], 400);
 }
 
 $ext = $allowedTypes[$mimeType];
 $filename = date('Ymd-His') . '-' . bin2hex(random_bytes(4)) . '.' . $ext;
 $destination = $uploadDir . $filename;
 
-if (!move_uploaded_file($file['tmp_name'], $destination)) {
-    json_response(['ok' => false, 'message' => 'Không thể lưu file.'], 500);
+if (!@move_uploaded_file($file['tmp_name'], $destination)) {
+    json_response(['ok' => false, 'message' => 'Không thể lưu file. Kiểm tra quyền ghi thư mục: images/uploads/'], 500);
 }
 
 $url = 'images/uploads/' . $filename;
 
 json_response(['ok' => true, 'url' => $url, 'filename' => $filename, 'csrfToken' => csrf_token()]);
+
