@@ -98,14 +98,33 @@ function esc(v) {
     return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
 
+async function loadPublishedBlogs() {
+    try {
+        const response = await fetch("api/blogs.php?status=published", {
+            headers: { Accept: "application/json" },
+            cache: "no-store"
+        });
+        const data = await response.json();
+        if (!response.ok || !data.ok || !Array.isArray(data.blogs)) {
+            throw new Error(data.message || "Cannot load blogs");
+        }
+        return data.blogs;
+    } catch (err) {
+        console.warn("Using fallback blog data:", err);
+        return blogPosts;
+    }
+}
+
 /* ===== BLOG PAGE ===== */
-function initBlog() {
+async function initBlog() {
     const grid = document.getElementById("blogGrid");
     const filters = document.getElementById("blogFilters");
     if (!grid) return;
 
+    const allPosts = await loadPublishedBlogs();
+
     function renderBlog(filter = "all") {
-        const posts = filter === "all" ? blogPosts : blogPosts.filter(p => p.category === filter);
+        const posts = filter === "all" ? allPosts : allPosts.filter(p => p.category === filter);
         grid.innerHTML = posts.map(p => `
             <a href="blog-post.html?slug=${esc(p.slug)}" class="blog-card reveal visible">
                 <div class="blog-card-thumb" style="background:linear-gradient(135deg,var(--primary-soft),var(--surface-warm));display:grid;place-items:center;font-size:2.5rem;color:var(--primary);">✍️</div>
@@ -133,14 +152,15 @@ function initBlog() {
 }
 
 /* ===== BLOG POST PAGE ===== */
-function initBlogPost() {
+async function initBlogPost() {
     const header = document.getElementById("postHeader");
     const content = document.getElementById("postContent");
     const progress = document.getElementById("readingProgress");
     if (!header || !content) return;
 
     const slug = new URLSearchParams(location.search).get("slug");
-    const post = blogPosts.find(p => p.slug === slug);
+    const posts = await loadPublishedBlogs();
+    const post = posts.find(p => p.slug === slug);
 
     if (!post) {
         header.innerHTML = `<h1>Bài viết không tìm thấy</h1><p style="color:var(--muted)">Quay lại <a href="blog.html" style="color:var(--primary);font-weight:600;">blog</a>.</p>`;
