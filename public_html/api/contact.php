@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+define('KIMTHAM_SKIP_SESSION', true);
 require __DIR__ . '/common.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

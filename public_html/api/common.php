@@ -8,33 +8,35 @@ ini_set('session.gc_maxlifetime', '86400');
 ini_set('session.gc_probability', '1');
 ini_set('session.gc_divisor', '100');
 
-$sessionDir = __DIR__ . '/../../storage/sessions';
-if (!is_dir($sessionDir)) {
-    @mkdir($sessionDir, 0755, true);
-}
-if (is_dir($sessionDir) && is_writable($sessionDir)) {
-    session_save_path($sessionDir);
-}
+if (!defined('KIMTHAM_SKIP_SESSION') || KIMTHAM_SKIP_SESSION !== true) {
+    $sessionDir = __DIR__ . '/../../storage/sessions';
+    if (!is_dir($sessionDir)) {
+        @mkdir($sessionDir, 0755, true);
+    }
+    if (is_dir($sessionDir) && is_writable($sessionDir)) {
+        session_save_path($sessionDir);
+    }
 
-$secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
-session_name('KIMTHAMSESSID');
-session_set_cookie_params([
-    'lifetime' => 86400,
-    'path' => '/',
-    'secure' => $secure,
-    'httponly' => true,
-    'samesite' => 'Lax',
-]);
-session_start();
-
-if (session_status() === PHP_SESSION_ACTIVE && session_id() !== '') {
-    setcookie(session_name(), session_id(), [
-        'expires' => time() + 86400,
+    $secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
+    session_name('KIMTHAMSESSID');
+    session_set_cookie_params([
+        'lifetime' => 86400,
         'path' => '/',
         'secure' => $secure,
         'httponly' => true,
         'samesite' => 'Lax',
     ]);
+    session_start();
+
+    if (session_status() === PHP_SESSION_ACTIVE && session_id() !== '') {
+        setcookie(session_name(), session_id(), [
+            'expires' => time() + 86400,
+            'path' => '/',
+            'secure' => $secure,
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ]);
+    }
 }
 
 const STRING_CONTENT_KEYS = [
@@ -73,7 +75,19 @@ const LIST_CONTENT_KEYS = [
 
 function app_config(): array
 {
-    return require __DIR__ . '/../../config/config.php';
+    $path = __DIR__ . '/../../config/config.php';
+    if (is_file($path)) {
+        $config = require $path;
+        if (is_array($config)) {
+            return $config;
+        }
+    }
+
+    return [
+        'admin_username' => getenv('KIMTHAM_ADMIN_USERNAME') ?: 'admin',
+        'admin_password_hash' => getenv('KIMTHAM_ADMIN_PASSWORD_HASH') ?: '',
+        'notification_email' => getenv('KIMTHAM_NOTIFICATION_EMAIL') ?: '',
+    ];
 }
 
 function storage_path(string $file): string

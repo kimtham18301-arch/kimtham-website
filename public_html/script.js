@@ -468,7 +468,13 @@ if (contactForm) {
                 headers: { Accept: "application/json", "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
             });
-            const data = await response.json();
+            const text = await response.text();
+            let data;
+            try {
+                data = text ? JSON.parse(text) : {};
+            } catch {
+                throw new Error("Máy chủ đang trả phản hồi không hợp lệ. Vui lòng thử lại sau.");
+            }
             if (!response.ok || !data.ok) throw new Error(data.message || "Không thể gửi.");
 
             contactForm.reset();
