@@ -98,6 +98,7 @@ function json_response(array $payload, int $status = 200): void
     header('X-Content-Type-Options: nosniff');
     header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
     header('Pragma: no-cache');
+    header('Expires: Wed, 01 Jan 1970 00:00:00 GMT');
     echo json_encode($payload, JSON_UNESCAPED_UNICODE);
     exit;
 }

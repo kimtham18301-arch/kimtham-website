@@ -99,20 +99,26 @@ function esc(v) {
 }
 
 async function loadPublishedBlogs() {
-    try {
-        const response = await fetch("api/blogs.php?status=published", {
-            headers: { Accept: "application/json" },
-            cache: "no-store"
-        });
-        const data = await response.json();
-        if (!response.ok || !data.ok || !Array.isArray(data.blogs)) {
-            throw new Error(data.message || "Cannot load blogs");
+    const endpoints = ["api/blogs.php?status=published", "public_html/api/blogs.php?status=published"];
+
+    for (const endpoint of endpoints) {
+        try {
+            const response = await fetch(endpoint, {
+                headers: { Accept: "application/json" },
+                cache: "no-store"
+            });
+            const data = await response.json();
+            if (!response.ok || !data.ok || !Array.isArray(data.blogs)) {
+                throw new Error(data.message || "Cannot load blogs");
+            }
+            return data.blogs;
+        } catch (err) {
+            console.warn(`Cannot load blogs from ${endpoint}:`, err);
         }
-        return data.blogs;
-    } catch (err) {
-        console.warn("Using fallback blog data:", err);
-        return blogPosts;
     }
+
+    console.warn("Using fallback blog data.");
+    return blogPosts;
 }
 
 /* ===== BLOG PAGE ===== */
