@@ -496,6 +496,56 @@ function initStoreQuiz() {
     });
 }
 
+function formatPhoneForDisplay(phone) {
+    const raw = String(phone || "").trim();
+    const digits = raw.replace(/\D/g, "");
+    if (digits.length === 10) {
+        return `${digits.slice(0, 4)} ${digits.slice(4, 7)} ${digits.slice(7)}`;
+    }
+    return raw;
+}
+
+function phoneHref(phone) {
+    const raw = String(phone || "").trim();
+    const normalized = raw.replace(/[^\d+]/g, "");
+    return normalized ? `tel:${normalized}` : "";
+}
+
+async function initContactPage() {
+    initContactIntent();
+
+    const contact = await loadPageData("contact");
+    if (!contact) return;
+
+    setText(".section-heading .eyebrow", contact.eyebrow);
+    setText(".section-heading h1", contact.title);
+    setText(".section-heading p[style]", contact.subtitle);
+
+    const email = String(contact.email || "").trim();
+    const phone = String(contact.phone || "").trim();
+    const zaloUrl = String(contact.zaloUrl || "").trim();
+
+    const emailCard = document.querySelector('[data-contact-card="email"]');
+    if (emailCard && email) {
+        emailCard.href = `mailto:${email}`;
+        const small = emailCard.querySelector("small");
+        if (small) small.textContent = email;
+    }
+
+    const phoneCard = document.querySelector('[data-contact-card="phone"]');
+    if (phoneCard && phone) {
+        const href = phoneHref(phone);
+        if (href) phoneCard.href = href;
+        const small = phoneCard.querySelector("small");
+        if (small) small.textContent = formatPhoneForDisplay(phone);
+    }
+
+    const zaloCard = document.querySelector('[data-contact-card="zalo"]');
+    if (zaloCard && (zaloUrl || phone)) {
+        zaloCard.href = zaloUrl || `https://zalo.me/${phone.replace(/\D/g, "")}`;
+    }
+}
+
 /* ===== CONTACT INTENT ===== */
 function initContactIntent() {
     const intentGrid = document.getElementById("intentGrid");
@@ -571,7 +621,7 @@ switch (page) {
     case "portfolio": initPortfolio(); break;
     case "store": initStore(); break;
     case "perfume": initPerfumePage(); break;
-    case "contact": initContactIntent(); break;
+    case "contact": initContactPage(); break;
 }
 
 observeReveal();

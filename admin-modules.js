@@ -263,6 +263,9 @@ Admin.registerRoute('pages', async (main) => {
         </div>
         <h2 style="margin-top:28px">Liên hệ</h2>
         <div class="form-grid">
+            <div class="form-group"><label class="form-label">Eyebrow</label><input class="form-input" id="pg_contactEyebrow" value="${Admin.esc(contact.eyebrow||'')}"></div>
+            <div class="form-group"><label class="form-label">Tieu de lien he</label><input class="form-input" id="pg_contactTitle" value="${Admin.esc(contact.title||'')}"></div>
+            <div class="form-group form-group--full"><label class="form-label">Mo ta lien he</label><textarea class="form-textarea" id="pg_contactSubtitle" rows="2">${Admin.esc(contact.subtitle||'')}</textarea></div>
             <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="pg_email" value="${Admin.esc(contact.email||'')}"></div>
             <div class="form-group"><label class="form-label">SĐT</label><input class="form-input" id="pg_phone" value="${Admin.esc(contact.phone||'')}"></div>
             <div class="form-group"><label class="form-label">Zalo URL</label><input class="form-input" id="pg_zaloUrl" value="${Admin.esc(contact.zaloUrl||'')}"></div>
@@ -285,6 +288,9 @@ Admin.registerRoute('pages', async (main) => {
             updated.perfume = updated.perfume || {};
             updated.perfume.heroImage = Admin.$('#pg_perfumeImage').value.trim();
             updated.contact = updated.contact || {};
+            updated.contact.eyebrow = Admin.$('#pg_contactEyebrow').value.trim();
+            updated.contact.title = Admin.$('#pg_contactTitle').value.trim();
+            updated.contact.subtitle = Admin.$('#pg_contactSubtitle').value.trim();
             updated.contact.email = Admin.$('#pg_email').value.trim();
             updated.contact.phone = Admin.$('#pg_phone').value.trim();
             updated.contact.zaloUrl = Admin.$('#pg_zaloUrl').value.trim();
