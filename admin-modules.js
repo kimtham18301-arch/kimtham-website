@@ -261,7 +261,8 @@ Admin.registerRoute('pages', async (main) => {
             updated.contact.phone = Admin.$('#pg_phone').value.trim();
             updated.contact.zaloUrl = Admin.$('#pg_zaloUrl').value.trim();
             try {
-                await Admin.api('pages.php', { method:'PUT', body: JSON.stringify(updated) });
+                await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'home', data: updated.home }) });
+                await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'contact', data: updated.contact }) });
                 Admin.toast('Đã lưu trang','success');
             } catch(e) { Admin.toast(e.message,'error'); }
         };

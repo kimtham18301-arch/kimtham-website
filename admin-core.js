@@ -78,7 +78,7 @@ Admin.api = async (endpoint, opts = {}) => {
     // Always update CSRF token if provided in response
     if (data.csrfToken) Admin.csrfToken = data.csrfToken;
     // Handle auth failure
-    if (res.status === 401) {
+    if (res.status === 401 && endpoint !== 'login.php') {
         Admin.showLogin();
         Admin.toast('Phiên đăng nhập hết hạn, vui lòng đăng nhập lại', 'error');
         throw new Error(data.message || 'Phiên đăng nhập hết hạn');
@@ -88,12 +88,25 @@ Admin.api = async (endpoint, opts = {}) => {
 };
 
 Admin.apiUpload = async (file) => {
+    await Admin._detectApi();
     const fd = new FormData();
     fd.append('file', file);
     const headers = {};
     if (Admin.csrfToken) headers['X-CSRF-Token'] = Admin.csrfToken;
     const res = await fetch(Admin.API + 'upload.php', { method: 'POST', headers, body: fd, credentials: 'include' });
-    const data = await res.json();
+    const raw = await res.text();
+    let data = {};
+    try {
+        data = raw ? JSON.parse(raw) : {};
+    } catch {
+        throw new Error('API khong tra ve JSON hop le. Hay kiem tra loi PHP hoac quyen ghi tren hosting.');
+    }
+    if (data.csrfToken) Admin.csrfToken = data.csrfToken;
+    if (res.status === 401) {
+        Admin.showLogin();
+        Admin.toast('Phiên đăng nhập hết hạn, vui lòng đăng nhập lại', 'error');
+        throw new Error(data.message || 'Phiên đăng nhập hết hạn');
+    }
     if (!res.ok || !data.ok) throw new Error(data.message || 'Upload thất bại');
     return data;
 };
