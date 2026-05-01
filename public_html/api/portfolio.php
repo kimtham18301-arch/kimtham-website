@@ -30,6 +30,7 @@ function clean_case(array $input): array
         'strategy'  => trim((string) ($input['strategy'] ?? '')),
         'execution' => trim((string) ($input['execution'] ?? '')),
         'result'    => trim((string) ($input['result'] ?? '')),
+        'image'     => trim((string) ($input['image'] ?? '')),
         'order'     => (int) ($input['order'] ?? 0),
     ];
 }

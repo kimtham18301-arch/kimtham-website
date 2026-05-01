@@ -26,6 +26,7 @@ function clean_product(array $input): array
         'category' => trim((string) ($input['category'] ?? '')),
         'tagColor' => in_array($input['tagColor'] ?? '', ['pink', 'sage', 'lavender', 'gold']) ? $input['tagColor'] : 'pink',
         'emoji'    => trim((string) ($input['emoji'] ?? '🌸')),
+        'image'    => trim((string) ($input['image'] ?? '')),
         'story'    => trim((string) ($input['story'] ?? '')),
         'ctaText'  => trim((string) ($input['ctaText'] ?? 'Nhắn mình để chọn mùi này')),
         'ctaUrl'   => trim((string) ($input['ctaUrl'] ?? 'contact.html?intent=perfume')),

@@ -164,6 +164,13 @@ function setLink(selector, text, href) {
     if (href != null) el.setAttribute("href", href);
 }
 
+function setImage(selector, src, alt) {
+    const img = document.querySelector(selector);
+    if (!img || !src) return;
+    img.src = src;
+    if (alt) img.alt = alt;
+}
+
 async function initHomePage() {
     const home = await loadPageData("home");
     if (!home) return;
@@ -182,11 +189,24 @@ async function initHomePage() {
     setLink('.hero-actions a[data-track="cta-start"]', home.primaryCta, home.primaryCtaUrl);
     setLink('.hero-actions a[data-track="cta-blog"]', home.secondaryCta, home.secondaryCtaUrl);
     setLink('.hero-actions a[data-track="cta-portfolio"]', home.ghostCta, home.ghostCtaUrl);
+    setImage(".hero-portrait img", home.heroImage, "Ảnh Kim Thắm");
     setText("#dashboard .section-heading .eyebrow", home.dashboardEyebrow);
     setText("#dashboard .section-heading h2", home.dashboardTitle);
     setText(".bento-card--scent p", home.scentOfDay);
     setText(".bento-stat-number", home.statNumber);
     setText(".bento-stat-label", home.statLabel);
+}
+
+async function initAboutPage() {
+    const about = await loadPageData("about");
+    if (!about) return;
+    setImage(".about-portrait img", about.heroImage, "Kim Thắm portrait");
+}
+
+async function initPerfumePage() {
+    const perfume = await loadPageData("perfume");
+    if (!perfume) return;
+    setImage(".perfume-visual img", perfume.heroImage, "Bộ nước hoa tinh tế");
 }
 
 /* ===== BLOG PAGE ===== */
@@ -209,9 +229,13 @@ async function initBlog() {
             grid.innerHTML = `<div class="empty-state"><h3>Chưa có bài viết đã xuất bản</h3><p>Hãy chuyển trạng thái bài viết trong admin sang Xuất bản.</p></div>`;
             return;
         }
-        grid.innerHTML = posts.map(p => `
+        grid.innerHTML = posts.map(p => {
+            const thumb = p.thumbnail
+                ? `<img class="blog-card-thumb" src="${esc(p.thumbnail)}" alt="${esc(p.title)}" loading="lazy">`
+                : `<div class="blog-card-thumb" style="background:linear-gradient(135deg,var(--primary-soft),var(--surface-warm));display:grid;place-items:center;font-size:2.5rem;color:var(--primary);">✍️</div>`;
+            return `
             <a href="blog-post.html?slug=${esc(p.slug)}" class="blog-card reveal visible">
-                <div class="blog-card-thumb" style="background:linear-gradient(135deg,var(--primary-soft),var(--surface-warm));display:grid;place-items:center;font-size:2.5rem;color:var(--primary);">✍️</div>
+                ${thumb}
                 <div class="blog-card-body">
                     <div class="blog-card-meta">
                         <span class="tag tag--pink">${esc(p.tag)}</span>
@@ -221,7 +245,8 @@ async function initBlog() {
                     <p>${esc(p.excerpt)}</p>
                 </div>
             </a>
-        `).join("");
+        `;
+        }).join("");
     }
 
     renderBlog();
@@ -267,6 +292,7 @@ async function initBlogPost() {
             <span>📅 ${esc(post.date)}</span>
             <span>⏱️ ${esc(post.readTime)}</span>
         </div>
+        ${post.thumbnail ? `<img class="post-cover" src="${esc(post.thumbnail)}" alt="${esc(post.title)}">` : ''}
     `;
 
     content.innerHTML = post.content;
@@ -316,8 +342,10 @@ async function initPortfolio() {
 
         grid.innerHTML = cases.map(item => {
             const tagColor = ["pink", "sage", "lavender", "gold"].includes(item.tagColor) ? item.tagColor : "pink";
+            const image = item.image ? `<img class="case-card-image" src="${esc(item.image)}" alt="${esc(item.title || '')}" loading="lazy">` : '';
             return `
                 <article class="case-card reveal visible">
+                    ${image}
                     <div class="case-card-header">
                         <div>
                             <span class="tag tag--${tagColor}">${esc(item.tag || "")}</span>
@@ -368,6 +396,10 @@ async function loadProducts() {
 
 async function initStore() {
     const grid = document.getElementById("productGrid");
+    const store = await loadPageData("store");
+    if (store) {
+        setImage(".store-hero-visual img", store.heroImage, "Bộ sưu tập nước hoa");
+    }
 
     // Load dynamic products from CMS
     if (grid) {
@@ -377,9 +409,10 @@ async function initStore() {
                 grid.innerHTML = products.map((p, i) => {
                     const tagColor = ["pink", "sage", "lavender", "gold"].includes(p.tagColor) ? p.tagColor : "sage";
                     const delay = i % 3 === 1 ? " reveal-delay-1" : i % 3 === 2 ? " reveal-delay-2" : "";
+                    const visual = p.image ? `<img src="${esc(p.image)}" alt="${esc(p.name || '')}" loading="lazy">` : (p.emoji || '🌸');
                     return `
                         <article class="product-card reveal visible${delay}">
-                            <div class="product-card-visual">${p.emoji || '🌸'}</div>
+                            <div class="product-card-visual">${visual}</div>
                             <div class="product-card-body">
                                 <span class="tag tag--${tagColor}">${esc(p.category || '')}</span>
                                 <h3 style="margin-top:10px;">${esc(p.name || '')}</h3>
@@ -492,10 +525,12 @@ if (contactForm) {
 /* ===== INIT PER PAGE ===== */
 switch (page) {
     case "home": initHomePage(); break;
+    case "about": initAboutPage(); break;
     case "blog": initBlog(); break;
     case "blog-post": initBlogPost(); break;
     case "portfolio": initPortfolio(); break;
     case "store": initStore(); break;
+    case "perfume": initPerfumePage(); break;
     case "contact": initContactIntent(); break;
 }
 

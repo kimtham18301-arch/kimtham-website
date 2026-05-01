@@ -31,6 +31,65 @@ Admin.assetUrl = url => {
     if (!url || /^(https?:)?\/\//.test(url) || url.startsWith('/')) return url || '';
     return Admin.API.startsWith('public_html/') && url.startsWith('images/') ? 'public_html/' + url : url;
 };
+Admin.imageField = (id, label, value = '') => `
+    <div class="form-group form-group--full image-field" data-image-field="${id}">
+        <label class="form-label">${Admin.esc(label)}</label>
+        <div class="image-field-preview">
+            ${value ? `<img src="${Admin.assetUrl(value)}" alt="${Admin.esc(label)}">` : '<span>Chua co anh</span>'}
+        </div>
+        <div class="image-field-controls">
+            <input class="form-input" id="${id}" value="${Admin.esc(value)}" placeholder="images/uploads/ten-anh.jpg">
+            <button class="btn btn--ghost" type="button" data-upload-target="${id}">Upload</button>
+            <button class="btn btn--ghost" type="button" data-clear-target="${id}">Xoa</button>
+            <input type="file" accept="image/*" hidden data-file-target="${id}">
+        </div>
+        <div class="form-hint">Co the upload anh moi hoac dan URL anh trong thu vien Media.</div>
+    </div>`;
+Admin.bindImageFields = (root = document) => {
+    root.querySelectorAll('[data-upload-target]').forEach(btn => {
+        btn.onclick = () => root.querySelector(`[data-file-target="${btn.dataset.uploadTarget}"]`)?.click();
+    });
+    root.querySelectorAll('[data-clear-target]').forEach(btn => {
+        btn.onclick = () => {
+            const input = Admin.$(`#${btn.dataset.clearTarget}`);
+            if (input) {
+                input.value = '';
+                input.dispatchEvent(new Event('input'));
+            }
+        };
+    });
+    root.querySelectorAll('[data-file-target]').forEach(input => {
+        input.onchange = async e => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+            try {
+                const data = await Admin.apiUpload(file);
+                const urlInput = Admin.$(`#${input.dataset.fileTarget}`);
+                if (urlInput) {
+                    urlInput.value = data.url || '';
+                    urlInput.dispatchEvent(new Event('input'));
+                }
+                Admin.toast('Da upload anh', 'success');
+            } catch (err) {
+                Admin.toast(err.message, 'error');
+            } finally {
+                input.value = '';
+            }
+        };
+    });
+    root.querySelectorAll('.image-field .form-input').forEach(input => {
+        const update = () => {
+            const field = input.closest('.image-field');
+            const preview = field?.querySelector('.image-field-preview');
+            if (!preview) return;
+            preview.innerHTML = input.value.trim()
+                ? `<img src="${Admin.assetUrl(input.value.trim())}" alt="">`
+                : '<span>Chua co anh</span>';
+        };
+        input.oninput = update;
+        update();
+    });
+};
 
 // --- Toast ---
 Admin.toast = (msg, type='info') => {

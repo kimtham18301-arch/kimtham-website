@@ -51,12 +51,14 @@ Admin.blogForm = async (main, isEdit) => {
     <div class="form-group"><label class="form-label">Danh mục</label><select class="form-select" id="blogCat"><option value="marketing">Marketing</option><option value="yoga">Yoga</option><option value="scent">Scent</option><option value="mentoring">Mentoring</option><option value="lifestyle">Lifestyle</option></select></div>
     <div class="form-group"><label class="form-label">Tag</label><input class="form-input" id="blogTag" placeholder="#HashTag"></div>
     <div class="form-group"><label class="form-label">Thời gian đọc</label><input class="form-input" id="blogRead" placeholder="5 phút đọc"></div>
+    ${Admin.imageField('blogThumbnail', 'Anh dai dien bai viet')}
     <div class="form-group form-group--full"><label class="form-label">Tóm tắt</label><textarea class="form-textarea" id="blogExcerpt" rows="2" placeholder="Mô tả ngắn..."></textarea></div>
     <div class="form-group form-group--full"><label class="form-label">Nội dung</label><div class="editor-wrap"><div id="blogEditor"></div></div></div>
     <div class="form-group"><label class="form-label">Trạng thái</label><select class="form-select" id="blogStatus"><option value="published">Xuất bản</option><option value="draft">Nháp</option></select></div>
     <div class="form-group"><label class="form-label">Ngày</label><input class="form-input" type="date" id="blogDate"></div>
     </div><div class="form-actions"><button class="btn btn--primary" id="btnSaveBlog">Lưu bài viết</button></div></div>`;
     Admin.$('#btnBackBlog').onclick = () => Admin.navigate('#/blogs');
+    Admin.bindImageFields(main);
     const quill = Admin.initQuill('#blogEditor');
     let editData = null;
     if (isEdit && Admin._editBlogId) {
@@ -68,6 +70,8 @@ Admin.blogForm = async (main, isEdit) => {
                 Admin.$('#blogCat').value = editData.category||'marketing';
                 Admin.$('#blogTag').value = editData.tag||'';
                 Admin.$('#blogRead').value = editData.readTime||'';
+                Admin.$('#blogThumbnail').value = editData.thumbnail||'';
+                Admin.$('#blogThumbnail').dispatchEvent(new Event('input'));
                 Admin.$('#blogExcerpt').value = editData.excerpt||'';
                 Admin.$('#blogStatus').value = editData.status||'draft';
                 Admin.$('#blogDate').value = editData.date||'';
@@ -81,6 +85,7 @@ Admin.blogForm = async (main, isEdit) => {
             category: Admin.$('#blogCat').value,
             tag: Admin.$('#blogTag').value.trim(),
             readTime: Admin.$('#blogRead').value.trim(),
+            thumbnail: Admin.$('#blogThumbnail').value.trim(),
             excerpt: Admin.$('#blogExcerpt').value.trim(),
             content: quill ? quill.root.innerHTML : '',
             status: Admin.$('#blogStatus').value,
@@ -127,20 +132,23 @@ Admin.portfolioForm = async (main, isEdit) => {
     main.innerHTML = `<div class="page-header"><div><h1>${isEdit?'Sửa':'Thêm'} Case Study</h1></div><div class="page-actions"><button class="btn btn--ghost" id="btnBackCase">← Quay lại</button></div></div>
     <div class="form-panel"><div class="form-grid">
     ${fields.map(f => `<div class="form-group ${f==='problem'||f==='result'?'form-group--full':''}"><label class="form-label">${f.charAt(0).toUpperCase()+f.slice(1)}</label>${f.length>10||['problem','insight','strategy','execution','result'].includes(f)?`<textarea class="form-textarea" id="case_${f}" rows="3"></textarea>`:`<input class="form-input" id="case_${f}">`}</div>`).join('')}
+    ${Admin.imageField('case_image', 'Anh case study')}
     <div class="form-group"><label class="form-label">Tag Color</label><select class="form-select" id="case_tagColor"><option value="pink">Pink</option><option value="lavender">Lavender</option><option value="sage">Sage</option><option value="gold">Gold</option></select></div>
     </div><div class="form-actions"><button class="btn btn--primary" id="btnSaveCase">Lưu</button></div></div>`;
     Admin.$('#btnBackCase').onclick = () => Admin.navigate('#/portfolio');
+    Admin.bindImageFields(main);
     let editData = null;
     if (isEdit && Admin._editCaseId) {
         try {
             const data = await Admin.api('portfolio.php');
             editData = (data.items||[]).find(c => c.id === Admin._editCaseId);
-            if (editData) { fields.forEach(f => { const el = Admin.$(`#case_${f}`); if(el) el.value = editData[f]||''; }); Admin.$('#case_tagColor').value = editData.tagColor||'pink'; }
+            if (editData) { fields.forEach(f => { const el = Admin.$(`#case_${f}`); if(el) el.value = editData[f]||''; }); Admin.$('#case_image').value = editData.image||''; Admin.$('#case_image').dispatchEvent(new Event('input')); Admin.$('#case_tagColor').value = editData.tagColor||'pink'; }
         } catch(e) { Admin.toast(e.message,'error'); }
     }
     Admin.$('#btnSaveCase').onclick = async () => {
         const body = { tagColor: Admin.$('#case_tagColor').value };
         fields.forEach(f => body[f] = Admin.$(`#case_${f}`).value.trim());
+        body.image = Admin.$('#case_image').value.trim();
         if (!body.title) { Admin.toast('Nhập tiêu đề','error'); return; }
         try {
             if (isEdit && editData) { body.id = editData.id; await Admin.api('portfolio.php',{method:'PUT',body:JSON.stringify(body)}); }
@@ -180,22 +188,24 @@ Admin.productForm = async (main, isEdit) => {
     <div class="form-group"><label class="form-label">Danh mục</label><input class="form-input" id="prod_category" placeholder="Tươi mát, Ngọt ấm..."></div>
     <div class="form-group"><label class="form-label">Emoji</label><input class="form-input" id="prod_emoji" placeholder="🌿"></div>
     <div class="form-group"><label class="form-label">Tag Color</label><select class="form-select" id="prod_tagColor"><option value="sage">Sage</option><option value="pink">Pink</option><option value="lavender">Lavender</option><option value="gold">Gold</option></select></div>
+    ${Admin.imageField('prod_image', 'Anh san pham')}
     <div class="form-group form-group--full"><label class="form-label">Câu chuyện</label><textarea class="form-textarea" id="prod_story" rows="3"></textarea></div>
     <div class="form-group"><label class="form-label">CTA Text</label><input class="form-input" id="prod_ctaText" value="Nhắn mình để chọn mùi này"></div>
     <div class="form-group"><label class="form-label">CTA URL</label><input class="form-input" id="prod_ctaUrl" value="contact.html?intent=perfume"></div>
     </div><div class="form-actions"><button class="btn btn--primary" id="btnSaveProd">Lưu</button></div></div>`;
     Admin.$('#btnBackProd').onclick = () => Admin.navigate('#/products');
+    Admin.bindImageFields(main);
     let editData = null;
     if (isEdit && Admin._editProdId) {
         try {
             const data = await Admin.api('products.php');
             editData = (data.items||[]).find(p => p.id === Admin._editProdId);
-            if (editData) { ['name','category','emoji','story','ctaText','ctaUrl'].forEach(f => { const el=Admin.$(`#prod_${f}`); if(el) el.value=editData[f]||''; }); Admin.$('#prod_tagColor').value=editData.tagColor||'sage'; }
+            if (editData) { ['name','category','emoji','image','story','ctaText','ctaUrl'].forEach(f => { const el=Admin.$(`#prod_${f}`); if(el) el.value=editData[f]||''; }); Admin.$('#prod_image').dispatchEvent(new Event('input')); Admin.$('#prod_tagColor').value=editData.tagColor||'sage'; }
         } catch(e) { Admin.toast(e.message,'error'); }
     }
     Admin.$('#btnSaveProd').onclick = async () => {
         const body = {};
-        ['name','category','emoji','tagColor','story','ctaText','ctaUrl'].forEach(f => body[f] = Admin.$(`#prod_${f}`).value.trim());
+        ['name','category','emoji','tagColor','image','story','ctaText','ctaUrl'].forEach(f => body[f] = Admin.$(`#prod_${f}`).value.trim());
         if (!body.name) { Admin.toast('Nhập tên','error'); return; }
         try {
             if (isEdit && editData) { body.id = editData.id; await Admin.api('products.php',{method:'PUT',body:JSON.stringify(body)}); }
@@ -232,14 +242,24 @@ Admin.registerRoute('pages', async (main) => {
         const data = await Admin.api('pages.php');
         const pages = data.pages || {};
         const home = pages.home || {};
+        const about = pages.about || {};
+        const store = pages.store || {};
+        const perfume = pages.perfume || {};
         const contact = pages.contact || {};
         Admin.$('#pagesForm').innerHTML = `<h2>Trang chủ – Hero</h2>
         <div class="form-grid">
             <div class="form-group"><label class="form-label">Eyebrow</label><input class="form-input" id="pg_heroEyebrow" value="${Admin.esc(home.heroEyebrow||'')}"></div>
             <div class="form-group"><label class="form-label">Title</label><input class="form-input" id="pg_heroTitle" value="${Admin.esc(home.heroTitle||'')}"></div>
             <div class="form-group"><label class="form-label">Subtitle</label><input class="form-input" id="pg_heroSubtitle" value="${Admin.esc(home.heroSubtitle||'')}"></div>
+            ${Admin.imageField('pg_homeHeroImage', 'Anh trang chu', home.heroImage || 'images/kim-tham.svg')}
             <div class="form-group form-group--full"><label class="form-label">Hero Lead</label><textarea class="form-textarea" id="pg_heroLead" rows="2">${Admin.esc(home.heroLead||'')}</textarea></div>
             <div class="form-group form-group--full"><label class="form-label">Hero Outro</label><textarea class="form-textarea" id="pg_heroOutro" rows="2">${Admin.esc(home.heroOutro||'')}</textarea></div>
+        </div>
+        <h2 style="margin-top:28px">Anh cac trang</h2>
+        <div class="form-grid">
+            ${Admin.imageField('pg_aboutImage', 'Anh trang gioi thieu', about.heroImage || 'images/kim-tham.svg')}
+            ${Admin.imageField('pg_storeImage', 'Anh Store', store.heroImage || 'images/perfume-service-hero.png')}
+            ${Admin.imageField('pg_perfumeImage', 'Anh trang nuoc hoa', perfume.heroImage || 'images/perfume-service-hero.png')}
         </div>
         <h2 style="margin-top:28px">Liên hệ</h2>
         <div class="form-grid">
@@ -248,20 +268,31 @@ Admin.registerRoute('pages', async (main) => {
             <div class="form-group"><label class="form-label">Zalo URL</label><input class="form-input" id="pg_zaloUrl" value="${Admin.esc(contact.zaloUrl||'')}"></div>
         </div>
         <div class="form-actions"><button class="btn btn--primary" id="btnSavePages">Lưu thay đổi</button></div>`;
+        Admin.bindImageFields(Admin.$('#pagesForm'));
         Admin.$('#btnSavePages').onclick = async () => {
             const updated = JSON.parse(JSON.stringify(pages));
             updated.home = updated.home || {};
             updated.home.heroEyebrow = Admin.$('#pg_heroEyebrow').value.trim();
             updated.home.heroTitle = Admin.$('#pg_heroTitle').value.trim();
             updated.home.heroSubtitle = Admin.$('#pg_heroSubtitle').value.trim();
+            updated.home.heroImage = Admin.$('#pg_homeHeroImage').value.trim();
             updated.home.heroLead = Admin.$('#pg_heroLead').value.trim();
             updated.home.heroOutro = Admin.$('#pg_heroOutro').value.trim();
+            updated.about = updated.about || {};
+            updated.about.heroImage = Admin.$('#pg_aboutImage').value.trim();
+            updated.store = updated.store || {};
+            updated.store.heroImage = Admin.$('#pg_storeImage').value.trim();
+            updated.perfume = updated.perfume || {};
+            updated.perfume.heroImage = Admin.$('#pg_perfumeImage').value.trim();
             updated.contact = updated.contact || {};
             updated.contact.email = Admin.$('#pg_email').value.trim();
             updated.contact.phone = Admin.$('#pg_phone').value.trim();
             updated.contact.zaloUrl = Admin.$('#pg_zaloUrl').value.trim();
             try {
                 await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'home', data: updated.home }) });
+                await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'about', data: updated.about }) });
+                await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'store', data: updated.store }) });
+                await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'perfume', data: updated.perfume }) });
                 await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'contact', data: updated.contact }) });
                 Admin.toast('Đã lưu trang','success');
             } catch(e) { Admin.toast(e.message,'error'); }
