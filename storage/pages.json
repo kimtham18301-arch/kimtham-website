@@ -1,0 +1,62 @@
+{
+  "home": {
+    "heroEyebrow": "Marketing – Lifestyle – Scent",
+    "heroTitle": "Kim Thắm",
+    "heroSubtitle": "Marketing Student | Lifestyle Creator",
+    "heroLead": "Mình chia sẻ về:",
+    "heroList": [
+      "Marketing dễ hiểu",
+      "Hành trình sống healthy (yoga & mindset)",
+      "Và cách chọn mùi hương đúng gu"
+    ],
+    "heroOutro": "Nếu bạn muốn vừa phát triển bản thân vừa sống có gu, đây là nơi dành cho bạn.",
+    "primaryCta": "Bắt đầu từ đây",
+    "primaryCtaUrl": "about.html",
+    "secondaryCta": "Đọc blog",
+    "secondaryCtaUrl": "blog.html",
+    "ghostCta": "Xem mình làm gì",
+    "ghostCtaUrl": "portfolio.html",
+    "dashboardEyebrow": "Dashboard",
+    "dashboardTitle": "Khám phá thế giới của mình",
+    "scentOfDay": "Mùi hương hôm nay: nhẹ nhàng, tươi mát – dành cho những ngày cần sự bình yên.",
+    "statNumber": "+5%",
+    "statLabel": "Engagement cho fanpage trong 2 tháng"
+  },
+  "about": {
+    "eyebrow": "Về mình",
+    "title": "Mình là Kim Thắm",
+    "story1": "Một người học marketing<br>Nhưng cũng đang <strong>học cách sống tốt hơn mỗi ngày</strong>.",
+    "story2": "Mình tập yoga 🧘<br>Mình thích mùi hương 🌸<br>Và mình thích chia sẻ những gì mình học được ✍️",
+    "story3": "Website này là nơi mình gom tất cả lại – marketing, lifestyle, và những thứ mình thấy hay ho trong hành trình trưởng thành.",
+    "timeline": [
+      { "year": "Bắt đầu", "title": "Học Marketing", "text": "Bắt đầu hành trình với content marketing, social media và SEO. Tìm hiểu cách nội dung giúp thương hiệu được hiểu đúng hơn." },
+      { "year": "Khám phá", "title": "Bắt đầu bán nước hoa", "text": "Từ niềm đam mê mùi hương, mình bắt đầu tư vấn và chia sẻ về cách chọn nước hoa đúng gu cho mọi người." },
+      { "year": "Chia sẻ", "title": "Dạy học & Gia sư", "text": "Mình tin việc dạy cũng là cách học tốt nhất. Chia sẻ kiến thức giúp mình hiểu sâu hơn và kết nối nhiều hơn." },
+      { "year": "Lifestyle", "title": "Tập Yoga & Sống có gu", "text": "Yoga giúp mình cân bằng. Cùng với marketing và mùi hương, mình xây dựng một lối sống mà mình tự hào." }
+    ],
+    "values": [
+      { "icon": "🎯", "title": "Học mỗi ngày", "text": "Marketing thay đổi nhanh. Mình luôn cập nhật, thử nghiệm và chia sẻ những gì hiệu quả nhất." },
+      { "icon": "🌿", "title": "Sống có chủ đích", "text": "Từ yoga đến mùi hương, mỗi lựa chọn đều có ý nghĩa. Sống chậm lại để sống sâu hơn." },
+      { "icon": "💝", "title": "Chia sẻ chân thành", "text": "Mình không bán. Mình chia sẻ những gì mình thật sự thấy hay và mong nó hữu ích cho bạn." }
+    ]
+  },
+  "contact": {
+    "eyebrow": "Liên hệ",
+    "title": "Bạn đang cần gì?",
+    "subtitle": "Chọn một chủ đề bên dưới, mình sẽ hỗ trợ nhanh nhất có thể.",
+    "email": "hello@kimtham.id.vn",
+    "phone": "0972295710",
+    "zaloUrl": "https://zalo.me/0972295710"
+  },
+  "store": {
+    "heroEyebrow": "The Curator's Shelf",
+    "heroTitle": "Chọn mùi hương, chọn cảm xúc",
+    "heroLead": "Mình không chỉ bán nước hoa. Mình chia sẻ câu chuyện đằng sau mỗi mùi hương – để bạn chọn đúng gu, đúng dịp, đúng cảm xúc.",
+    "quizTitle": "Bạn thích vibe nào?",
+    "quizSubtitle": "Chọn một vibe bên dưới, mình sẽ gợi ý mùi hương phù hợp nhất cho bạn."
+  },
+  "footer": {
+    "copyright": "© 2026 Kim Thắm. Marketer sống có gu.",
+    "domain": "kimtham.id.vn"
+  }
+}

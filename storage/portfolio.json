@@ -1,0 +1,41 @@
+[
+  {
+    "id": "case_001",
+    "tag": "SEO / E-commerce",
+    "tagColor": "pink",
+    "title": "SEO Shopee – Mắt kính Titanus",
+    "problem": "Sản phẩm mắt kính cần dễ được tìm thấy hơn trên sàn thương mại điện tử Shopee.",
+    "insight": "Người mua tìm theo nhu cầu (chống nắng, gaming) thay vì tên thương hiệu.",
+    "strategy": "Nghiên cứu từ khóa theo nhóm nhu cầu, đề xuất cấu trúc nội dung sản phẩm tối ưu.",
+    "execution": "Xây bộ tiêu đề, mô tả và nhóm từ khóa có thể áp dụng trực tiếp cho trang sản phẩm.",
+    "result": "Bộ gợi ý tiêu đề và mô tả SEO hoàn chỉnh, tăng khả năng hiển thị tìm kiếm trên Shopee.",
+    "order": 1,
+    "createdAt": "2026-04-01T00:00:00Z"
+  },
+  {
+    "id": "case_002",
+    "tag": "Customer Insight",
+    "tagColor": "lavender",
+    "title": "VietJet Air – Trải nghiệm khi chuyến bay delay",
+    "problem": "Khách hàng dễ có cảm xúc tiêu cực trong thời gian chờ chuyến bay bị trễ.",
+    "insight": "Điểm đau chính không phải thời gian chờ mà là cảm giác \"không được quan tâm\".",
+    "strategy": "Phân tích điểm đau và đề xuất hướng truyền thông hỗ trợ trải nghiệm khách hàng.",
+    "execution": "Ý tưởng hoạt động giúp khách hàng được cập nhật, trấn an và cảm thấy được quan tâm.",
+    "result": "Đề xuất truyền thông giúp giảm cảm xúc tiêu cực và nâng trải nghiệm chờ bay.",
+    "order": 2,
+    "createdAt": "2026-04-01T00:00:00Z"
+  },
+  {
+    "id": "case_003",
+    "tag": "Social Media",
+    "tagColor": "sage",
+    "title": "SHOOTING Kombucha",
+    "problem": "Thương hiệu đồ uống cần tăng nhận diện và tương tác trên kênh social media.",
+    "insight": "Gen Z tương tác nhiều với nội dung video ngắn, meme và câu chuyện đời thường.",
+    "strategy": "Content theo insight Gen Z – Video ngắn + meme + hình ảnh trẻ trung.",
+    "execution": "Xây dựng concept nội dung, lịch đăng và hướng hình ảnh cho Facebook & Instagram.",
+    "result": "+2,000 follower · +3% engagement · Khung triển khai social media hoàn chỉnh.",
+    "order": 3,
+    "createdAt": "2026-04-01T00:00:00Z"
+  }
+]

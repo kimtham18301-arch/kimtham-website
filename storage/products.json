@@ -1,0 +1,50 @@
+[
+  {
+    "id": "prod_001",
+    "name": "Morning Breeze",
+    "category": "Tươi mát",
+    "tagColor": "sage",
+    "emoji": "🌿",
+    "story": "Mùi này dành cho những ngày bạn muốn bắt đầu thật nhẹ nhàng – như một buổi sáng có nắng, có gió và một ly trà ấm.",
+    "ctaText": "Nhắn mình để chọn mùi này",
+    "ctaUrl": "contact.html?intent=perfume",
+    "order": 1,
+    "createdAt": "2026-04-01T00:00:00Z"
+  },
+  {
+    "id": "prod_002",
+    "name": "Soft Bloom",
+    "category": "Ngọt ấm",
+    "tagColor": "pink",
+    "emoji": "🌸",
+    "story": "Dành cho buổi hẹn, tiệc tối hoặc khi bạn muốn mình nữ tính hơn một chút – cuốn hút nhưng vẫn dễ gần.",
+    "ctaText": "Nhắn mình để chọn mùi này",
+    "ctaUrl": "contact.html?intent=perfume",
+    "order": 2,
+    "createdAt": "2026-04-01T00:00:00Z"
+  },
+  {
+    "id": "prod_003",
+    "name": "Velvet Night",
+    "category": "Sang trọng",
+    "tagColor": "lavender",
+    "emoji": "✨",
+    "story": "Cho những dịp quan trọng – khi bạn muốn để lại dấu ấn. Mùi có chiều sâu, lưu hương lâu và rất đặc biệt.",
+    "ctaText": "Nhắn mình để chọn mùi này",
+    "ctaUrl": "contact.html?intent=perfume",
+    "order": 3,
+    "createdAt": "2026-04-01T00:00:00Z"
+  },
+  {
+    "id": "prod_004",
+    "name": "Urban Calm",
+    "category": "Unisex",
+    "tagColor": "gold",
+    "emoji": "🍃",
+    "story": "Không phân biệt nam nữ. Hiện đại, tối giản, dùng được mọi hoàn cảnh. Mùi của sự tự tin và bình thản.",
+    "ctaText": "Nhắn mình để chọn mùi này",
+    "ctaUrl": "contact.html?intent=perfume",
+    "order": 4,
+    "createdAt": "2026-04-01T00:00:00Z"
+  }
+]
