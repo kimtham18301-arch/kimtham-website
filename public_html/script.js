@@ -130,6 +130,65 @@ async function loadPublishedBlogs() {
     throw new Error("Không tải được blog từ CMS. Kiểm tra API hoặc quyền đọc file storage/blogs.json.");
 }
 
+async function loadPageData(pageName) {
+    const endpoints = [`api/pages.php?page=${encodeURIComponent(pageName)}`, `public_html/api/pages.php?page=${encodeURIComponent(pageName)}`];
+
+    for (const endpoint of endpoints) {
+        try {
+            const response = await fetch(`${endpoint}&_=${Date.now()}`, {
+                headers: { Accept: "application/json" },
+                cache: "no-store"
+            });
+            const data = await response.json();
+            if (!response.ok || !data.ok || !data.page) {
+                throw new Error(data.message || "Cannot load page data");
+            }
+            return data.page;
+        } catch (err) {
+            console.warn(`Cannot load page data from ${endpoint}:`, err);
+        }
+    }
+
+    return null;
+}
+
+function setText(selector, value) {
+    const el = document.querySelector(selector);
+    if (el && value != null) el.textContent = value;
+}
+
+function setLink(selector, text, href) {
+    const el = document.querySelector(selector);
+    if (!el) return;
+    if (text != null) el.textContent = text;
+    if (href != null) el.setAttribute("href", href);
+}
+
+async function initHomePage() {
+    const home = await loadPageData("home");
+    if (!home) return;
+
+    setText(".hero .eyebrow", home.heroEyebrow);
+    setText(".hero h1", home.heroTitle);
+    setText(".hero-content .hero-lead:nth-of-type(2)", home.heroSubtitle);
+    setText(".hero-content .hero-lead:nth-of-type(3)", home.heroLead);
+    setText(".hero-content .hero-lead:nth-of-type(4)", home.heroOutro);
+
+    const introList = document.querySelector(".hero-intro-list");
+    if (introList && Array.isArray(home.heroList)) {
+        introList.innerHTML = home.heroList.map(item => `<li>${esc(item)}</li>`).join("");
+    }
+
+    setLink('.hero-actions a[data-track="cta-start"]', home.primaryCta, home.primaryCtaUrl);
+    setLink('.hero-actions a[data-track="cta-blog"]', home.secondaryCta, home.secondaryCtaUrl);
+    setLink('.hero-actions a[data-track="cta-portfolio"]', home.ghostCta, home.ghostCtaUrl);
+    setText("#dashboard .section-heading .eyebrow", home.dashboardEyebrow);
+    setText("#dashboard .section-heading h2", home.dashboardTitle);
+    setText(".bento-card--scent p", home.scentOfDay);
+    setText(".bento-stat-number", home.statNumber);
+    setText(".bento-stat-label", home.statLabel);
+}
+
 /* ===== BLOG PAGE ===== */
 async function initBlog() {
     const grid = document.getElementById("blogGrid");
@@ -426,6 +485,7 @@ if (contactForm) {
 
 /* ===== INIT PER PAGE ===== */
 switch (page) {
+    case "home": initHomePage(); break;
     case "blog": initBlog(); break;
     case "blog-post": initBlogPost(); break;
     case "portfolio": initPortfolio(); break;
