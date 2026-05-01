@@ -133,9 +133,10 @@ Admin.apiUpload = async (file) => {
     let data = {};
 
     for (let index = 0; index < total; index++) {
-        const headers = { 'Content-Type': 'application/json' };
+        const headers = {};
         if (Admin.csrfToken) headers['X-CSRF-Token'] = Admin.csrfToken;
-        const body = {
+        const body = new FormData();
+        Object.entries({
             mode: 'chunk',
             uploadId,
             index,
@@ -144,8 +145,8 @@ Admin.apiUpload = async (file) => {
             type: uploadFile.type,
             size: uploadFile.size,
             chunk: base64Payload.slice(index * chunkSize, (index + 1) * chunkSize)
-        };
-        const res = await fetch(Admin.API + 'upload.php', { method: 'POST', headers, body: JSON.stringify(body), credentials: 'include' });
+        }).forEach(([key, value]) => body.append(key, value));
+        const res = await fetch(Admin.API + 'upload.php', { method: 'POST', headers, body, credentials: 'include' });
         const raw = await res.text();
         try {
             data = raw ? JSON.parse(raw) : {};
