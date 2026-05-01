@@ -17,11 +17,11 @@ if (!is_dir($uploadDir)) {
     mkdir($uploadDir, 0755, true);
 }
 
-if (empty($_FILES['file'])) {
+if (empty($_FILES['file']) && empty($_FILES['image'])) {
     json_response(['ok' => false, 'message' => 'Không tìm thấy file upload.'], 400);
 }
 
-$file = $_FILES['file'];
+$file = $_FILES['file'] ?? $_FILES['image'];
 
 if ($file['error'] !== UPLOAD_ERR_OK) {
     json_response(['ok' => false, 'message' => 'Lỗi upload file.'], 400);

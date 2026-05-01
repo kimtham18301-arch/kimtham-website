@@ -270,17 +270,100 @@ Admin.registerRoute('pages', async (main) => {
 
 // ==================== MEDIA ====================
 Admin.registerRoute('media', async (main) => {
-    main.innerHTML = '<div class="page-header"><div><h1>Media</h1><p>Quản lý hình ảnh</p></div></div><div class="media-grid" id="mediaGrid"><label class="media-upload" id="mediaUpload"><div class="media-upload-icon">📁</div><div class="media-upload-text">Click để upload ảnh</div><input type="file" accept="image/*" hidden id="mediaFile"></label></div>';
-    Admin.$('#mediaFile').onchange = async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        try {
-            const data = await Admin.apiUpload(file);
-            Admin.toast('Upload thành công: ' + (data.url||''),'success');
-            Admin.handleRoute();
-        } catch(err) { Admin.toast(err.message,'error'); }
+    main.innerHTML = `<div class="page-header">
+        <div><h1>Media</h1><p>Quan ly hinh anh upload cho website</p></div>
+        <div class="page-actions">
+            <button class="btn btn--ghost" id="btnReloadMedia">Tai lai</button>
+            <button class="btn btn--primary" id="btnPickMedia">Upload anh</button>
+        </div>
+    </div>
+    <input type="file" accept="image/*" hidden id="mediaFile" multiple>
+    <div class="media-toolbar">
+        <input class="form-input" id="mediaSearch" placeholder="Tim theo ten anh...">
+        <span class="media-count" id="mediaCount"></span>
+    </div>
+    <div class="media-grid" id="mediaGrid"><div class="empty-state"><p>Dang tai...</p></div></div>`;
+
+    let mediaItems = [];
+
+    const formatSize = bytes => {
+        const n = Number(bytes || 0);
+        if (n >= 1024 * 1024) return (n / 1024 / 1024).toFixed(1) + ' MB';
+        if (n >= 1024) return Math.round(n / 1024) + ' KB';
+        return n + ' B';
     };
-    Admin.$('#mediaUpload').onclick = (e) => { if (e.target.id !== 'mediaFile') Admin.$('#mediaFile').click(); };
+
+    const renderMedia = () => {
+        const keyword = Admin.$('#mediaSearch').value.trim().toLowerCase();
+        const items = mediaItems.filter(item => !keyword || (item.filename || '').toLowerCase().includes(keyword));
+        Admin.$('#mediaCount').textContent = `${items.length} anh`;
+
+        Admin.$('#mediaGrid').innerHTML = `
+            <label class="media-upload" id="mediaUpload">
+                <div class="media-upload-icon">+</div>
+                <div class="media-upload-text">Upload anh moi</div>
+            </label>
+            ${items.map(item => {
+                const size = item.width && item.height ? `${item.width}x${item.height} - ${formatSize(item.size)}` : formatSize(item.size);
+                return `<article class="media-card">
+                    <img src="${Admin.assetUrl(item.url)}" alt="${Admin.esc(item.name)}" loading="lazy">
+                    <div class="media-card-body">
+                        <strong>${Admin.esc(item.name)}</strong>
+                        <span>${Admin.esc(size)}</span>
+                        <code>${Admin.esc(item.url)}</code>
+                    </div>
+                    <div class="media-card-actions">
+                        <button class="btn btn--ghost btn--small" data-copy="${Admin.esc(item.url)}">Copy URL</button>
+                        <a class="btn btn--ghost btn--small" href="${Admin.assetUrl(item.url)}" target="_blank">Mo</a>
+                        ${item.deletable ? `<button class="btn btn--danger btn--small" data-delete="${Admin.esc(item.filename)}">Xoa</button>` : ''}
+                    </div>
+                </article>`;
+            }).join('')}`;
+
+        Admin.$('#mediaUpload').onclick = () => Admin.$('#mediaFile').click();
+        Admin.$$('[data-copy]').forEach(btn => btn.onclick = async () => {
+            await navigator.clipboard.writeText(btn.dataset.copy);
+            Admin.toast('Da copy URL anh', 'success');
+        });
+        Admin.$$('[data-delete]').forEach(btn => btn.onclick = async () => {
+            if (await Admin.confirm('Xoa anh', 'Ban co chac muon xoa anh nay?')) {
+                try {
+                    await Admin.api('media.php', { method:'DELETE', body: JSON.stringify({ filename: btn.dataset.delete }) });
+                    Admin.toast('Da xoa anh', 'success');
+                    await loadMedia();
+                } catch(e) { Admin.toast(e.message, 'error'); }
+            }
+        });
+    };
+
+    const loadMedia = async () => {
+        try {
+            const data = await Admin.api('media.php');
+            mediaItems = data.items || [];
+            renderMedia();
+        } catch(e) {
+            Admin.$('#mediaGrid').innerHTML = '<div class="empty-state"><h3>Khong tai duoc thu vien anh</h3><p>' + Admin.esc(e.message) + '</p></div>';
+        }
+    };
+
+    Admin.$('#btnPickMedia').onclick = () => Admin.$('#mediaFile').click();
+    Admin.$('#btnReloadMedia').onclick = loadMedia;
+    Admin.$('#mediaSearch').oninput = renderMedia;
+    Admin.$('#mediaFile').onchange = async (e) => {
+        const files = Array.from(e.target.files || []);
+        if (!files.length) return;
+
+        try {
+            for (const file of files) {
+                await Admin.apiUpload(file);
+            }
+            Admin.toast(`Da upload ${files.length} anh`, 'success');
+            e.target.value = '';
+            await loadMedia();
+        } catch(err) { Admin.toast(err.message, 'error'); }
+    };
+
+    await loadMedia();
 });
 
 // ==================== SETTINGS ====================

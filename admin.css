@@ -153,14 +153,22 @@ ul{list-style:none;margin:0;padding:0}
 .editor-wrap .ql-editor blockquote{border-left:3px solid var(--a-primary);padding-left:16px;color:var(--a-muted)}
 
 /* ===== MEDIA GRID ===== */
+.media-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.media-toolbar .form-input{max-width:360px}
+.media-count{font-size:.82rem;color:var(--a-muted);font-weight:700}
 .media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
-.media-card{position:relative;aspect-ratio:1;border-radius:var(--a-radius);overflow:hidden;border:1px solid var(--a-line);cursor:pointer;transition:border-color .2s}
+.media-card{display:flex;flex-direction:column;min-height:280px;border-radius:var(--a-radius);overflow:hidden;border:1px solid var(--a-line);background:var(--a-surface);transition:border-color .2s}
 .media-card:hover{border-color:var(--a-primary)}
-.media-card img{width:100%;height:100%;object-fit:cover}
+.media-card img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--a-surface2);border-bottom:1px solid var(--a-line)}
+.media-card-body{display:grid;gap:4px;padding:10px;min-width:0}
+.media-card-body strong{font-size:.78rem;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.media-card-body span{font-size:.72rem;color:var(--a-muted)}
+.media-card-body code{display:block;max-width:100%;padding:4px 6px;border-radius:6px;background:var(--a-surface2);color:var(--a-muted);font-size:.68rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.media-card-actions{display:flex;gap:6px;flex-wrap:wrap;padding:0 10px 10px;margin-top:auto}
 .media-card-overlay{position:absolute;inset:0;background:linear-gradient(transparent 60%,rgba(0,0,0,.7));opacity:0;transition:opacity .2s;display:flex;align-items:flex-end;padding:10px}
 .media-card:hover .media-card-overlay{opacity:1}
 .media-card-name{color:#fff;font-size:.72rem;font-weight:600;word-break:break-all}
-.media-upload{aspect-ratio:1;border:2px dashed var(--a-line);border-radius:var(--a-radius);display:grid;place-items:center;cursor:pointer;transition:border-color .2s;text-align:center;padding:20px}
+.media-upload{min-height:280px;border:2px dashed var(--a-line);border-radius:var(--a-radius);display:grid;place-items:center;align-content:center;cursor:pointer;transition:border-color .2s;text-align:center;padding:20px}
 .media-upload:hover{border-color:var(--a-primary)}
 .media-upload-icon{font-size:2rem;margin-bottom:8px}
 .media-upload-text{font-size:.78rem;color:var(--a-muted)}

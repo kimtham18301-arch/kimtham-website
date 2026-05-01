@@ -27,6 +27,10 @@ Admin.esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replac
 Admin.$ = s => document.querySelector(s);
 Admin.$$ = s => document.querySelectorAll(s);
 Admin.genId = p => p + '_' + Date.now().toString(36);
+Admin.assetUrl = url => {
+    if (!url || /^(https?:)?\/\//.test(url) || url.startsWith('/')) return url || '';
+    return Admin.API.startsWith('public_html/') && url.startsWith('images/') ? 'public_html/' + url : url;
+};
 
 // --- Toast ---
 Admin.toast = (msg, type='info') => {
@@ -52,17 +56,33 @@ Admin.confirm = (title, msg) => new Promise(resolve => {
 
 // --- API ---
 Admin.api = async (endpoint, opts = {}) => {
-    const headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' };
+    const headers = { 'Accept': 'application/json' };
+    // Only set Content-Type for requests with body
+    if (opts.method && opts.method !== 'GET') {
+        headers['Content-Type'] = 'application/json';
+    }
     if (Admin.csrfToken) headers['X-CSRF-Token'] = Admin.csrfToken;
-    const res = await fetch(Admin.API + endpoint, { ...opts, credentials: 'same-origin', headers: { ...headers, ...(opts.headers || {}) } });
+    const res = await fetch(Admin.API + endpoint, {
+        ...opts,
+        credentials: 'same-origin',
+        headers: { ...headers, ...(opts.headers || {}) }
+    });
     const data = await res.json();
+    // Always update CSRF token if provided in response
+    if (data.csrfToken) Admin.csrfToken = data.csrfToken;
+    // Handle auth failure
+    if (res.status === 401) {
+        Admin.showLogin();
+        Admin.toast('Phiên đăng nhập hết hạn, vui lòng đăng nhập lại', 'error');
+        throw new Error(data.message || 'Phiên đăng nhập hết hạn');
+    }
     if (!res.ok || !data.ok) throw new Error(data.message || 'Có lỗi xảy ra');
     return data;
 };
 
 Admin.apiUpload = async (file) => {
     const fd = new FormData();
-    fd.append('image', file);
+    fd.append('file', file);
     const headers = {};
     if (Admin.csrfToken) headers['X-CSRF-Token'] = Admin.csrfToken;
     const res = await fetch(Admin.API + 'upload.php', { method: 'POST', headers, body: fd, credentials: 'same-origin' });

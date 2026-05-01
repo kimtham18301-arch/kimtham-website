@@ -27,6 +27,10 @@ Admin.esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replac
 Admin.$ = s => document.querySelector(s);
 Admin.$$ = s => document.querySelectorAll(s);
 Admin.genId = p => p + '_' + Date.now().toString(36);
+Admin.assetUrl = url => {
+    if (!url || /^(https?:)?\/\//.test(url) || url.startsWith('/')) return url || '';
+    return Admin.API.startsWith('public_html/') && url.startsWith('images/') ? 'public_html/' + url : url;
+};
 
 // --- Toast ---
 Admin.toast = (msg, type='info') => {
@@ -62,7 +66,7 @@ Admin.api = async (endpoint, opts = {}) => {
 
 Admin.apiUpload = async (file) => {
     const fd = new FormData();
-    fd.append('image', file);
+    fd.append('file', file);
     const headers = {};
     if (Admin.csrfToken) headers['X-CSRF-Token'] = Admin.csrfToken;
     const res = await fetch(Admin.API + 'upload.php', { method: 'POST', headers, body: fd, credentials: 'same-origin' });
