@@ -220,6 +220,68 @@ async function initBlogPost() {
     }
 }
 
+/* ===== PORTFOLIO PAGE ===== */
+async function loadPortfolioCases() {
+    const endpoints = ["api/portfolio.php", "public_html/api/portfolio.php"];
+
+    for (const endpoint of endpoints) {
+        try {
+            const response = await fetch(`${endpoint}?_=${Date.now()}`, {
+                headers: { Accept: "application/json" },
+                cache: "no-store"
+            });
+            const data = await response.json();
+            const cases = data.cases || data.items;
+            if (!response.ok || !data.ok || !Array.isArray(cases)) {
+                throw new Error(data.message || "Cannot load portfolio");
+            }
+            return cases;
+        } catch (err) {
+            console.warn(`Cannot load portfolio from ${endpoint}:`, err);
+        }
+    }
+
+    throw new Error("Không tải được portfolio từ CMS. Kiểm tra API hoặc quyền đọc file storage/portfolio.json.");
+}
+
+async function initPortfolio() {
+    const grid = document.getElementById("caseGrid");
+    if (!grid) return;
+
+    try {
+        const cases = await loadPortfolioCases();
+        if (!cases.length) {
+            grid.innerHTML = `<div class="empty-state"><h3>Chưa có case study</h3><p>Hãy thêm case study trong admin để hiển thị tại đây.</p></div>`;
+            return;
+        }
+
+        grid.innerHTML = cases.map(item => {
+            const tagColor = ["pink", "sage", "lavender", "gold"].includes(item.tagColor) ? item.tagColor : "pink";
+            return `
+                <article class="case-card reveal visible">
+                    <div class="case-card-header">
+                        <div>
+                            <span class="tag tag--${tagColor}">${esc(item.tag || "")}</span>
+                            <h2 style="font-size:1.4rem;margin-top:8px;">${esc(item.title || "")}</h2>
+                        </div>
+                    </div>
+                    <div class="case-card-body">
+                        <dl class="case-field"><dt>Problem</dt><dd>${esc(item.problem || "")}</dd></dl>
+                        <dl class="case-field"><dt>Insight</dt><dd>${esc(item.insight || "")}</dd></dl>
+                        <dl class="case-field"><dt>Strategy</dt><dd>${esc(item.strategy || "")}</dd></dl>
+                        <dl class="case-field"><dt>Execution</dt><dd>${esc(item.execution || "")}</dd></dl>
+                    </div>
+                    <div class="case-result">
+                        <dl class="case-field"><dt>Result</dt><dd>${esc(item.result || "")}</dd></dl>
+                    </div>
+                </article>
+            `;
+        }).join("");
+    } catch (err) {
+        grid.innerHTML = `<div class="empty-state"><h3>Không tải được portfolio</h3><p>${esc(err.message)}</p></div>`;
+    }
+}
+
 /* ===== STORE QUIZ ===== */
 function initStoreQuiz() {
     const options = document.getElementById("quizOptions");
@@ -309,6 +371,7 @@ if (contactForm) {
 switch (page) {
     case "blog": initBlog(); break;
     case "blog-post": initBlogPost(); break;
+    case "portfolio": initPortfolio(); break;
     case "store": initStoreQuiz(); break;
     case "contact": initContactIntent(); break;
 }
