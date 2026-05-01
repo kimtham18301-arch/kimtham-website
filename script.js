@@ -9,6 +9,46 @@ const contactStatus = document.querySelector("#contactStatus");
 /* ===== BLOG DATA ===== */
 const blogPosts = [
     {
+        slug: "aida-va-pheu-chuyen-doi-co-ban",
+        title: "AIDA và phễu chuyển đổi: hiểu hành trình khách hàng",
+        category: "marketing",
+        tag: "#MarketingBasics",
+        readTime: "5 phút đọc",
+        date: "2026-05-01",
+        excerpt: "AIDA giúp mình nhìn một nội dung marketing theo từng bước: thu hút chú ý, tạo hứng thú, làm khách muốn thử và dẫn họ đến hành động.",
+        content: `<h2>AIDA là gì?</h2><p>AIDA là viết tắt của Attention, Interest, Desire, Action. Đây là một cách rất dễ nhớ để xem khách hàng đang ở đâu trong hành trình ra quyết định.</p><h2>4 bước cơ bản</h2><p><strong>Attention</strong> là làm khách dừng lại và chú ý. Tiêu đề, hình ảnh, câu mở đầu hoặc vấn đề quen thuộc đều có thể làm nhiệm vụ này.<br><strong>Interest</strong> là khiến khách thấy nội dung có liên quan đến mình. Ở bước này, mình cần nói đúng nỗi đau, mong muốn hoặc bối cảnh của họ.<br><strong>Desire</strong> là làm khách bắt đầu muốn sản phẩm, dịch vụ hoặc giải pháp. Đừng chỉ nói tính năng; hãy nói lợi ích và cảm giác sau khi vấn đề được giải quyết.<br><strong>Action</strong> là lời kêu gọi hành động rõ ràng: nhắn tin, đặt lịch, mua hàng, tải tài liệu hoặc để lại thông tin.</p><h2>Ví dụ đơn giản</h2><p>Nếu viết bài bán một lớp học tiếng Anh, câu mở đầu có thể đánh vào nỗi sợ giao tiếp. Phần giữa giải thích lớp học giúp người học luyện phản xạ như thế nào. Cuối bài nên có lời mời cụ thể: đăng ký học thử hoặc nhắn tin để kiểm tra trình độ.</p><blockquote><p>Nội dung tốt không chỉ hay. Nội dung tốt dẫn người đọc đi từng bước đến một hành động phù hợp.</p></blockquote>`
+    },
+    {
+        slug: "customer-insight-la-gi",
+        title: "Customer insight là gì? Cách tìm sự thật phía sau khách hàng",
+        category: "marketing",
+        tag: "#MarketingBasics",
+        readTime: "5 phút đọc",
+        date: "2026-05-01",
+        excerpt: "Insight không chỉ là một quan sát như \"khách hàng thích giá rẻ\". Insight là lý do sâu hơn khiến họ suy nghĩ, chọn mua hoặc từ chối.",
+        content: `<h2>Insight không phải là dữ liệu thô</h2><p>Dữ liệu có thể nói rằng nhiều khách hàng bỏ giỏ hàng ở bước thanh toán. Nhưng insight cần đi sâu hơn: họ bỏ vì phí ship cao, vì chưa tin shop, vì thiếu đánh giá, hay vì chưa thật sự cần ngay?</p><h2>Công thức dễ nhớ</h2><p>Một insight tốt thường trả lời được ba câu hỏi: khách hàng đang gặp vấn đề gì, họ cảm thấy gì về vấn đề đó, và vì sao những giải pháp hiện tại chưa đủ tốt với họ.</p><h2>Tìm insight bằng cách nào?</h2><p><strong>Quan sát</strong> hành vi thật của khách hàng: họ hỏi gì, than phiền gì, dừng lại ở đâu.<br><strong>Lắng nghe</strong> bình luận, review, tin nhắn và câu chuyện đời thường.<br><strong>Phỏng vấn</strong> vài người trong nhóm khách hàng mục tiêu, hỏi lý do phía sau lựa chọn của họ.<br><strong>So sánh</strong> giữa điều họ nói và điều họ làm, vì hai thứ này đôi khi không giống nhau.</p><h2>Ví dụ</h2><p>Khách mua nước hoa mini không chỉ vì giá thấp. Có thể insight là: họ muốn thử nhiều mùi để tìm ra phong cách riêng mà không sợ mua sai chai lớn.</p><blockquote><p>Insight hay thường làm mình thốt lên: đúng rồi, khách hàng thật sự nghĩ như vậy.</p></blockquote>`
+    },
+    {
+        slug: "stp-trong-marketing",
+        title: "STP trong marketing: chọn đúng khách hàng trước khi truyền thông",
+        category: "marketing",
+        tag: "#MarketingBasics",
+        readTime: "5 phút đọc",
+        date: "2026-05-01",
+        excerpt: "STP gồm Segmentation, Targeting và Positioning. Đây là bước giúp thương hiệu không nói chuyện với tất cả mọi người một cách mơ hồ.",
+        content: `<h2>STP là gì?</h2><p>STP là khung tư duy gồm ba bước: chia thị trường thành các nhóm nhỏ, chọn nhóm khách hàng ưu tiên, rồi xác định vị trí thương hiệu trong tâm trí nhóm đó.</p><h2>Segmentation: chia thị trường</h2><p>Không phải ai cũng có cùng nhu cầu. Mình có thể chia thị trường theo độ tuổi, thu nhập, khu vực sống, lối sống, vấn đề đang gặp hoặc hành vi mua hàng. Càng hiểu nhóm nhỏ, thông điệp càng dễ sắc nét.</p><h2>Targeting: chọn khách hàng mục tiêu</h2><p>Sau khi chia nhóm, thương hiệu cần chọn nhóm phù hợp nhất với nguồn lực và lợi thế của mình. Một nhóm tốt thường có nhu cầu rõ, đủ quy mô, có khả năng chi trả và thương hiệu có thể tiếp cận được.</p><h2>Positioning: định vị</h2><p>Định vị là câu trả lời cho câu hỏi: khi khách hàng nghĩ đến mình, họ nhớ điều gì? Ví dụ: giá tốt, chuyên nghiệp, thân thiện, cao cấp, cá nhân hóa hoặc đáng tin.</p><blockquote><p>Làm marketing không bắt đầu bằng việc đăng bài. Nó bắt đầu bằng việc biết mình đang nói với ai.</p></blockquote>`
+    },
+    {
+        slug: "marketing-mix-4p-co-ban",
+        title: "Marketing Mix 4P: nền tảng đầu tiên khi học marketing",
+        category: "marketing",
+        tag: "#MarketingBasics",
+        readTime: "6 phút đọc",
+        date: "2026-05-01",
+        excerpt: "4P gồm Product, Price, Place và Promotion. Đây là khung cơ bản giúp mình nhìn một sản phẩm không chỉ ở phần quảng cáo, mà ở toàn bộ cách nó ra thị trường.",
+        content: `<h2>4P là gì?</h2><p>Marketing Mix 4P là một mô hình kinh điển trong marketing, gồm <strong>Product</strong>, <strong>Price</strong>, <strong>Place</strong> và <strong>Promotion</strong>. Khi mới học marketing, mình từng nghĩ marketing chủ yếu là chạy quảng cáo hoặc viết content. Nhưng 4P cho thấy quảng cáo chỉ là một phần trong bức tranh lớn hơn.</p><h2>Product: sản phẩm</h2><p>Sản phẩm không chỉ là thứ mình bán, mà là giải pháp cho một nhu cầu cụ thể. Khi phân tích Product, hãy hỏi: sản phẩm giải quyết vấn đề gì, khác gì so với lựa chọn khác, bao bì ra sao, chất lượng có ổn định không, trải nghiệm sau khi mua có tốt không?</p><h2>Price: giá</h2><p>Giá không chỉ là con số. Giá tạo cảm nhận về vị trí thương hiệu. Một mức giá thấp có thể giúp dễ thử, nhưng cũng có thể làm khách nghi ngờ chất lượng. Một mức giá cao cần đi cùng giá trị, niềm tin và trải nghiệm đủ tốt.</p><h2>Place: phân phối</h2><p>Place là nơi và cách khách hàng mua được sản phẩm. Với một thương hiệu nhỏ, Place có thể là Facebook, TikTok Shop, website, cửa hàng offline hoặc các sàn thương mại điện tử. Kênh bán càng thuận tiện, rào cản mua càng thấp.</p><h2>Promotion: truyền thông</h2><p>Promotion là cách thương hiệu nói với thị trường: quảng cáo, content, khuyến mãi, PR, KOL, email hoặc sự kiện. Nhưng truyền thông chỉ hiệu quả khi ba chữ P còn lại đủ rõ.</p><blockquote><p>4P nhắc mình rằng marketing tốt không cứu một sản phẩm mơ hồ. Marketing tốt bắt đầu từ một đề xuất giá trị rõ ràng.</p></blockquote>`
+    },
+    {
         slug: "hoc-marketing-tu-so-0",
         title: "Cách mình học marketing từ con số 0",
         category: "marketing",
