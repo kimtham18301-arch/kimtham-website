@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
+// Ensure session lasts at least 24h on shared hosting
+ini_set('session.gc_maxlifetime', '86400');
+
 $secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
 session_set_cookie_params([
-    'lifetime' => 0,
+    'lifetime' => 86400,
     'path' => '/',
     'secure' => $secure,
     'httponly' => true,

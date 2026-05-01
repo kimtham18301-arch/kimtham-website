@@ -19,7 +19,8 @@ if ($passwordHash === '') {
 }
 
 if ($username === $config['admin_username'] && password_verify($password, $passwordHash)) {
-    session_regenerate_id(true);
+    // Use false to keep old session file – prevents session loss on some hostings
+    session_regenerate_id(false);
     $_SESSION['admin_logged_in'] = true;
     $_SESSION['admin_username'] = $username;
 

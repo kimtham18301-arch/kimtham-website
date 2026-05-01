@@ -13,7 +13,7 @@ Admin._apiDetected = false;
 Admin._detectApi = async () => {
     if (Admin._apiDetected) return;
     try {
-        const res = await fetch('api/session.php', { method: 'HEAD', credentials: 'same-origin' });
+        const res = await fetch('api/session.php', { method: 'HEAD', credentials: 'include' });
         if (res.status === 404) throw 0;
         Admin.API = 'api/';
     } catch {
@@ -64,7 +64,7 @@ Admin.api = async (endpoint, opts = {}) => {
     if (Admin.csrfToken) headers['X-CSRF-Token'] = Admin.csrfToken;
     const res = await fetch(Admin.API + endpoint, {
         ...opts,
-        credentials: 'same-origin',
+        credentials: 'include',
         headers: { ...headers, ...(opts.headers || {}) }
     });
     const data = await res.json();
@@ -85,7 +85,7 @@ Admin.apiUpload = async (file) => {
     fd.append('file', file);
     const headers = {};
     if (Admin.csrfToken) headers['X-CSRF-Token'] = Admin.csrfToken;
-    const res = await fetch(Admin.API + 'upload.php', { method: 'POST', headers, body: fd, credentials: 'same-origin' });
+    const res = await fetch(Admin.API + 'upload.php', { method: 'POST', headers, body: fd, credentials: 'include' });
     const data = await res.json();
     if (!res.ok || !data.ok) throw new Error(data.message || 'Upload thất bại');
     return data;
