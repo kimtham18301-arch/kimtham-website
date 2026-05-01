@@ -126,26 +126,41 @@ Admin.apiUpload = async (file) => {
         reader.onerror = error => reject(error);
         reader.readAsDataURL(uploadFile);
     });
-    if (String(base64Data).length > 1800 * 1024) {
-        throw new Error('Anh qua lon de upload tren hosting hien tai. Hay chon anh nho hon 1.3MB hoac resize anh truoc khi upload.');
-    }
-    const headers = { 'Content-Type': 'application/json' };
-    if (Admin.csrfToken) headers['X-CSRF-Token'] = Admin.csrfToken;
-    const res = await fetch(Admin.API + 'upload.php', { method: 'POST', headers, body: JSON.stringify({ name: uploadFile.name, type: uploadFile.type, size: uploadFile.size, base64: base64Data }), credentials: 'include' });
-    const raw = await res.text();
+    const base64Payload = String(base64Data).split(';base64,')[1] || '';
+    const chunkSize = 48 * 1024;
+    const total = Math.max(1, Math.ceil(base64Payload.length / chunkSize));
+    const uploadId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
     let data = {};
-    try {
-        data = raw ? JSON.parse(raw) : {};
-    } catch {
-        throw new Error('API khong tra ve JSON hop le. Hay kiem tra loi PHP hoac quyen ghi tren hosting.');
+
+    for (let index = 0; index < total; index++) {
+        const headers = { 'Content-Type': 'application/json' };
+        if (Admin.csrfToken) headers['X-CSRF-Token'] = Admin.csrfToken;
+        const body = {
+            mode: 'chunk',
+            uploadId,
+            index,
+            total,
+            name: uploadFile.name,
+            type: uploadFile.type,
+            size: uploadFile.size,
+            chunk: base64Payload.slice(index * chunkSize, (index + 1) * chunkSize)
+        };
+        const res = await fetch(Admin.API + 'upload.php', { method: 'POST', headers, body: JSON.stringify(body), credentials: 'include' });
+        const raw = await res.text();
+        try {
+            data = raw ? JSON.parse(raw) : {};
+        } catch {
+            throw new Error('API khong tra ve JSON hop le. Hay kiem tra loi PHP hoac quyen ghi tren hosting.');
+        }
+        if (data.csrfToken) Admin.csrfToken = data.csrfToken;
+        if (res.status === 401) {
+            Admin.showLogin();
+            Admin.toast('Phiên đăng nhập hết hạn, vui lòng đăng nhập lại', 'error');
+            throw new Error(data.message || 'Phiên đăng nhập hết hạn');
+        }
+        if (!res.ok || !data.ok) throw new Error(data.message || 'Upload thất bại');
     }
-    if (data.csrfToken) Admin.csrfToken = data.csrfToken;
-    if (res.status === 401) {
-        Admin.showLogin();
-        Admin.toast('Phiên đăng nhập hết hạn, vui lòng đăng nhập lại', 'error');
-        throw new Error(data.message || 'Phiên đăng nhập hết hạn');
-    }
-    if (!res.ok || !data.ok) throw new Error(data.message || 'Upload thất bại');
+
     return data;
 };
 

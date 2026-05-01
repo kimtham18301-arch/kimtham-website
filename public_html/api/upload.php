@@ -17,7 +17,80 @@ if (!is_dir($uploadDir)) {
     @mkdir($uploadDir, 0755, true);
 }
 
-$input = json_decode(file_get_contents('php://input'), true) ?: [];
+$allowedTypes = [
+    'image/jpeg' => 'jpg',
+    'image/pjpeg' => 'jpg',
+    'image/png'  => 'png',
+    'image/webp' => 'webp',
+    'image/svg+xml' => 'svg',
+    'image/gif'  => 'gif',
+];
+
+$rawInput = file_get_contents('php://input') ?: '';
+$input = json_decode($rawInput, true);
+if (!is_array($input)) {
+    $input = [];
+}
+
+if (($input['mode'] ?? '') === 'chunk') {
+    $uploadId = preg_replace('/[^a-zA-Z0-9_-]/', '', (string) ($input['uploadId'] ?? ''));
+    $index = (int) ($input['index'] ?? -1);
+    $total = (int) ($input['total'] ?? 0);
+    $chunk = (string) ($input['chunk'] ?? '');
+    $mimeType = (string) ($input['type'] ?? '');
+    $fileSize = (int) ($input['size'] ?? 0);
+
+    if ($uploadId === '' || $index < 0 || $total < 1 || $total > 80 || $chunk === '') {
+        json_response(['ok' => false, 'message' => 'Du lieu upload tung phan khong hop le.'], 400);
+    }
+    if (strlen($chunk) > 320 * 1024) {
+        json_response(['ok' => false, 'message' => 'Mot phan upload qua lon, hay tai lai trang admin roi thu lai.'], 413);
+    }
+    if (!isset($allowedTypes[$mimeType])) {
+        json_response(['ok' => false, 'message' => 'Dinh dang file khong duoc ho tro. Chi chap nhan: JPG, PNG, WebP, SVG, GIF.'], 400);
+    }
+    if ($fileSize > 2 * 1024 * 1024) {
+        json_response(['ok' => false, 'message' => 'File qua lon. Toi da 2MB.'], 400);
+    }
+
+    $chunkDir = storage_path('upload_chunks');
+    if (!is_dir($chunkDir)) {
+        @mkdir($chunkDir, 0755, true);
+    }
+    if (!is_dir($chunkDir) || !is_writable($chunkDir)) {
+        json_response(['ok' => false, 'message' => 'Khong the ghi thu muc tam upload_chunks trong storage/.'], 500);
+    }
+
+    $chunkFile = $chunkDir . DIRECTORY_SEPARATOR . $uploadId . '.b64';
+    $flags = $index === 0 ? LOCK_EX : FILE_APPEND | LOCK_EX;
+    if (file_put_contents($chunkFile, $chunk, $flags) === false) {
+        json_response(['ok' => false, 'message' => 'Khong the ghi tam du lieu upload.'], 500);
+    }
+
+    if ($index + 1 < $total) {
+        json_response(['ok' => true, 'partial' => true, 'csrfToken' => csrf_token()]);
+    }
+
+    $base64Payload = file_get_contents($chunkFile) ?: '';
+    @unlink($chunkFile);
+    $fileData = base64_decode($base64Payload, true);
+    if ($fileData === false) {
+        json_response(['ok' => false, 'message' => 'Loi giai ma du lieu anh sau khi ghep file.'], 400);
+    }
+    if (strlen($fileData) > 2 * 1024 * 1024) {
+        json_response(['ok' => false, 'message' => 'File qua lon sau khi giai ma. Toi da 2MB.'], 400);
+    }
+
+    $ext = $allowedTypes[$mimeType];
+    $filename = date('Ymd-His') . '-' . bin2hex(random_bytes(4)) . '.' . $ext;
+    $destination = $uploadDir . $filename;
+    if (file_put_contents($destination, $fileData) === false) {
+        json_response(['ok' => false, 'message' => 'Khong the luu file. Kiem tra quyen ghi thu muc: images/uploads/'], 500);
+    }
+
+    $url = 'images/uploads/' . $filename;
+    json_response(['ok' => true, 'url' => $url, 'filename' => $filename, 'csrfToken' => csrf_token()]);
+}
 
 if (empty($_FILES['file']) && empty($_FILES['image']) && empty($input['base64'])) {
     $contentLength = (int) ($_SERVER['CONTENT_LENGTH'] ?? 0);
@@ -83,15 +156,6 @@ if (!empty($input['base64'])) {
         $mimeType = $file['type'] ?? '';
     }
 }
-
-$allowedTypes = [
-    'image/jpeg' => 'jpg',
-    'image/pjpeg' => 'jpg',
-    'image/png'  => 'png',
-    'image/webp' => 'webp',
-    'image/svg+xml' => 'svg',
-    'image/gif'  => 'gif',
-];
 
 if (!isset($allowedTypes[$mimeType])) {
     json_response(['ok' => false, 'message' => 'Định dạng file không được hỗ trợ (' . htmlspecialchars($mimeType) . '). Chỉ chấp nhận: JPG, PNG, WebP, SVG, GIF.'], 400);
