@@ -56,10 +56,26 @@ Admin.confirm = (title, msg) => new Promise(resolve => {
 
 // --- API ---
 Admin.api = async (endpoint, opts = {}) => {
-    const headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' };
+    const headers = { 'Accept': 'application/json' };
+    // Only set Content-Type for requests with body
+    if (opts.method && opts.method !== 'GET') {
+        headers['Content-Type'] = 'application/json';
+    }
     if (Admin.csrfToken) headers['X-CSRF-Token'] = Admin.csrfToken;
-    const res = await fetch(Admin.API + endpoint, { ...opts, credentials: 'same-origin', headers: { ...headers, ...(opts.headers || {}) } });
+    const res = await fetch(Admin.API + endpoint, {
+        ...opts,
+        credentials: 'same-origin',
+        headers: { ...headers, ...(opts.headers || {}) }
+    });
     const data = await res.json();
+    // Always update CSRF token if provided in response
+    if (data.csrfToken) Admin.csrfToken = data.csrfToken;
+    // Handle auth failure
+    if (res.status === 401) {
+        Admin.showLogin();
+        Admin.toast('Phiên đăng nhập hết hạn, vui lòng đăng nhập lại', 'error');
+        throw new Error(data.message || 'Phiên đăng nhập hết hạn');
+    }
     if (!res.ok || !data.ok) throw new Error(data.message || 'Có lỗi xảy ra');
     return data;
 };
