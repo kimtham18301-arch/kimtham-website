@@ -49,7 +49,16 @@ if (!empty($input['base64'])) {
     $file = $_FILES['file'] ?? $_FILES['image'];
 
     if ($file['error'] !== UPLOAD_ERR_OK) {
-        json_response(['ok' => false, 'message' => 'Lỗi upload file (Mã lỗi: ' . $file['error'] . ').'], 400);
+        $uploadErrors = [
+            UPLOAD_ERR_INI_SIZE => 'File vượt quá giới hạn upload_max_filesize của PHP.',
+            UPLOAD_ERR_FORM_SIZE => 'File vượt quá giới hạn MAX_FILE_SIZE của form.',
+            UPLOAD_ERR_PARTIAL => 'File chỉ được upload một phần, hãy thử lại.',
+            UPLOAD_ERR_NO_FILE => 'Không có file nào được upload.',
+            UPLOAD_ERR_NO_TMP_DIR => 'Server thiếu thư mục tạm để upload.',
+            UPLOAD_ERR_CANT_WRITE => 'Server không ghi được file tạm (mã lỗi 7). Hãy tải lại trang admin để dùng upload base64, hoặc kiểm tra quyền ghi thư mục tạm trên hosting.',
+            UPLOAD_ERR_EXTENSION => 'Một PHP extension đã chặn upload.',
+        ];
+        json_response(['ok' => false, 'message' => $uploadErrors[$file['error']] ?? ('Lỗi upload file (mã lỗi: ' . $file['error'] . ').')], 400);
     }
 
     if ($file['size'] > 2 * 1024 * 1024) {
@@ -101,4 +110,3 @@ if ($fileData !== null) {
 $url = 'images/uploads/' . $filename;
 
 json_response(['ok' => true, 'url' => $url, 'filename' => $filename, 'csrfToken' => csrf_token()]);
-
