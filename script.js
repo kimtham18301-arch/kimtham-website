@@ -108,7 +108,7 @@ async function loadPublishedBlogs() {
 
     for (const endpoint of endpoints) {
         try {
-            const response = await fetch(endpoint, {
+            const response = await fetch(`${endpoint}&_=${Date.now()}`, {
                 headers: { Accept: "application/json" },
                 cache: "no-store"
             });
@@ -122,8 +122,12 @@ async function loadPublishedBlogs() {
         }
     }
 
-    console.warn("Using fallback blog data.");
-    return blogPosts;
+    if (location.protocol === "file:") {
+        console.warn("Using fallback blog data for local file preview.");
+        return blogPosts;
+    }
+
+    throw new Error("Không tải được blog từ CMS. Kiểm tra API hoặc quyền đọc file storage/blogs.json.");
 }
 
 /* ===== BLOG PAGE ===== */
@@ -132,10 +136,20 @@ async function initBlog() {
     const filters = document.getElementById("blogFilters");
     if (!grid) return;
 
-    const allPosts = await loadPublishedBlogs();
+    let allPosts = [];
+    try {
+        allPosts = await loadPublishedBlogs();
+    } catch (err) {
+        grid.innerHTML = `<div class="empty-state"><h3>Không tải được blog</h3><p>${esc(err.message)}</p></div>`;
+        return;
+    }
 
     function renderBlog(filter = "all") {
         const posts = filter === "all" ? allPosts : allPosts.filter(p => p.category === filter);
+        if (!posts.length) {
+            grid.innerHTML = `<div class="empty-state"><h3>Chưa có bài viết đã xuất bản</h3><p>Hãy chuyển trạng thái bài viết trong admin sang Xuất bản.</p></div>`;
+            return;
+        }
         grid.innerHTML = posts.map(p => `
             <a href="blog-post.html?slug=${esc(p.slug)}" class="blog-card reveal visible">
                 <div class="blog-card-thumb" style="background:linear-gradient(135deg,var(--primary-soft),var(--surface-warm));display:grid;place-items:center;font-size:2.5rem;color:var(--primary);">✍️</div>
@@ -170,7 +184,13 @@ async function initBlogPost() {
     if (!header || !content) return;
 
     const slug = new URLSearchParams(location.search).get("slug");
-    const posts = await loadPublishedBlogs();
+    let posts = [];
+    try {
+        posts = await loadPublishedBlogs();
+    } catch (err) {
+        header.innerHTML = `<h1>Không tải được bài viết</h1><p style="color:var(--muted)">${esc(err.message)}</p>`;
+        return;
+    }
     const post = posts.find(p => p.slug === slug);
 
     if (!post) {

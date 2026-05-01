@@ -53,7 +53,7 @@ Admin.blogForm = async (main, isEdit) => {
     <div class="form-group"><label class="form-label">Thời gian đọc</label><input class="form-input" id="blogRead" placeholder="5 phút đọc"></div>
     <div class="form-group form-group--full"><label class="form-label">Tóm tắt</label><textarea class="form-textarea" id="blogExcerpt" rows="2" placeholder="Mô tả ngắn..."></textarea></div>
     <div class="form-group form-group--full"><label class="form-label">Nội dung</label><div class="editor-wrap"><div id="blogEditor"></div></div></div>
-    <div class="form-group"><label class="form-label">Trạng thái</label><select class="form-select" id="blogStatus"><option value="draft">Nháp</option><option value="published">Xuất bản</option></select></div>
+    <div class="form-group"><label class="form-label">Trạng thái</label><select class="form-select" id="blogStatus"><option value="published">Xuất bản</option><option value="draft">Nháp</option></select></div>
     <div class="form-group"><label class="form-label">Ngày</label><input class="form-input" type="date" id="blogDate"></div>
     </div><div class="form-actions"><button class="btn btn--primary" id="btnSaveBlog">Lưu bài viết</button></div></div>`;
     Admin.$('#btnBackBlog').onclick = () => Admin.navigate('#/blogs');
