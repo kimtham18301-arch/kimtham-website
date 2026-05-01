@@ -282,7 +282,64 @@ async function initPortfolio() {
     }
 }
 
-/* ===== STORE QUIZ ===== */
+/* ===== STORE – DYNAMIC PRODUCTS + QUIZ ===== */
+async function loadProducts() {
+    const endpoints = ["api/products.php", "public_html/api/products.php"];
+
+    for (const endpoint of endpoints) {
+        try {
+            const response = await fetch(`${endpoint}?_=${Date.now()}`, {
+                headers: { Accept: "application/json" },
+                cache: "no-store"
+            });
+            const data = await response.json();
+            const items = data.products || data.items;
+            if (!response.ok || !data.ok || !Array.isArray(items)) {
+                throw new Error(data.message || "Cannot load products");
+            }
+            return items;
+        } catch (err) {
+            console.warn(`Cannot load products from ${endpoint}:`, err);
+        }
+    }
+
+    // No API available – return empty (static HTML fallback will remain)
+    return null;
+}
+
+async function initStore() {
+    const grid = document.getElementById("productGrid");
+
+    // Load dynamic products from CMS
+    if (grid) {
+        try {
+            const products = await loadProducts();
+            if (products && products.length) {
+                grid.innerHTML = products.map((p, i) => {
+                    const tagColor = ["pink", "sage", "lavender", "gold"].includes(p.tagColor) ? p.tagColor : "sage";
+                    const delay = i % 3 === 1 ? " reveal-delay-1" : i % 3 === 2 ? " reveal-delay-2" : "";
+                    return `
+                        <article class="product-card reveal visible${delay}">
+                            <div class="product-card-visual">${p.emoji || '🌸'}</div>
+                            <div class="product-card-body">
+                                <span class="tag tag--${tagColor}">${esc(p.category || '')}</span>
+                                <h3 style="margin-top:10px;">${esc(p.name || '')}</h3>
+                                <p class="product-card-story">"${esc(p.story || '')}"</p>
+                                <a class="btn primary" href="${esc(p.ctaUrl || 'contact.html?intent=perfume')}" data-track="product-${esc(p.name || '').toLowerCase().replace(/\s+/g,'-')}">${esc(p.ctaText || 'Nhắn mình để chọn mùi này')}</a>
+                            </div>
+                        </article>
+                    `;
+                }).join("");
+            }
+        } catch (err) {
+            console.warn("Store: using static HTML fallback", err);
+        }
+    }
+
+    // Quiz functionality
+    initStoreQuiz();
+}
+
 function initStoreQuiz() {
     const options = document.getElementById("quizOptions");
     const result = document.getElementById("quizResult");
@@ -372,7 +429,7 @@ switch (page) {
     case "blog": initBlog(); break;
     case "blog-post": initBlogPost(); break;
     case "portfolio": initPortfolio(); break;
-    case "store": initStoreQuiz(); break;
+    case "store": initStore(); break;
     case "contact": initContactIntent(); break;
 }
 

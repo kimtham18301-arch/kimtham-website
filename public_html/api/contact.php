@@ -8,13 +8,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     json_response(['ok' => false, 'message' => 'Phương thức không được hỗ trợ.'], 405);
 }
 
-require_csrf();
+// Public contact form – no CSRF required (visitors don't have admin session)
+// CSRF is only enforced for admin-only endpoints
 
 $data = request_json();
 $name = trim((string) ($data['name'] ?? ''));
 $email = trim((string) ($data['email'] ?? ''));
 $phone = trim((string) ($data['phone'] ?? ''));
-$service = trim((string) ($data['service'] ?? 'Tư vấn nước hoa'));
+$service = trim((string) ($data['service'] ?? 'Hỏi chung'));
 $goal = trim((string) ($data['goal'] ?? ''));
 $channels = trim((string) ($data['channels'] ?? ''));
 $timeline = trim((string) ($data['timeline'] ?? ''));
@@ -29,8 +30,15 @@ if ($website !== '') {
     json_response(['ok' => true, 'message' => 'Đã nhận thông tin tư vấn.']);
 }
 
-if ($name === '' || $phone === '' || $budget === '' || $occasion === '' || $message === '') {
-    json_response(['ok' => false, 'message' => 'Vui lòng nhập tên, số điện thoại/Zalo, ngân sách, dịp dùng và gu mùi.'], 422);
+// Validation: name required, email or phone required, message required
+if ($name === '') {
+    json_response(['ok' => false, 'message' => 'Vui lòng nhập họ tên.'], 422);
+}
+if ($email === '' && $phone === '') {
+    json_response(['ok' => false, 'message' => 'Vui lòng nhập email hoặc số điện thoại.'], 422);
+}
+if ($message === '') {
+    json_response(['ok' => false, 'message' => 'Vui lòng nhập nội dung tin nhắn.'], 422);
 }
 
 if ($email !== '' && !validate_email($email)) {

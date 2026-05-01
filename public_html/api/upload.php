@@ -20,7 +20,11 @@ if (!is_dir($uploadDir)) {
 $input = json_decode(file_get_contents('php://input'), true) ?: [];
 
 if (empty($_FILES['file']) && empty($_FILES['image']) && empty($input['base64'])) {
-    json_response(['ok' => false, 'message' => 'Không tìm thấy file upload.'], 400);
+    $contentLength = (int) ($_SERVER['CONTENT_LENGTH'] ?? 0);
+    if ($contentLength > 0) {
+        json_response(['ok' => false, 'message' => 'Request upload bị rỗng khi tới PHP. Thường là do ảnh vượt giới hạn post_max_size trên hosting; hãy dùng ảnh nhỏ hơn hoặc tăng post_max_size/upload_max_filesize.'], 413);
+    }
+    json_response(['ok' => false, 'message' => 'Không tìm thấy file upload. Hãy tải lại trang admin rồi thử lại.'], 400);
 }
 
 $fileData = null;

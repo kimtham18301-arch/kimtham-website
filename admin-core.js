@@ -89,15 +89,49 @@ Admin.api = async (endpoint, opts = {}) => {
 
 Admin.apiUpload = async (file) => {
     await Admin._detectApi();
+    const normalizeImage = async (source) => {
+        if (!/^image\/(jpeg|png|webp)$/i.test(source.type) || (source.size <= 700 * 1024)) {
+            return source;
+        }
+
+        const imageUrl = URL.createObjectURL(source);
+        try {
+            const img = await new Promise((resolve, reject) => {
+                const el = new Image();
+                el.onload = () => resolve(el);
+                el.onerror = reject;
+                el.src = imageUrl;
+            });
+            const maxSide = 1600;
+            const scale = Math.min(1, maxSide / Math.max(img.naturalWidth || img.width, img.naturalHeight || img.height));
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.max(1, Math.round((img.naturalWidth || img.width) * scale));
+            canvas.height = Math.max(1, Math.round((img.naturalHeight || img.height) * scale));
+            canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+            const outputType = source.type === 'image/jpeg' ? 'image/jpeg' : 'image/webp';
+            const blob = await new Promise(resolve => canvas.toBlob(resolve, outputType, 0.82));
+            if (!blob || blob.size >= source.size) return source;
+            const ext = outputType === 'image/jpeg' ? 'jpg' : 'webp';
+            const baseName = source.name.replace(/\.[^.]+$/, '') || 'image';
+            return new File([blob], `${baseName}.${ext}`, { type: outputType });
+        } finally {
+            URL.revokeObjectURL(imageUrl);
+        }
+    };
+
+    const uploadFile = await normalizeImage(file);
     const base64Data = await new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result);
         reader.onerror = error => reject(error);
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(uploadFile);
     });
+    if (String(base64Data).length > 1800 * 1024) {
+        throw new Error('Anh qua lon de upload tren hosting hien tai. Hay chon anh nho hon 1.3MB hoac resize anh truoc khi upload.');
+    }
     const headers = { 'Content-Type': 'application/json' };
     if (Admin.csrfToken) headers['X-CSRF-Token'] = Admin.csrfToken;
-    const res = await fetch(Admin.API + 'upload.php', { method: 'POST', headers, body: JSON.stringify({ name: file.name, type: file.type, size: file.size, base64: base64Data }), credentials: 'include' });
+    const res = await fetch(Admin.API + 'upload.php', { method: 'POST', headers, body: JSON.stringify({ name: uploadFile.name, type: uploadFile.type, size: uploadFile.size, base64: base64Data }), credentials: 'include' });
     const raw = await res.text();
     let data = {};
     try {
