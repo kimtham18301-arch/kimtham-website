@@ -152,6 +152,7 @@ Admin.api = async (endpoint, opts = {}) => {
     if (Admin.csrfToken) headers['X-CSRF-Token'] = Admin.csrfToken;
     const res = await fetch(Admin.API + endpoint, {
         ...opts,
+        cache: 'no-store',
         credentials: 'include',
         headers: { ...headers, ...(opts.headers || {}) }
     });
