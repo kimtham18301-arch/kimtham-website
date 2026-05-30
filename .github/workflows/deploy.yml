@@ -22,6 +22,8 @@ jobs:
           local-dir: ./public_html/
           server-dir: /domains/kimtham.id.vn/public_html/
           dangerous-clean-slate: true
+          exclude: |
+            images/uploads/**
 
       - name: Deploy private config
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -42,5 +44,4 @@ jobs:
           local-dir: ./storage/
           server-dir: /domains/kimtham.id.vn/storage/
           exclude: |
-            content.json
-            leads.json
+            *.json
