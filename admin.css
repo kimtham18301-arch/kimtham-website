@@ -19,6 +19,32 @@
     --a-shadow: 0 4px 24px rgba(0,0,0,.25);
 }
 
+/* ===== LIGHT THEME OVERRIDES ===== */
+:root[data-theme="light"] {
+    --a-bg: #f8f7fa;
+    --a-surface: #ffffff;
+    --a-surface2: #f3f0f7;
+    --a-surface3: #e8e4f0;
+    --a-line: #e2dfec;
+    --a-ink: #231f30;
+    --a-muted: #7c7490;
+    --a-primary: #d4617b;
+    --a-primary-soft: rgba(212, 97, 123, 0.08);
+    --a-primary-glow: rgba(212, 97, 123, 0.15);
+    --a-success: #4ea37e;
+    --a-danger: #d64545;
+    --a-warning: #c49123;
+    --a-shadow: 0 4px 20px rgba(35, 31, 48, 0.06);
+}
+
+:root[data-theme="light"] .login-screen {
+    background: linear-gradient(135deg, var(--a-bg) 0%, #f3ebf2 50%, #eae5f5 100%);
+}
+
+:root[data-theme="light"] .form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237c7490' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+}
+
 /* ===== RESET ===== */
 *,*::before,*::after{box-sizing:border-box}
 [hidden]{display:none!important}

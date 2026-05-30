@@ -194,7 +194,15 @@ async function loadPageData(pageName) {
 
 function setText(selector, value) {
     const el = document.querySelector(selector);
-    if (el && value != null) el.textContent = value;
+    if (!el || value == null) return;
+    if (selector === ".hero-content .hero-lead:nth-of-type(4)") {
+        if (value.includes("#NKT")) {
+            const cleanText = esc(value.replace("#NKT", "")).trim();
+            el.innerHTML = `${cleanText} <span class="nkt-tag">#NKT</span>`;
+            return;
+        }
+    }
+    el.textContent = value;
 }
 
 function setLink(selector, text, href) {

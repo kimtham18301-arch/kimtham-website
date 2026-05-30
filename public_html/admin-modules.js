@@ -406,10 +406,25 @@ Admin.registerRoute('media', async (main) => {
 
 // ==================== SETTINGS ====================
 Admin.registerRoute('settings', (main) => {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
     main.innerHTML = `<div class="page-header"><div><h1>Cài đặt</h1><p>Thông tin website</p></div></div>
     <div class="form-panel"><div class="settings-grid">
         <div class="form-group"><label class="form-label">Tên website</label><input class="form-input" value="Kim Thắm – Personal Brand Hub" disabled></div>
         <div class="form-group"><label class="form-label">Domain</label><input class="form-input" value="kimtham.id.vn" disabled></div>
+        <div class="form-group"><label class="form-label">Giao diện quản trị</label>
+            <select class="form-select" id="settingThemeSelect">
+                <option value="light">Giao diện sáng (Mặc định)</option>
+                <option value="dark">Giao diện tối</option>
+            </select>
+        </div>
         <div class="form-group"><label class="form-label">Phiên bản Admin</label><input class="form-input" value="2.0 – CMS (01/05/2026)" disabled></div>
     </div></div>`;
+
+    const select = Admin.$('#settingThemeSelect');
+    if (select) {
+        select.value = currentTheme;
+        select.addEventListener('change', (e) => {
+            Admin.setTheme(e.target.value);
+        });
+    }
 });

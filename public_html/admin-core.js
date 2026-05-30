@@ -8,6 +8,34 @@ Admin.API = 'api/';
 Admin.csrfToken = '';
 Admin.quillInstance = null;
 
+// --- Theme Management ---
+Admin.initTheme = () => {
+    const currentTheme = localStorage.getItem('admin-theme') || 'light';
+    Admin.setTheme(currentTheme);
+};
+
+Admin.setTheme = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('admin-theme', theme);
+
+    const icon = Admin.$('#themeToggleIcon');
+    const text = Admin.$('#themeToggleText');
+    if (icon && text) {
+        if (theme === 'light') {
+            icon.textContent = '🌙';
+            text.textContent = 'Giao diện tối';
+        } else {
+            icon.textContent = '☀️';
+            text.textContent = 'Giao diện sáng';
+        }
+    }
+
+    const select = Admin.$('#settingThemeSelect');
+    if (select) {
+        select.value = theme;
+    }
+};
+
 // Auto-detect API path on first call
 Admin._apiDetected = false;
 Admin._detectApi = async () => {
@@ -307,6 +335,15 @@ Admin.initSidebar = () => {
     Admin.$$('.sidebar-link[data-route]').forEach(link => {
         link.addEventListener('click', () => sidebar.classList.remove('open'));
     });
+
+    const themeBtn = Admin.$('#themeToggleBtn');
+    if (themeBtn) {
+        themeBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+            Admin.setTheme(nextTheme);
+        });
+    }
 };
 
 // --- Quill Helper ---

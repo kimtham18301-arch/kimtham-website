@@ -88,6 +88,22 @@ h3{margin-bottom:10px;font-size:1.15rem;line-height:1.35}
 .hero{min-height:calc(100vh - var(--nav-h));display:grid;grid-template-columns:1fr auto;align-items:center;gap:48px}
 .hero-content{max-width:640px}
 .hero-lead{color:var(--muted);font-size:1.05rem;max-width:560px}
+.nkt-tag {
+    display: block;
+    font-family: 'Caveat', cursive;
+    font-size: 2.3rem;
+    color: var(--primary);
+    font-weight: 700;
+    margin-top: 8px;
+    line-height: 1;
+    transform: rotate(-3deg);
+    transition: transform 0.3s ease, color 0.3s ease;
+    width: fit-content;
+}
+.nkt-tag:hover {
+    transform: scale(1.1) rotate(-1deg);
+    color: var(--primary-dark);
+}
 .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 
 .hero-portrait{width:300px;aspect-ratio:1;border-radius:50%;overflow:hidden;border:4px solid var(--primary-soft);box-shadow:0 0 0 8px var(--primary-glow),var(--shadow-lg);background:var(--primary-soft)}
