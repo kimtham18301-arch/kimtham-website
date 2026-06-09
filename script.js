@@ -355,18 +355,19 @@ async function initBlogPost() {
 
 /* ===== PORTFOLIO PAGE ===== */
 async function loadPortfolioCases() {
-    const endpoints = ["api/portfolio.php", "public_html/api/portfolio.php"];
+    const endpoints = ["api/portfolio.php", "public_html/api/portfolio.php", "storage/portfolio.json"];
 
     for (const endpoint of endpoints) {
         try {
-            const response = await fetch(`${endpoint}?_=${Date.now()}`, {
+            const sep = endpoint.includes('?') ? '&' : '?';
+            const response = await fetch(`${endpoint}${sep}_=${Date.now()}`, {
                 headers: { Accept: "application/json" },
                 cache: "no-store"
             });
             const data = await response.json();
-            const cases = data.cases || data.items;
-            if (!response.ok || !data.ok || !Array.isArray(cases)) {
-                throw new Error(data.message || "Cannot load portfolio");
+            const cases = Array.isArray(data) ? data : (data.cases || data.items);
+            if (!response.ok || !Array.isArray(cases)) {
+                throw new Error("Cannot load portfolio");
             }
             return cases;
         } catch (err) {
@@ -388,28 +389,95 @@ async function initPortfolio() {
             return;
         }
 
-        grid.innerHTML = cases.map(item => {
+        grid.innerHTML = cases.map((item, index) => {
             const tagColor = ["pink", "sage", "lavender", "gold"].includes(item.tagColor) ? item.tagColor : "pink";
-            const image = item.image ? `<img class="case-card-image" src="${esc(item.image)}" alt="${esc(item.title || '')}" loading="lazy">` : '';
+            
+            // Image mockups: if case study has an image, render it inside the phone screen mockup; otherwise keep it empty/blank placeholder
+            const mockupImage = item.image ? 
+                `<img src="${esc(item.image)}" alt="${esc(item.title || '')}" style="width: 100%; height: 100%; object-fit: cover;">` : 
+                `<div class="image-placeholder" style="width: 100%; height: 100%; border: none; border-radius: 0;">
+                    <svg viewBox="0 0 24 24" style="width: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"/></svg>
+                    <span style="font-size: 0.6rem;">Đang để trống</span>
+                 </div>`;
+            
+            // Randomly alternate slides background for a dynamic aesthetic: odd items can have a dark slide background
+            const isDark = index % 2 === 1;
+            const slideClass = isDark ? "portfolio-slide portfolio-slide--dark" : "portfolio-slide";
+            const indexStr = String(index + 1).padStart(2, '0');
+            const sideTitle = `Case Study ${indexStr}`;
+
             return `
-                <article class="case-card reveal visible">
-                    ${image}
-                    <div class="case-card-header">
+                <section class="${slideClass} reveal visible" id="case-${item.id || index}">
+                    <div class="side-vertical-title">${esc(sideTitle)}</div>
+                    <div class="slide-grid-2">
+                        <div class="phone-mockups-container">
+                            <div class="phone-mockup">
+                                <div class="phone-screen">
+                                    ${mockupImage}
+                                </div>
+                            </div>
+                            <div class="phone-mockup" style="margin-top: 20px;">
+                                <div class="phone-screen">
+                                    <div class="image-placeholder" style="width: 100%; height: 100%; border: none; border-radius: 0;">
+                                        <svg viewBox="0 0 24 24" style="width: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"/></svg>
+                                        <span style="font-size: 0.6rem;">Đang để trống</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div>
-                            <span class="tag tag--${tagColor}">${esc(item.tag || "")}</span>
-                            <h2 style="font-size:1.4rem;margin-top:8px;">${esc(item.title || "")}</h2>
+                            <p class="eyebrow" style="margin-bottom: 8px;">Case Study // ${esc(item.tag || "")}</p>
+                            <h2 style="font-size: 1.6rem; margin-bottom: 16px;">${esc(item.title || "")}</h2>
+                            
+                            <div class="case-details-list">
+                                ${item.problem ? `
+                                <div class="case-detail-item">
+                                    <div class="case-detail-label">Problem (Vấn đề)</div>
+                                    <div class="case-detail-value">${esc(item.problem)}</div>
+                                </div>` : ''}
+                                
+                                ${item.insight ? `
+                                <div class="case-detail-item">
+                                    <div class="case-detail-label">Insight (Sự thật ngầm hiểu)</div>
+                                    <div class="case-detail-value">${esc(item.insight)}</div>
+                                </div>` : ''}
+
+                                ${item.strategy ? `
+                                <div class="case-detail-item">
+                                    <div class="case-detail-label">Strategy (Chiến lược)</div>
+                                    <div class="case-detail-value">${esc(item.strategy)}</div>
+                                </div>` : ''}
+
+                                ${item.execution ? `
+                                <div class="case-detail-item">
+                                    <div class="case-detail-label">Execution (Triển khai)</div>
+                                    <div class="case-detail-value">${esc(item.execution)}</div>
+                                </div>` : ''}
+                            </div>
+                            
+                            ${item.result ? `
+                            <div class="case-result-box">
+                                <div style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; margin-bottom: 2px;">Result (Kết quả)</div>
+                                <div>${esc(item.result)}</div>
+                            </div>` : ''}
+
+                            <div class="stat-badges-row">
+                                <div class="stat-badge-circle">
+                                    <div class="stat-badge-icon">100k</div>
+                                    <div class="stat-badge-label">Views</div>
+                                </div>
+                                <div class="stat-badge-circle">
+                                    <div class="stat-badge-icon">2.2k</div>
+                                    <div class="stat-badge-label">Likes</div>
+                                </div>
+                                <div class="stat-badge-circle">
+                                    <div class="stat-badge-icon">10k</div>
+                                    <div class="stat-badge-label">Shares</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="case-card-body">
-                        <dl class="case-field"><dt>Problem</dt><dd>${esc(item.problem || "")}</dd></dl>
-                        <dl class="case-field"><dt>Insight</dt><dd>${esc(item.insight || "")}</dd></dl>
-                        <dl class="case-field"><dt>Strategy</dt><dd>${esc(item.strategy || "")}</dd></dl>
-                        <dl class="case-field"><dt>Execution</dt><dd>${esc(item.execution || "")}</dd></dl>
-                    </div>
-                    <div class="case-result">
-                        <dl class="case-field"><dt>Result</dt><dd>${esc(item.result || "")}</dd></dl>
-                    </div>
-                </article>
+                </section>
             `;
         }).join("");
     } catch (err) {

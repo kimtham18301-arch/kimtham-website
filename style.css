@@ -200,21 +200,511 @@ h3{margin-bottom:10px;font-size:1.15rem;line-height:1.35}
 .author-info h4{margin:0 0 4px;font-size:1rem}
 .author-info p{margin:0;color:var(--muted);font-size:.85rem}
 
-/* ===== PORTFOLIO ===== */
-.case-grid{display:grid;gap:24px}
-.case-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:box-shadow .3s}
-.case-card:hover{box-shadow:var(--shadow-md)}
-.case-card-image{width:100%;aspect-ratio:16/7;object-fit:cover;border-bottom:1px solid var(--line)}
-.case-card-header{padding:28px 28px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
-.case-card-body{padding:0 28px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-top:20px}
-.case-field dt{color:var(--primary);font-size:.74rem;font-weight:800;text-transform:uppercase;margin-bottom:4px}
-.case-field dd{margin:0;color:var(--muted);font-size:.92rem;line-height:1.6}
-.case-result{padding:20px 28px;background:linear-gradient(135deg,var(--primary-soft),#fff5f7);border-top:1px solid var(--line)}
-.case-result dt{color:var(--primary-dark)}
-.case-result dd{color:var(--ink);font-weight:600;font-size:1rem}
+/* ===== PORTFOLIO SLIDES (UGC CANVA LAYOUT) ===== */
+.portfolio-deck {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-bottom: 60px;
+}
 
-.cv-section{display:flex;align-items:center;gap:24px;padding:32px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm)}
-.cv-section p{color:var(--muted);margin:0;flex:1}
+.portfolio-slide {
+    background: var(--surface-warm);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-slide:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Slide Cover / Dark Mode variation */
+.portfolio-slide--dark {
+    background: var(--ink);
+    color: var(--primary-soft);
+    border-color: rgba(212, 97, 123, 0.15);
+}
+
+.portfolio-slide--dark h1,
+.portfolio-slide--dark h2,
+.portfolio-slide--dark h3 {
+    color: var(--surface);
+}
+
+.portfolio-slide--dark .eyebrow {
+    color: var(--accent-gold);
+}
+
+/* Image Placeholder Style */
+.image-placeholder {
+    background: linear-gradient(135deg, var(--surface), var(--primary-soft));
+    border: 1px dashed var(--primary);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    min-height: 120px;
+    position: relative;
+    overflow: hidden;
+}
+
+.portfolio-slide--dark .image-placeholder {
+    background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(212, 97, 123, 0.1));
+    border-color: var(--accent-gold);
+    color: var(--primary-soft);
+}
+
+.image-placeholder svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    opacity: 0.6;
+}
+
+.image-placeholder::after {
+    content: "Khung ảnh trống";
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.5;
+}
+
+/* Layout slide combinations */
+.slide-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: center;
+}
+
+.slide-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+/* Brands Grid slide */
+.brand-board-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.brand-board-grid .image-placeholder {
+    aspect-ratio: 3/4;
+    min-height: auto;
+}
+
+.brand-board-quote {
+    text-align: center;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+    margin-top: 16px;
+    line-height: 1.6;
+}
+
+.portfolio-slide--dark .brand-board-quote {
+    color: var(--primary-soft);
+    border-color: rgba(255,255,255,0.1);
+}
+
+/* Index Slide */
+.index-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.index-item {
+    padding: 16px 24px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.index-item::before {
+    content: "•";
+    color: var(--primary);
+    font-size: 1.5rem;
+}
+
+.index-item:hover {
+    background: var(--primary-soft);
+    border-color: var(--primary);
+    transform: translateX(4px);
+}
+
+/* CSS Phone Mockup */
+.phone-mockups-container {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+.phone-mockup {
+    width: 160px;
+    height: 310px;
+    border: 8px solid var(--ink);
+    border-radius: 24px;
+    background: var(--ink);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.phone-mockup::before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 12px;
+    background: var(--ink);
+    border-radius: 6px;
+    z-index: 10;
+}
+
+.phone-screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+}
+
+.phone-screen .image-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    border: none;
+}
+
+.portfolio-slide--dark .phone-mockup {
+    border-color: #332d40;
+    background: #332d40;
+}
+.portfolio-slide--dark .phone-mockup::before {
+    background: #332d40;
+}
+
+/* IMac mockup */
+.imac-mockup {
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+}
+
+.imac-screen-wrap {
+    border: 8px solid #222;
+    border-bottom: 24px solid #222;
+    border-radius: 12px 12px 0 0;
+    aspect-ratio: 16/10;
+    background: #222;
+    overflow: hidden;
+    position: relative;
+}
+
+.imac-screen-wrap .image-placeholder {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 0;
+}
+
+.imac-stand {
+    width: 70px;
+    height: 40px;
+    background: #ccc;
+    margin: 0 auto;
+    clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+    position: relative;
+    z-index: 5;
+}
+
+.imac-base {
+    width: 120px;
+    height: 6px;
+    background: #aaa;
+    border-radius: 3px;
+    margin: 0 auto;
+}
+
+/* Case study text details */
+.case-details-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.case-detail-item {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 8px;
+}
+
+.case-detail-item:last-child {
+    border: none;
+}
+
+.case-detail-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 4px;
+    letter-spacing: 0.05em;
+}
+
+.case-detail-value {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.portfolio-slide--dark .case-detail-item {
+    border-color: rgba(255,255,255,0.08);
+}
+.portfolio-slide--dark .case-detail-label {
+    color: var(--accent-gold);
+}
+.portfolio-slide--dark .case-detail-value {
+    color: var(--primary-soft);
+}
+
+.case-result-box {
+    margin-top: 14px;
+    padding: 12px 18px;
+    background: var(--primary-soft);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 8px 8px 0;
+    font-weight: 600;
+    color: var(--primary-dark);
+    font-size: 0.95rem;
+}
+
+.portfolio-slide--dark .case-result-box {
+    background: rgba(232, 184, 77, 0.1);
+    border-left-color: var(--accent-gold);
+    color: var(--accent-gold);
+}
+
+/* Circle Stats Badges */
+.stat-badges-row {
+    display: flex;
+    gap: 20px;
+    margin-top: 16px;
+}
+
+.stat-badge-circle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+}
+
+.stat-badge-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid var(--primary);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--primary);
+}
+
+.stat-badge-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-weight: 600;
+    text-align: center;
+}
+
+.portfolio-slide--dark .stat-badge-icon {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+}
+.portfolio-slide--dark .stat-badge-label {
+    color: var(--primary-soft);
+}
+
+/* Timeline columns */
+.timeline-columns {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 24px;
+}
+
+.timeline-col {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.timeline-col:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.timeline-col-year {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 12px;
+    border-bottom: 2px solid var(--primary-soft);
+    padding-bottom: 6px;
+}
+
+.timeline-col-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.84rem;
+    color: var(--muted);
+}
+
+.timeline-col-list li {
+    position: relative;
+    padding-left: 14px;
+}
+
+.timeline-col-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+}
+
+/* Logos Bar */
+.brand-logos-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    margin-bottom: 24px;
+}
+
+.brand-logo-item {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+/* Side title rotate */
+.side-vertical-title {
+    position: absolute;
+    top: 48px;
+    left: 12px;
+    transform: rotate(-90deg) translateX(-100%);
+    transform-origin: top left;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: rgba(212, 97, 123, 0.3);
+}
+
+.portfolio-slide--dark .side-vertical-title {
+    color: rgba(255,255,255,0.08);
+}
+
+/* Mobile responsive additions for slide designs */
+@media(max-width: 900px) {
+    .slide-grid-2 {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+    .brand-board-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .timeline-columns {
+        grid-template-columns: 1fr 1fr;
+    }
+    .portfolio-slide {
+        padding: 32px;
+        min-height: auto;
+    }
+}
+
+@media(max-width: 600px) {
+    .brand-board-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .timeline-columns {
+        grid-template-columns: 1fr;
+    }
+    .index-grid {
+        grid-template-columns: 1fr;
+    }
+    .phone-mockups-container {
+        flex-wrap: wrap;
+    }
+}
+
+.cv-section {
+    display:flex;
+    align-items:center;
+    gap:24px;
+    padding:32px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-sm);
+}
+
+.cv-section p {
+    color:var(--muted);
+    margin:0;
+    flex:1;
+}
 
 /* ===== STORE ===== */
 .store-hero{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
