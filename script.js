@@ -162,7 +162,7 @@ async function loadPublishedBlogs() {
         }
     }
 
-    if (location.protocol === "file:") {
+    if (location.protocol === "file:" || location.hostname === "localhost" || location.hostname === "127.0.0.1") {
         console.warn("Using fallback blog data for local file preview.");
         return blogPosts;
     }

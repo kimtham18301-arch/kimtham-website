@@ -202,22 +202,6 @@ h3{margin-bottom:10px;font-size:1.15rem;line-height:1.35}
 
 /* ===== PORTFOLIO MODERN MINIMALIST AESTHETIC ===== */
 body[data-page="portfolio"] {
-    --primary: #9e8a78; /* Sand/taupe */
-    --primary-dark: #7c6b5b; /* Earthy brown */
-    --primary-soft: #fbfaf8; /* Ivory cream */
-    --primary-glow: rgba(158, 138, 120, 0.08);
-
-    --ink: #2b2825; /* Charcoal/soft black */
-    --muted: #78736d; /* Muted grey */
-    --surface: #ffffff; /* Crisp white */
-    --surface-soft: #fdfdfc; /* Clean ivory */
-    --surface-warm: #f6f4ee; /* Pale warm beige */
-    --line: #e6e1d8; /* Thin beige/grey line */
-
-    --accent-gold: #c3a682; /* Champagne gold */
-    --accent-sage: #91a396; /* Pale sage green */
-    --accent-lavender: #aba1b8;
-    
     font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
     background-color: var(--surface-soft);
     color: var(--ink);
@@ -236,13 +220,13 @@ body[data-page="portfolio"] h4 {
 
 body[data-page="portfolio"] .site-header {
     border-bottom: 1px solid var(--line);
-    background: rgba(253, 253, 252, 0.95);
+    background: rgba(255, 255, 255, 0.95);
 }
 
 body[data-page="portfolio"] .nav-links a:hover,
 body[data-page="portfolio"] .nav-links a.active {
     color: var(--primary-dark);
-    background: var(--surface-warm);
+    background: var(--primary-soft);
 }
 
 /* Portfolio Layout */
@@ -278,7 +262,7 @@ body[data-page="portfolio"] .nav-links a.active {
 .premium-img-placeholder {
     width: 100%;
     aspect-ratio: 4/3;
-    background-color: var(--surface-warm);
+    background-color: var(--primary-soft);
     border: 1px solid var(--line);
     border-radius: 12px;
     display: flex;
@@ -300,7 +284,7 @@ body[data-page="portfolio"] .nav-links a.active {
     content: "❖";
     font-size: 1.6rem;
     margin-bottom: 10px;
-    color: var(--accent-gold);
+    color: var(--primary);
 }
 
 .asym-offset-bg {
@@ -332,7 +316,7 @@ body[data-page="portfolio"] .nav-links a.active {
 }
 
 .skill-category-card:hover {
-    border-color: var(--accent-gold);
+    border-color: var(--primary);
     box-shadow: var(--shadow-sm);
 }
 
@@ -351,12 +335,12 @@ body[data-page="portfolio"] .nav-links a.active {
 }
 
 .tool-tag {
-    background: var(--surface-warm);
+    background: var(--primary-soft);
     border: 1px solid var(--line);
     padding: 4px 10px;
     border-radius: 6px;
     font-size: 0.76rem;
-    color: var(--muted);
+    color: var(--primary-dark);
 }
 
 /* Featured Projects */
@@ -396,7 +380,7 @@ body[data-page="portfolio"] .nav-links a.active {
     display: inline-block;
     font-size: 0.72rem;
     font-weight: 700;
-    color: var(--accent-gold);
+    color: var(--primary-dark);
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin-bottom: 10px;
@@ -434,7 +418,7 @@ body[data-page="portfolio"] .nav-links a.active {
     content: "—";
     position: absolute;
     left: 0;
-    color: var(--accent-gold);
+    color: var(--primary);
 }
 
 .project-kpis {
@@ -466,7 +450,7 @@ body[data-page="portfolio"] .nav-links a.active {
 
 /* Custom E-commerce Stat Dashboard */
 .stats-dashboard {
-    background: var(--surface-warm);
+    background: var(--primary-soft);
     border: 1px solid var(--line);
     border-radius: 16px;
     padding: 32px;
@@ -488,7 +472,7 @@ body[data-page="portfolio"] .nav-links a.active {
 .stats-dash-card:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
-    border-color: var(--accent-gold);
+    border-color: var(--primary);
 }
 
 .stats-dash-val {
@@ -546,7 +530,7 @@ body[data-page="portfolio"] .nav-links a.active {
 }
 
 .tiktok-metric-box {
-    background: var(--surface-warm);
+    background: var(--primary-soft);
     padding: 12px;
     border-radius: 8px;
     text-align: center;
@@ -911,7 +895,7 @@ body[data-page="portfolio"] .nav-links a.active {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--surface-warm);
+    background: var(--primary-soft);
     border: 1px solid var(--line);
     border-radius: 16px;
     padding: 40px;
