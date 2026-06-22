@@ -150,7 +150,16 @@ Admin.api = async (endpoint, opts = {}) => {
         headers['Content-Type'] = 'application/json';
     }
     if (Admin.csrfToken) headers['X-CSRF-Token'] = Admin.csrfToken;
-    const res = await fetch(Admin.API + endpoint, {
+    
+    // Add cache buster for GET requests to prevent browser caching
+    let url = Admin.API + endpoint;
+    const isGet = !opts.method || opts.method.toUpperCase() === 'GET';
+    if (isGet) {
+        const sep = url.includes('?') ? '&' : '?';
+        url = `${url}${sep}_=${Date.now()}`;
+    }
+
+    const res = await fetch(url, {
         ...opts,
         cache: 'no-store',
         credentials: 'include',
