@@ -46,16 +46,4 @@ jobs:
           exclude: |
             *.json
 
-      - name: Prepare temp deploy storage
-        run: |
-          mkdir temp_deploy_storage
-          cp storage/portfolio.json temp_deploy_storage/
 
-      - name: Deploy portfolio database temporarily
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./temp_deploy_storage/
-          server-dir: /domains/kimtham.id.vn/storage/
