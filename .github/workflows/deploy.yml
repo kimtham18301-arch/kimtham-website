@@ -44,7 +44,7 @@ jobs:
           local-dir: ./storage/
           server-dir: /domains/kimtham.id.vn/storage/
           exclude: |
-            # *.json
+            *.json
 
 
 
