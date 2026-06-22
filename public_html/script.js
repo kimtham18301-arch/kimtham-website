@@ -380,108 +380,89 @@ async function loadPortfolioCases() {
 
 async function initPortfolio() {
     const grid = document.getElementById("caseGrid");
-    if (!grid) return;
+    const container = document.getElementById("additionalProjectsBlock");
 
     try {
         const cases = await loadPortfolioCases();
-        if (!cases.length) {
-            grid.innerHTML = `<div class="empty-state"><h3>Chưa có case study</h3><p>Hãy thêm case study trong admin để hiển thị tại đây.</p></div>`;
+        if (!cases || !cases.length) {
+            if (container) container.style.display = "none";
             return;
         }
 
-        grid.innerHTML = cases.map((item, index) => {
-            const tagColor = ["pink", "sage", "lavender", "gold"].includes(item.tagColor) ? item.tagColor : "pink";
+        // Dynamically bind the core 3 projects if they exist in the CMS JSON database
+        const c1 = cases.find(c => c && c.id === "case_001");
+        if (c1) {
+            const titleEl = document.getElementById("cms-case-001-title");
+            if (titleEl && c1.title) titleEl.textContent = c1.title;
+            const descEl = document.getElementById("cms-case-001-desc");
+            if (descEl && c1.execution) descEl.textContent = c1.execution;
+            const kpiDescEl = document.getElementById("cms-case-001-kpi-desc");
+            if (kpiDescEl && c1.problem) kpiDescEl.textContent = c1.problem;
+            const kpiHighEl = document.getElementById("cms-case-001-kpi-highlight");
+            if (kpiHighEl && c1.result) kpiHighEl.textContent = c1.result;
+        }
+
+        const c2 = cases.find(c => c && c.id === "case_002");
+        if (c2) {
+            const titleEl = document.getElementById("cms-case-002-title");
+            if (titleEl && c2.title) titleEl.textContent = c2.title;
+            const descEl = document.getElementById("cms-case-002-desc");
+            if (descEl && c2.execution) descEl.textContent = c2.execution;
+            const kpiDescEl = document.getElementById("cms-case-002-kpi-desc");
+            if (kpiDescEl && c2.problem) kpiDescEl.textContent = c2.problem;
+            const kpiHighEl = document.getElementById("cms-case-002-kpi-highlight");
+            if (kpiHighEl && c2.result) kpiHighEl.textContent = c2.result;
+        }
+
+        const c3 = cases.find(c => c && c.id === "case_003");
+        if (c3) {
+            const kpiDesc1El = document.getElementById("cms-case-003-kpi-desc-1");
+            if (kpiDesc1El && c3.execution) kpiDesc1El.textContent = c3.execution;
+            const kpiHigh1El = document.getElementById("cms-case-003-kpi-highlight-1");
+            if (kpiHigh1El && c3.result) kpiHigh1El.textContent = c3.result;
             
-            // Image mockups: if case study has an image, render it inside the phone screen mockup; otherwise keep it empty/blank placeholder
-            const mockupImage = item.image ? 
-                `<img src="${esc(item.image)}" alt="${esc(item.title || '')}" style="width: 100%; height: 100%; object-fit: cover;">` : 
-                `<div class="image-placeholder" style="width: 100%; height: 100%; border: none; border-radius: 0;">
-                    <svg viewBox="0 0 24 24" style="width: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"/></svg>
-                    <span style="font-size: 0.6rem;">Đang để trống</span>
-                 </div>`;
-            
-            // Randomly alternate slides background for a dynamic aesthetic: odd items can have a dark slide background
-            const isDark = index % 2 === 1;
-            const slideClass = isDark ? "portfolio-slide portfolio-slide--dark" : "portfolio-slide";
-            const indexStr = String(index + 1).padStart(2, '0');
-            const sideTitle = `Case Study ${indexStr}`;
+            const kpiDesc2El = document.getElementById("cms-case-003-kpi-desc-2");
+            if (kpiDesc2El && c3.strategy) kpiDesc2El.textContent = c3.strategy;
+            const kpiHigh2El = document.getElementById("cms-case-003-kpi-highlight-2");
+            if (kpiHigh2El && c3.insight) kpiHigh2El.textContent = c3.insight;
+        }
 
-            return `
-                <section class="${slideClass} reveal visible" id="case-${item.id || index}">
-                    <div class="side-vertical-title">${esc(sideTitle)}</div>
-                    <div class="slide-grid-2">
-                        <div class="phone-mockups-container">
-                            <div class="phone-mockup">
-                                <div class="phone-screen">
-                                    ${mockupImage}
-                                </div>
-                            </div>
-                            <div class="phone-mockup" style="margin-top: 20px;">
-                                <div class="phone-screen">
-                                    <div class="image-placeholder" style="width: 100%; height: 100%; border: none; border-radius: 0;">
-                                        <svg viewBox="0 0 24 24" style="width: 20px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"/></svg>
-                                        <span style="font-size: 0.6rem;">Đang để trống</span>
-                                    </div>
-                                </div>
-                            </div>
+        // Filter out the main 3 projects to see if there are any extra cases
+        const featuredIds = ["case_001", "case_002", "case_003"];
+        const extraCases = cases.filter(c => c && !featuredIds.includes(c.id));
+
+        if (!extraCases.length) {
+            if (container) container.style.display = "none";
+            document.body.classList.remove("has-extra-cases");
+            return;
+        }
+
+        if (container) container.style.display = "block";
+        document.body.classList.add("has-extra-cases");
+
+        if (grid) {
+            grid.innerHTML = extraCases.map((item, index) => {
+                const tagColor = ["pink", "sage", "lavender", "gold"].includes(item.tagColor) ? item.tagColor : "sage";
+                const tagClass = `tag tag--${tagColor}`;
+                
+                return `
+                    <article class="skill-category-card reveal visible" id="case-${item.id || index}">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                            <span class="${tagClass}">${esc(item.tag || "Dự án")}</span>
+                            <span style="font-size:0.75rem; color:var(--muted); font-weight:600;">Case Study</span>
                         </div>
-                        <div>
-                            <p class="eyebrow" style="margin-bottom: 8px;">Case Study // ${esc(item.tag || "")}</p>
-                            <h2 style="font-size: 1.6rem; margin-bottom: 16px;">${esc(item.title || "")}</h2>
-                            
-                            <div class="case-details-list">
-                                ${item.problem ? `
-                                <div class="case-detail-item">
-                                    <div class="case-detail-label">Problem (Vấn đề)</div>
-                                    <div class="case-detail-value">${esc(item.problem)}</div>
-                                </div>` : ''}
-                                
-                                ${item.insight ? `
-                                <div class="case-detail-item">
-                                    <div class="case-detail-label">Insight (Sự thật ngầm hiểu)</div>
-                                    <div class="case-detail-value">${esc(item.insight)}</div>
-                                </div>` : ''}
-
-                                ${item.strategy ? `
-                                <div class="case-detail-item">
-                                    <div class="case-detail-label">Strategy (Chiến lược)</div>
-                                    <div class="case-detail-value">${esc(item.strategy)}</div>
-                                </div>` : ''}
-
-                                ${item.execution ? `
-                                <div class="case-detail-item">
-                                    <div class="case-detail-label">Execution (Triển khai)</div>
-                                    <div class="case-detail-value">${esc(item.execution)}</div>
-                                </div>` : ''}
-                            </div>
-                            
-                            ${item.result ? `
-                            <div class="case-result-box">
-                                <div style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase; margin-bottom: 2px;">Result (Kết quả)</div>
-                                <div>${esc(item.result)}</div>
-                            </div>` : ''}
-
-                            <div class="stat-badges-row">
-                                <div class="stat-badge-circle">
-                                    <div class="stat-badge-icon">100k</div>
-                                    <div class="stat-badge-label">Views</div>
-                                </div>
-                                <div class="stat-badge-circle">
-                                    <div class="stat-badge-icon">2.2k</div>
-                                    <div class="stat-badge-label">Likes</div>
-                                </div>
-                                <div class="stat-badge-circle">
-                                    <div class="stat-badge-icon">10k</div>
-                                    <div class="stat-badge-label">Shares</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            `;
-        }).join("");
+                        <h3 style="font-size:1.1rem; margin-bottom:10px; text-transform:none; letter-spacing:0; font-family:inherit;">${esc(item.title || "")}</h3>
+                        
+                        ${item.problem ? `<p style="font-size:0.85rem; color:var(--muted); margin-bottom:8px; line-height:1.5;"><strong>Vấn đề:</strong> ${esc(item.problem)}</p>` : ''}
+                        ${item.execution ? `<p style="font-size:0.85rem; color:var(--muted); margin-bottom:8px; line-height:1.5;"><strong>Triển khai:</strong> ${esc(item.execution)}</p>` : ''}
+                        ${item.result ? `<p style="font-size:0.85rem; color:var(--primary-dark); font-weight:600; margin-top:10px; line-height:1.5;"><strong>Kết quả:</strong> ${esc(item.result)}</p>` : ''}
+                    </article>
+                `;
+            }).join("");
+        }
     } catch (err) {
-        grid.innerHTML = `<div class="empty-state"><h3>Không tải được portfolio</h3><p>${esc(err.message)}</p></div>`;
+        console.warn("Portfolio dynamic loader error:", err);
+        if (container) container.style.display = "none";
     }
 }
 

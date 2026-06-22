@@ -381,39 +381,85 @@ async function loadPortfolioCases() {
 async function initPortfolio() {
     const grid = document.getElementById("caseGrid");
     const container = document.getElementById("additionalProjectsBlock");
-    if (!grid) return;
 
     try {
         const cases = await loadPortfolioCases();
-        // Filter out the main 3 projects that are already featured on the page statically
+        if (!cases || !cases.length) {
+            if (container) container.style.display = "none";
+            return;
+        }
+
+        // Dynamically bind the core 3 projects if they exist in the CMS JSON database
+        const c1 = cases.find(c => c && c.id === "case_001");
+        if (c1) {
+            const titleEl = document.getElementById("cms-case-001-title");
+            if (titleEl && c1.title) titleEl.textContent = c1.title;
+            const descEl = document.getElementById("cms-case-001-desc");
+            if (descEl && c1.execution) descEl.textContent = c1.execution;
+            const kpiDescEl = document.getElementById("cms-case-001-kpi-desc");
+            if (kpiDescEl && c1.problem) kpiDescEl.textContent = c1.problem;
+            const kpiHighEl = document.getElementById("cms-case-001-kpi-highlight");
+            if (kpiHighEl && c1.result) kpiHighEl.textContent = c1.result;
+        }
+
+        const c2 = cases.find(c => c && c.id === "case_002");
+        if (c2) {
+            const titleEl = document.getElementById("cms-case-002-title");
+            if (titleEl && c2.title) titleEl.textContent = c2.title;
+            const descEl = document.getElementById("cms-case-002-desc");
+            if (descEl && c2.execution) descEl.textContent = c2.execution;
+            const kpiDescEl = document.getElementById("cms-case-002-kpi-desc");
+            if (kpiDescEl && c2.problem) kpiDescEl.textContent = c2.problem;
+            const kpiHighEl = document.getElementById("cms-case-002-kpi-highlight");
+            if (kpiHighEl && c2.result) kpiHighEl.textContent = c2.result;
+        }
+
+        const c3 = cases.find(c => c && c.id === "case_003");
+        if (c3) {
+            const kpiDesc1El = document.getElementById("cms-case-003-kpi-desc-1");
+            if (kpiDesc1El && c3.execution) kpiDesc1El.textContent = c3.execution;
+            const kpiHigh1El = document.getElementById("cms-case-003-kpi-highlight-1");
+            if (kpiHigh1El && c3.result) kpiHigh1El.textContent = c3.result;
+            
+            const kpiDesc2El = document.getElementById("cms-case-003-kpi-desc-2");
+            if (kpiDesc2El && c3.strategy) kpiDesc2El.textContent = c3.strategy;
+            const kpiHigh2El = document.getElementById("cms-case-003-kpi-highlight-2");
+            if (kpiHigh2El && c3.insight) kpiHigh2El.textContent = c3.insight;
+        }
+
+        // Filter out the main 3 projects to see if there are any extra cases
         const featuredIds = ["case_001", "case_002", "case_003"];
         const extraCases = cases.filter(c => c && !featuredIds.includes(c.id));
 
         if (!extraCases.length) {
             if (container) container.style.display = "none";
+            document.body.classList.remove("has-extra-cases");
             return;
         }
 
         if (container) container.style.display = "block";
+        document.body.classList.add("has-extra-cases");
 
-        grid.innerHTML = extraCases.map((item, index) => {
-            const tagColor = ["pink", "sage", "lavender", "gold"].includes(item.tagColor) ? item.tagColor : "sage";
-            const tagClass = `tag tag--${tagColor}`;
-            
-            return `
-                <article class="skill-category-card reveal visible" id="case-${item.id || index}">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                        <span class="${tagClass}">${esc(item.tag || "Dự án")}</span>
-                        <span style="font-size:0.75rem; color:var(--muted); font-weight:600;">Case Study</span>
-                    </div>
-                    <h3 style="font-size:1.1rem; margin-bottom:10px; text-transform:none; letter-spacing:0; font-family:inherit;">${esc(item.title || "")}</h3>
-                    
-                    ${item.problem ? `<p style="font-size:0.85rem; color:var(--muted); margin-bottom:8px; line-height:1.5;"><strong>Vấn đề:</strong> ${esc(item.problem)}</p>` : ''}
-                    ${item.execution ? `<p style="font-size:0.85rem; color:var(--muted); margin-bottom:8px; line-height:1.5;"><strong>Triển khai:</strong> ${esc(item.execution)}</p>` : ''}
-                    ${item.result ? `<p style="font-size:0.85rem; color:var(--primary-dark); font-weight:600; margin-top:10px; line-height:1.5;"><strong>Kết quả:</strong> ${esc(item.result)}</p>` : ''}
-                </article>
-            `;
-        }).join("");
+        if (grid) {
+            grid.innerHTML = extraCases.map((item, index) => {
+                const tagColor = ["pink", "sage", "lavender", "gold"].includes(item.tagColor) ? item.tagColor : "sage";
+                const tagClass = `tag tag--${tagColor}`;
+                
+                return `
+                    <article class="skill-category-card reveal visible" id="case-${item.id || index}">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                            <span class="${tagClass}">${esc(item.tag || "Dự án")}</span>
+                            <span style="font-size:0.75rem; color:var(--muted); font-weight:600;">Case Study</span>
+                        </div>
+                        <h3 style="font-size:1.1rem; margin-bottom:10px; text-transform:none; letter-spacing:0; font-family:inherit;">${esc(item.title || "")}</h3>
+                        
+                        ${item.problem ? `<p style="font-size:0.85rem; color:var(--muted); margin-bottom:8px; line-height:1.5;"><strong>Vấn đề:</strong> ${esc(item.problem)}</p>` : ''}
+                        ${item.execution ? `<p style="font-size:0.85rem; color:var(--muted); margin-bottom:8px; line-height:1.5;"><strong>Triển khai:</strong> ${esc(item.execution)}</p>` : ''}
+                        ${item.result ? `<p style="font-size:0.85rem; color:var(--primary-dark); font-weight:600; margin-top:10px; line-height:1.5;"><strong>Kết quả:</strong> ${esc(item.result)}</p>` : ''}
+                    </article>
+                `;
+            }).join("");
+        }
     } catch (err) {
         console.warn("Portfolio dynamic loader error:", err);
         if (container) container.style.display = "none";
