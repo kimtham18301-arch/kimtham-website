@@ -108,23 +108,179 @@ Admin.blogForm = async (main, isEdit) => {
 // ==================== PORTFOLIO ====================
 Admin.registerRoute('portfolio', async (main, param) => {
     if (param === 'new' || param === 'edit') return Admin.portfolioForm(main, param === 'edit');
-    main.innerHTML = '<div class="page-header"><div><h1>Portfolio</h1><p>Quản lý case studies</p></div><div class="page-actions"><button class="btn btn--primary" id="btnNewCase">+ Case study mới</button></div></div><div class="data-table-wrap"><table class="data-table"><thead><tr><th>Tiêu đề</th><th>Tag</th><th></th></tr></thead><tbody id="caseTable"></tbody></table></div>';
+    
+    main.innerHTML = `
+        <div class="page-header">
+            <div>
+                <h1>Portfolio</h1>
+                <p>Quản lý nội dung slides và case studies</p>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="slide-content">Nội dung Slide</button>
+            <button class="tab-btn" data-tab="case-studies">Case Studies</button>
+        </div>
+        
+        <div class="tab-content active" id="tab-slide-content">
+            <div class="form-panel" id="portfolioSlidesForm">
+                <p>Đang tải...</p>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="tab-case-studies">
+            <div class="page-actions" style="margin-bottom: 20px; display: flex; justify-content: flex-end;">
+                <button class="btn btn--primary" id="btnNewCase">+ Case study mới</button>
+            </div>
+            <div class="data-table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Tiêu đề</th>
+                            <th>Tag</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="caseTable"></tbody>
+                </table>
+            </div>
+        </div>
+    `;
+    
+    // Tab switching
+    Admin.$$('.tab-btn').forEach(btn => {
+        btn.onclick = () => {
+            Admin.$$('.tab-btn').forEach(b => b.classList.remove('active'));
+            Admin.$$('.tab-content').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            const tabId = btn.dataset.tab;
+            Admin.$(`#tab-${tabId}`).classList.add('active');
+        };
+    });
+    
     Admin.$('#btnNewCase').onclick = () => Admin.navigate('#/portfolio/new');
+    
     try {
-        const data = await Admin.api('portfolio.php');
-        const rows = (data.items||[]).map(c => `<tr>
+        const [pagesData, casesData] = await Promise.all([
+            Admin.api('pages.php'),
+            Admin.api('portfolio.php')
+        ]);
+        
+        const pages = pagesData.pages || {};
+        const portfolio = pages.portfolio || {};
+        const cases = casesData.items || [];
+        
+        // Render slide content form in Tab 1
+        Admin.$('#portfolioSlidesForm').innerHTML = `
+            <div class="form-grid">
+                <div class="form-group form-group--full"><h3>Thông tin Cover (Slide 01)</h3></div>
+                <div class="form-group"><label class="form-label">Cover Title</label><input class="form-input" id="pg_ptCoverTitle" value="${Admin.esc(portfolio.coverTitle||'')}"></div>
+                <div class="form-group"><label class="form-label">Cover Name</label><input class="form-input" id="pg_ptCoverName" value="${Admin.esc(portfolio.coverName||'')}"></div>
+                <div class="form-group"><label class="form-label">Cover Role</label><input class="form-input" id="pg_ptCoverRole" value="${Admin.esc(portfolio.coverRole||'')}"></div>
+                
+                <div class="form-group form-group--full"><h3>Mục tiêu Nghề nghiệp (Slide 03)</h3></div>
+                <div class="form-group form-group--full"><label class="form-label">Mục tiêu ngắn hạn</label><textarea class="form-textarea" id="pg_ptShortTerm" rows="3">${Admin.esc(portfolio.aboutShortTerm||'')}</textarea></div>
+                <div class="form-group form-group--full"><label class="form-label">Mục tiêu dài hạn</label><textarea class="form-textarea" id="pg_ptLongTerm" rows="3">${Admin.esc(portfolio.aboutLongTerm||'')}</textarea></div>
+                
+                <div class="form-group form-group--full"><h3>Thông tin Cá nhân (Slide 03 - Liên hệ)</h3></div>
+                <div class="form-group"><label class="form-label">Ngày sinh</label><input class="form-input" id="pg_ptBirthday" value="${Admin.esc(portfolio.aboutBirthday||'')}"></div>
+                <div class="form-group"><label class="form-label">Điện thoại</label><input class="form-input" id="pg_ptPhone" value="${Admin.esc(portfolio.aboutPhone||'')}"></div>
+                <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="pg_ptEmail" value="${Admin.esc(portfolio.aboutEmail||'')}"></div>
+                <div class="form-group"><label class="form-label">Địa chỉ</label><input class="form-input" id="pg_ptAddress" value="${Admin.esc(portfolio.aboutAddress||'')}"></div>
+                
+                <div class="form-group form-group--full"><h3>Kênh TikTok @chamchiontap (Slide 04)</h3></div>
+                <div class="form-group form-group--full"><label class="form-label">Định hướng kênh</label><textarea class="form-textarea" id="pg_ptEduBio" rows="2">${Admin.esc(portfolio.tiktokEduBio||'')}</textarea></div>
+                <div class="form-group form-group--full"><label class="form-label">Tệp khán giả</label><textarea class="form-textarea" id="pg_ptEduAudience" rows="2">${Admin.esc(portfolio.tiktokEduAudience||'')}</textarea></div>
+                <div class="form-group form-group--full"><label class="form-label">Chỉ số nổi bật 1 (Tìm kiếm)</label><textarea class="form-textarea" id="pg_ptEduStat1" rows="3">${Admin.esc(portfolio.tiktokEduStat1||'')}</textarea></div>
+                <div class="form-group form-group--full"><label class="form-label">Chỉ số nổi bật 2 (Chuyển đổi)</label><textarea class="form-textarea" id="pg_ptEduStat2" rows="3">${Admin.esc(portfolio.tiktokEduStat2||'')}</textarea></div>
+    
+                <div class="form-group form-group--full"><h3>Kênh TikTok @tham_hoc_ai (Slide 05)</h3></div>
+                <div class="form-group form-group--full"><label class="form-label">Định hướng kênh</label><textarea class="form-textarea" id="pg_ptPersonalBio" rows="2">${Admin.esc(portfolio.tiktokPersonalBio||'')}</textarea></div>
+                <div class="form-group form-group--full"><label class="form-label">Tệp khán giả</label><textarea class="form-textarea" id="pg_ptPersonalAudience" rows="2">${Admin.esc(portfolio.tiktokPersonalAudience||'')}</textarea></div>
+                <div class="form-group form-group--full"><label class="form-label">Chỉ số nổi bật 1</label><textarea class="form-textarea" id="pg_ptPersonalStat1" rows="3">${Admin.esc(portfolio.tiktokPersonalStat1||'')}</textarea></div>
+                <div class="form-group form-group--full"><label class="form-label">Chỉ số nổi bật 2</label><textarea class="form-textarea" id="pg_ptPersonalStat2" rows="3">${Admin.esc(portfolio.tiktokPersonalStat2||'')}</textarea></div>
+                
+                <div class="form-group form-group--full"><h3>Kỹ năng chuyên môn (Slide 06)</h3></div>
+                <div class="form-group form-group--full"><label class="form-label">AI Tools & Automation</label><textarea class="form-textarea" id="pg_ptSkillAI" rows="2">${Admin.esc(portfolio.skillAI||'')}</textarea></div>
+                <div class="form-group form-group--full"><label class="form-label">Data Analysis & SEO</label><textarea class="form-textarea" id="pg_ptSkillSEO" rows="2">${Admin.esc(portfolio.skillSEO||'')}</textarea></div>
+                <div class="form-group form-group--full"><label class="form-label">Creative Content & Production</label><textarea class="form-textarea" id="pg_ptSkillCreative" rows="2">${Admin.esc(portfolio.skillCreative||'')}</textarea></div>
+                <div class="form-group form-group--full"><label class="form-label">Soft Skills</label><textarea class="form-textarea" id="pg_ptSkillSoft" rows="2">${Admin.esc(portfolio.skillSoft||'')}</textarea></div>
+    
+                <div class="form-group form-group--full"><h3>Học vấn & Chứng chỉ (Slide 07)</h3></div>
+                <div class="form-group form-group--full"><label class="form-label">Học vấn</label><textarea class="form-textarea" id="pg_ptEduText" rows="2">${Admin.esc(portfolio.eduText||'')}</textarea></div>
+                <div class="form-group form-group--full"><label class="form-label">Chứng chỉ</label><textarea class="form-textarea" id="pg_ptCertText" rows="2">${Admin.esc(portfolio.certText||'')}</textarea></div>
+    
+                <div class="form-group form-group--full"><h3>Phản hồi từ quản lý & khách hàng (Slide 09)</h3></div>
+                <div class="form-group form-group--full"><label class="form-label">Đánh giá 1 (Quản lý)</label><textarea class="form-textarea" id="pg_ptFeedback1" rows="2">${Admin.esc(portfolio.feedback1||'')}</textarea></div>
+                <div class="form-group form-group--full"><label class="form-label">Đánh giá 2 (Khách hàng 1)</label><textarea class="form-textarea" id="pg_ptFeedback2" rows="2">${Admin.esc(portfolio.feedback2||'')}</textarea></div>
+                <div class="form-group form-group--full"><label class="form-label">Đánh giá 3 (Khách hàng 2)</label><textarea class="form-textarea" id="pg_ptFeedback3" rows="2">${Admin.esc(portfolio.feedback3||'')}</textarea></div>
+            </div>
+            
+            <div class="form-actions" style="margin-top:20px;">
+                <button class="btn btn--primary" id="btnSavePortfolioSlides">Lưu cấu hình Slide</button>
+            </div>
+        `;
+        
+        // Save slide content logic
+        Admin.$('#btnSavePortfolioSlides').onclick = async () => {
+            const updatedPortfolio = {
+                coverTitle: Admin.$('#pg_ptCoverTitle').value.trim(),
+                coverName: Admin.$('#pg_ptCoverName').value.trim(),
+                coverRole: Admin.$('#pg_ptCoverRole').value.trim(),
+                aboutShortTerm: Admin.$('#pg_ptShortTerm').value.trim(),
+                aboutLongTerm: Admin.$('#pg_ptLongTerm').value.trim(),
+                aboutBirthday: Admin.$('#pg_ptBirthday').value.trim(),
+                aboutPhone: Admin.$('#pg_ptPhone').value.trim(),
+                aboutEmail: Admin.$('#pg_ptEmail').value.trim(),
+                aboutAddress: Admin.$('#pg_ptAddress').value.trim(),
+                tiktokEduBio: Admin.$('#pg_ptEduBio').value.trim(),
+                tiktokEduAudience: Admin.$('#pg_ptEduAudience').value.trim(),
+                tiktokEduStat1: Admin.$('#pg_ptEduStat1').value.trim(),
+                tiktokEduStat2: Admin.$('#pg_ptEduStat2').value.trim(),
+                tiktokPersonalBio: Admin.$('#pg_ptPersonalBio').value.trim(),
+                tiktokPersonalAudience: Admin.$('#pg_ptPersonalAudience').value.trim(),
+                tiktokPersonalStat1: Admin.$('#pg_ptPersonalStat1').value.trim(),
+                tiktokPersonalStat2: Admin.$('#pg_ptPersonalStat2').value.trim(),
+                skillAI: Admin.$('#pg_ptSkillAI').value.trim(),
+                skillSEO: Admin.$('#pg_ptSkillSEO').value.trim(),
+                skillCreative: Admin.$('#pg_ptSkillCreative').value.trim(),
+                skillSoft: Admin.$('#pg_ptSkillSoft').value.trim(),
+                eduText: Admin.$('#pg_ptEduText').value.trim(),
+                certText: Admin.$('#pg_ptCertText').value.trim(),
+                feedback1: Admin.$('#pg_ptFeedback1').value.trim(),
+                feedback2: Admin.$('#pg_ptFeedback2').value.trim(),
+                feedback3: Admin.$('#pg_ptFeedback3').value.trim()
+            };
+            
+            try {
+                await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'portfolio', data: updatedPortfolio }) });
+                Admin.toast('Đã lưu cấu hình slide thành công!','success');
+            } catch(e) { Admin.toast(e.message,'error'); }
+        };
+        
+        // Render cases table in Tab 2
+        const rows = (cases||[]).map(c => `<tr>
             <td><strong>${Admin.esc(c.title)}</strong></td>
             <td><span class="tag tag--${c.tagColor||'pink'}">${Admin.esc(c.tag)}</span></td>
             <td><div class="row-actions"><button class="btn btn--ghost btn--small" data-cedit="${c.id}">Sửa</button><button class="btn btn--danger btn--small" data-cdel="${c.id}">Xóa</button></div></td>
         </tr>`).join('');
         Admin.$('#caseTable').innerHTML = rows || '<tr><td colspan="3"><div class="empty-state"><h3>Chưa có case study</h3></div></td></tr>';
+        
         Admin.$$('[data-cedit]').forEach(btn => btn.onclick = () => { Admin._editCaseId = btn.dataset.cedit; Admin.navigate('#/portfolio/edit'); });
         Admin.$$('[data-cdel]').forEach(btn => btn.onclick = async () => {
             if (await Admin.confirm('Xóa case study','Bạn có chắc?')) {
-                try { await Admin.api('portfolio.php',{method:'DELETE',body:JSON.stringify({id:btn.dataset.cdel})}); Admin.toast('Đã xóa','success'); Admin.handleRoute(); } catch(e){Admin.toast(e.message,'error');}
+                try { 
+                    await Admin.api('portfolio.php',{method:'DELETE',body:JSON.stringify({id:btn.dataset.cdel})}); 
+                    Admin.toast('Đã xóa','success'); 
+                    Admin.handleRoute(); 
+                } catch(e){Admin.toast(e.message,'error');}
             }
         });
-    } catch(e) { Admin.toast(e.message,'error'); }
+        
+    } catch(e) { 
+        Admin.$('#portfolioSlidesForm').innerHTML = `<div class="empty-state"><h3>Không thể tải dữ liệu</h3><p>${Admin.esc(e.message)}</p></div>`;
+        Admin.toast(e.message,'error'); 
+    }
 });
 
 Admin.portfolioForm = async (main, isEdit) => {
@@ -274,42 +430,12 @@ Admin.registerRoute('pages', async (main) => {
         
         <h2 style="margin-top:28px">Trang Portfolio</h2>
         <div class="form-grid">
-            <div class="form-group"><label class="form-label">Cover Title</label><input class="form-input" id="pg_ptCoverTitle" value="${Admin.esc(portfolio.coverTitle||'')}"></div>
-            <div class="form-group"><label class="form-label">Cover Name</label><input class="form-input" id="pg_ptCoverName" value="${Admin.esc(portfolio.coverName||'')}"></div>
-            <div class="form-group"><label class="form-label">Cover Role</label><input class="form-input" id="pg_ptCoverRole" value="${Admin.esc(portfolio.coverRole||'')}"></div>
-            <div class="form-group form-group--full"><label class="form-label">Mục tiêu ngắn hạn</label><textarea class="form-textarea" id="pg_ptShortTerm" rows="2">${Admin.esc(portfolio.aboutShortTerm||'')}</textarea></div>
-            <div class="form-group form-group--full"><label class="form-label">Mục tiêu dài hạn</label><textarea class="form-textarea" id="pg_ptLongTerm" rows="2">${Admin.esc(portfolio.aboutLongTerm||'')}</textarea></div>
-            <div class="form-group"><label class="form-label">Ngày sinh</label><input class="form-input" id="pg_ptBirthday" value="${Admin.esc(portfolio.aboutBirthday||'')}"></div>
-            <div class="form-group"><label class="form-label">Điện thoại</label><input class="form-input" id="pg_ptPhone" value="${Admin.esc(portfolio.aboutPhone||'')}"></div>
-            <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="pg_ptEmail" value="${Admin.esc(portfolio.aboutEmail||'')}"></div>
-            <div class="form-group"><label class="form-label">Địa chỉ</label><input class="form-input" id="pg_ptAddress" value="${Admin.esc(portfolio.aboutAddress||'')}"></div>
-            
-            <div class="form-group form-group--full"><h3>Kênh TikTok @chamchiontap</h3></div>
-            <div class="form-group form-group--full"><label class="form-label">Định hướng kênh</label><textarea class="form-textarea" id="pg_ptEduBio" rows="2">${Admin.esc(portfolio.tiktokEduBio||'')}</textarea></div>
-            <div class="form-group form-group--full"><label class="form-label">Tệp khán giả</label><textarea class="form-textarea" id="pg_ptEduAudience" rows="2">${Admin.esc(portfolio.tiktokEduAudience||'')}</textarea></div>
-            <div class="form-group form-group--full"><label class="form-label">Chỉ số nổi bật 1 (Tìm kiếm)</label><textarea class="form-textarea" id="pg_ptEduStat1" rows="2">${Admin.esc(portfolio.tiktokEduStat1||'')}</textarea></div>
-            <div class="form-group form-group--full"><label class="form-label">Chỉ số nổi bật 2 (Chuyển đổi)</label><textarea class="form-textarea" id="pg_ptEduStat2" rows="2">${Admin.esc(portfolio.tiktokEduStat2||'')}</textarea></div>
-
-            <div class="form-group form-group--full"><h3>Kênh TikTok @tham_hoc_ai</h3></div>
-            <div class="form-group form-group--full"><label class="form-label">Định hướng kênh</label><textarea class="form-textarea" id="pg_ptPersonalBio" rows="2">${Admin.esc(portfolio.tiktokPersonalBio||'')}</textarea></div>
-            <div class="form-group form-group--full"><label class="form-label">Tệp khán giả</label><textarea class="form-textarea" id="pg_ptPersonalAudience" rows="2">${Admin.esc(portfolio.tiktokPersonalAudience||'')}</textarea></div>
-            <div class="form-group form-group--full"><label class="form-label">Chỉ số nổi bật 1</label><textarea class="form-textarea" id="pg_ptPersonalStat1" rows="2">${Admin.esc(portfolio.tiktokPersonalStat1||'')}</textarea></div>
-            <div class="form-group form-group--full"><label class="form-label">Chỉ số nổi bật 2</label><textarea class="form-textarea" id="pg_ptPersonalStat2" rows="2">${Admin.esc(portfolio.tiktokPersonalStat2||'')}</textarea></div>
-            
-            <div class="form-group form-group--full"><h3>Kỹ năng chuyên môn</h3></div>
-            <div class="form-group form-group--full"><label class="form-label">AI Tools & Automation</label><textarea class="form-textarea" id="pg_ptSkillAI" rows="2">${Admin.esc(portfolio.skillAI||'')}</textarea></div>
-            <div class="form-group form-group--full"><label class="form-label">Data Analysis & SEO</label><textarea class="form-textarea" id="pg_ptSkillSEO" rows="2">${Admin.esc(portfolio.skillSEO||'')}</textarea></div>
-            <div class="form-group form-group--full"><label class="form-label">Creative Content & Production</label><textarea class="form-textarea" id="pg_ptSkillCreative" rows="2">${Admin.esc(portfolio.skillCreative||'')}</textarea></div>
-            <div class="form-group form-group--full"><label class="form-label">Soft Skills</label><textarea class="form-textarea" id="pg_ptSkillSoft" rows="2">${Admin.esc(portfolio.skillSoft||'')}</textarea></div>
-
-            <div class="form-group form-group--full"><h3>Học vấn & Chứng chỉ</h3></div>
-            <div class="form-group form-group--full"><label class="form-label">Học vấn</label><textarea class="form-textarea" id="pg_ptEduText" rows="2">${Admin.esc(portfolio.eduText||'')}</textarea></div>
-            <div class="form-group form-group--full"><label class="form-label">Chứng chỉ</label><textarea class="form-textarea" id="pg_ptCertText" rows="2">${Admin.esc(portfolio.certText||'')}</textarea></div>
-
-            <div class="form-group form-group--full"><h3>Phản hồi từ quản lý & khách hàng</h3></div>
-            <div class="form-group form-group--full"><label class="form-label">Đánh giá 1 (Quản lý)</label><textarea class="form-textarea" id="pg_ptFeedback1" rows="2">${Admin.esc(portfolio.feedback1||'')}</textarea></div>
-            <div class="form-group form-group--full"><label class="form-label">Đánh giá 2 (Khách hàng 1)</label><textarea class="form-textarea" id="pg_ptFeedback2" rows="2">${Admin.esc(portfolio.feedback2||'')}</textarea></div>
-            <div class="form-group form-group--full"><label class="form-label">Đánh giá 3 (Khách hàng 2)</label><textarea class="form-textarea" id="pg_ptFeedback3" rows="2">${Admin.esc(portfolio.feedback3||'')}</textarea></div>
+            <div class="form-group form-group--full">
+                <div style="background: var(--a-primary-soft); color: var(--a-primary); border-radius: var(--a-radius); padding: 16px; font-weight: 500; border-left: 4px solid var(--a-primary);">
+                    💡 Nội dung slide và thông tin của trang Portfolio đã được di chuyển sang mục quản lý riêng biệt. 
+                    Bạn có thể chỉnh sửa trực tiếp tại mục <a href="#/portfolio" style="color: var(--a-ink); text-decoration: underline; font-weight: 600;">Portfolio</a> (tab <strong>Nội dung Slide</strong>).
+                </div>
+            </div>
         </div>
         
         <div class="form-actions"><button class="btn btn--primary" id="btnSavePages">Lưu thay đổi</button></div>`;
@@ -337,41 +463,12 @@ Admin.registerRoute('pages', async (main) => {
             updated.contact.phone = Admin.$('#pg_phone').value.trim();
             updated.contact.zaloUrl = Admin.$('#pg_zaloUrl').value.trim();
             
-            updated.portfolio = updated.portfolio || {};
-            updated.portfolio.coverTitle = Admin.$('#pg_ptCoverTitle').value.trim();
-            updated.portfolio.coverName = Admin.$('#pg_ptCoverName').value.trim();
-            updated.portfolio.coverRole = Admin.$('#pg_ptCoverRole').value.trim();
-            updated.portfolio.aboutShortTerm = Admin.$('#pg_ptShortTerm').value.trim();
-            updated.portfolio.aboutLongTerm = Admin.$('#pg_ptLongTerm').value.trim();
-            updated.portfolio.aboutBirthday = Admin.$('#pg_ptBirthday').value.trim();
-            updated.portfolio.aboutPhone = Admin.$('#pg_ptPhone').value.trim();
-            updated.portfolio.aboutEmail = Admin.$('#pg_ptEmail').value.trim();
-            updated.portfolio.aboutAddress = Admin.$('#pg_ptAddress').value.trim();
-            updated.portfolio.tiktokEduBio = Admin.$('#pg_ptEduBio').value.trim();
-            updated.portfolio.tiktokEduAudience = Admin.$('#pg_ptEduAudience').value.trim();
-            updated.portfolio.tiktokEduStat1 = Admin.$('#pg_ptEduStat1').value.trim();
-            updated.portfolio.tiktokEduStat2 = Admin.$('#pg_ptEduStat2').value.trim();
-            updated.portfolio.tiktokPersonalBio = Admin.$('#pg_ptPersonalBio').value.trim();
-            updated.portfolio.tiktokPersonalAudience = Admin.$('#pg_ptPersonalAudience').value.trim();
-            updated.portfolio.tiktokPersonalStat1 = Admin.$('#pg_ptPersonalStat1').value.trim();
-            updated.portfolio.tiktokPersonalStat2 = Admin.$('#pg_ptPersonalStat2').value.trim();
-            updated.portfolio.skillAI = Admin.$('#pg_ptSkillAI').value.trim();
-            updated.portfolio.skillSEO = Admin.$('#pg_ptSkillSEO').value.trim();
-            updated.portfolio.skillCreative = Admin.$('#pg_ptSkillCreative').value.trim();
-            updated.portfolio.skillSoft = Admin.$('#pg_ptSkillSoft').value.trim();
-            updated.portfolio.eduText = Admin.$('#pg_ptEduText').value.trim();
-            updated.portfolio.certText = Admin.$('#pg_ptCertText').value.trim();
-            updated.portfolio.feedback1 = Admin.$('#pg_ptFeedback1').value.trim();
-            updated.portfolio.feedback2 = Admin.$('#pg_ptFeedback2').value.trim();
-            updated.portfolio.feedback3 = Admin.$('#pg_ptFeedback3').value.trim();
-            
             try {
                 await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'home', data: updated.home }) });
                 await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'about', data: updated.about }) });
                 await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'store', data: updated.store }) });
                 await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'perfume', data: updated.perfume }) });
                 await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'contact', data: updated.contact }) });
-                await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'portfolio', data: updated.portfolio }) });
                 Admin.toast('Đã lưu trang','success');
             } catch(e) { Admin.toast(e.message,'error'); }
         };
