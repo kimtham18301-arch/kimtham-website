@@ -389,7 +389,20 @@ async function initPortfolio() {
             return;
         }
 
-        // Dynamically bind the core 3 projects if they exist in the CMS JSON database
+        // Helper function to dynamically update timeline elements
+        const updateTimeline = (id, caseData) => {
+            if (!caseData) return;
+            const imgEl = document.getElementById(`cms-timeline-${id}-img`);
+            if (imgEl && caseData.image) imgEl.src = caseData.image;
+            const titleEl = document.getElementById(`cms-timeline-${id}-title`);
+            if (titleEl && caseData.title) titleEl.textContent = caseData.title;
+            const tagEl = document.getElementById(`cms-timeline-${id}-tag`);
+            if (tagEl && caseData.tag) tagEl.textContent = caseData.tag;
+            const descEl = document.getElementById(`cms-timeline-${id}-desc`);
+            if (descEl && caseData.problem) descEl.textContent = caseData.problem;
+        };
+
+        // Dynamically bind the 5 core projects
         const c1 = cases.find(c => c && c.id === "case_001");
         if (c1) {
             const titleEl = document.getElementById("cms-case-001-title");
@@ -400,6 +413,7 @@ async function initPortfolio() {
             if (kpiDescEl && c1.problem) kpiDescEl.textContent = c1.problem;
             const kpiHighEl = document.getElementById("cms-case-001-kpi-highlight");
             if (kpiHighEl && c1.result) kpiHighEl.textContent = c1.result;
+            updateTimeline("001", c1);
         }
 
         const c2 = cases.find(c => c && c.id === "case_002");
@@ -412,6 +426,7 @@ async function initPortfolio() {
             if (kpiDescEl && c2.problem) kpiDescEl.textContent = c2.problem;
             const kpiHighEl = document.getElementById("cms-case-002-kpi-highlight");
             if (kpiHighEl && c2.result) kpiHighEl.textContent = c2.result;
+            updateTimeline("002", c2);
         }
 
         const c3 = cases.find(c => c && c.id === "case_003");
@@ -425,10 +440,37 @@ async function initPortfolio() {
             if (kpiDesc2El && c3.strategy) kpiDesc2El.textContent = c3.strategy;
             const kpiHigh2El = document.getElementById("cms-case-003-kpi-highlight-2");
             if (kpiHigh2El && c3.insight) kpiHigh2El.textContent = c3.insight;
+            updateTimeline("003", c3);
         }
 
-        // Filter out the main 3 projects to see if there are any extra cases
-        const featuredIds = ["case_001", "case_002", "case_003"];
+        const c4 = cases.find(c => c && c.id === "case_004");
+        if (c4) {
+            const scTagEl = document.getElementById("cms-showcase-004-tag");
+            if (scTagEl && c4.tag) scTagEl.textContent = c4.tag;
+            const scTitleEl = document.getElementById("cms-showcase-004-title");
+            if (scTitleEl && c4.title) scTitleEl.textContent = c4.title;
+            const scDescEl = document.getElementById("cms-showcase-004-desc");
+            if (scDescEl && c4.execution) scDescEl.textContent = c4.execution;
+            const scFooterEl = document.getElementById("cms-showcase-004-footer");
+            if (scFooterEl && c4.result) scFooterEl.textContent = c4.result;
+            updateTimeline("004", c4);
+        }
+
+        const c5 = cases.find(c => c && c.id === "case_005");
+        if (c5) {
+            const scTagEl = document.getElementById("cms-showcase-005-tag");
+            if (scTagEl && c5.tag) scTagEl.textContent = c5.tag;
+            const scTitleEl = document.getElementById("cms-showcase-005-title");
+            if (scTitleEl && c5.title) scTitleEl.textContent = c5.title;
+            const scDescEl = document.getElementById("cms-showcase-005-desc");
+            if (scDescEl && c5.execution) scDescEl.textContent = c5.execution;
+            const scFooterEl = document.getElementById("cms-showcase-005-footer");
+            if (scFooterEl && c5.result) scFooterEl.textContent = c5.result;
+            updateTimeline("005", c5);
+        }
+
+        // Filter out the main 5 projects to see if there are any extra cases
+        const featuredIds = ["case_001", "case_002", "case_003", "case_004", "case_005"];
         const extraCases = cases.filter(c => c && !featuredIds.includes(c.id));
 
         if (!extraCases.length) {

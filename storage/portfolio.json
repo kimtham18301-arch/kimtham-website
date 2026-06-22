@@ -9,7 +9,7 @@
     "strategy": "Tích hợp hệ thống Telegram Bot tự động hóa 24/7 và triển khai seeding thông minh tại các hội nhóm mạng xã hội.",
     "execution": "Xây dựng hệ thống Telegram Bot tự động cập nhật giá và đăng bài hàng ngày; triển khai comment seeding tiếp cận tệp khách hàng tiềm năng trên Zalo, Facebook, TikTok, Threads; chốt đơn và CSKH qua Zalo.",
     "result": "Doanh thu tháng cao nhất đạt 5.000.000đ (>80 tài khoản), tăng trưởng 250% sau 4 tháng; duy trì tệp khách hàng trung thành với hơn 20 lượt quay lại mỗi tháng.",
-    "image": "",
+    "image": "images/timeline_ai_tools.png",
     "order": 1,
     "createdAt": "2026-06-10T00:00:00Z"
   },
@@ -23,7 +23,7 @@
     "strategy": "Sáng tạo nội dung trải nghiệm mùi hương kết hợp nhuần nhuyễn giữa marketing online và tư vấn trực tiếp.",
     "execution": "Lên ý tưởng, viết content và thiết kế hình ảnh/video quảng bá trên Facebook/Zalo; liên tục theo dõi hành vi, dữ liệu bán hàng để tối ưu cách tiếp cận khách hàng.",
     "result": "Duy trì doanh số ổn định từ 2.000.000đ - 2.500.000đ/tháng với 40 - 60 chai nước hoa được bán ra đều đặn mỗi 1-2 tháng.",
-    "image": "",
+    "image": "images/brand_product_display.png",
     "order": 2,
     "createdAt": "2026-06-10T00:00:00Z"
   },
@@ -37,8 +37,36 @@
     "strategy": "Triển khai SEO On-page/Off-page kết hợp thiết lập tối ưu giao diện web; tối ưu hiển thị sản phẩm và phân tích tài chính marketing cho gian hàng.",
     "execution": "Nghiên cứu từ khóa, tối ưu nội dung chuẩn SEO; setup admin, chỉnh sửa hình ảnh sản phẩm và tinh chỉnh layout web; đăng tải và tối ưu hiển thị sản phẩm Shopee; phân tích giá thành và chiến lược giá cạnh tranh trên Shopee và TikTok Shop.",
     "result": "Các từ khóa mục tiêu đạt thứ hạng cao trên Google; gian hàng Shopee tăng trưởng hiển thị và cải thiện rõ rệt hiệu suất chuyển đổi đơn hàng.",
-    "image": "",
+    "image": "images/timeline_click_agency.png",
     "order": 3,
+    "createdAt": "2026-06-10T00:00:00Z"
+  },
+  {
+    "id": "case_004",
+    "tag": "TikTok Education",
+    "tagColor": "pink",
+    "title": "TĂNG TRƯỞNG HỆ THỐNG TIKTOK",
+    "problem": "Xây dựng kênh TikTok Toán lớp 6, điều hướng traffic vào phễu cộng đồng kín.",
+    "insight": "Dự án 1 — TikTok Network",
+    "strategy": "TĂNG TRƯỞNG HỆ THỐNG TIKTOK",
+    "execution": "Sở hữu và vận hành 100% hệ thống kênh từ 04/2026 - Hiện tại. Ứng dụng AI và tư duy dữ liệu thị trường để thiết kế, đo lường các định dạng short-form video.",
+    "result": "Thời gian: 04/2026 - Hiện tại",
+    "image": "images/timeline_chamchiontap.png",
+    "order": 4,
+    "createdAt": "2026-06-10T00:00:00Z"
+  },
+  {
+    "id": "case_005",
+    "tag": "Personal Brand",
+    "tagColor": "gold",
+    "title": "KÊNH TIKTOK @tham_hoc_ai",
+    "problem": "Xây dựng thương hiệu cá nhân qua nhật ký tự học AI và tối ưu Portfolio B2B.",
+    "insight": "Case Study 2 — Personal Branding",
+    "strategy": "KÊNH TIKTOK @tham_hoc_ai",
+    "execution": "Định hướng: Xây dựng Personal Branding – Nhật ký tự học, ứng dụng AI, tối ưu hóa Portfolio nhằm trực tiếp tiếp cận phân khúc nhà tuyển dụng và doanh nghiệp (B2B). Tệp khán giả: 81% Nam, 18% Nữ. Chỉ số nổi bật: Video 'Thiết kế website / Portfolio giao diện' đạt 1,307 lượt xem ngay sau khi lên kênh, thời gian xem trung bình ấn tượng 11.2 giây và tỷ lệ xem hết đạt 5.49%, mang về những followers đầu tiên thuộc đúng tệp mục tiêu chỉ trong vài ngày đầu vận hành.",
+    "result": "Tỷ lệ xem hết: 5.49%",
+    "image": "images/timeline_tham_hoc_ai.png",
+    "order": 5,
     "createdAt": "2026-06-10T00:00:00Z"
   }
 ]
