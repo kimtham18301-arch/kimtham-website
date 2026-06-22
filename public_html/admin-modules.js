@@ -177,22 +177,30 @@ Admin.registerRoute('portfolio', async (main, param) => {
                 <div class="form-group"><label class="form-label">Cover Title</label><input class="form-input" id="pg_ptCoverTitle" value="${Admin.esc(portfolio.coverTitle||'')}"></div>
                 <div class="form-group"><label class="form-label">Cover Name</label><input class="form-input" id="pg_ptCoverName" value="${Admin.esc(portfolio.coverName||'')}"></div>
                 <div class="form-group"><label class="form-label">Cover Role</label><input class="form-input" id="pg_ptCoverRole" value="${Admin.esc(portfolio.coverRole||'')}"></div>
+                ${Admin.imageField('pg_ptCoverImage1', 'Ảnh Cover 1 (Chân dung chính)', portfolio.coverImage1 || '')}
+                ${Admin.imageField('pg_ptCoverImage2', 'Ảnh Cover 2 (Góc làm việc)', portfolio.coverImage2 || '')}
+                ${Admin.imageField('pg_ptCoverImage3', 'Ảnh Cover 3 (Setup quay phim)', portfolio.coverImage3 || '')}
+                ${Admin.imageField('pg_ptCoverImage4', 'Ảnh Cover 4 (Trưng bày thương hiệu)', portfolio.coverImage4 || '')}
                 
                 <div class="form-group form-group--full"><h3>Mục tiêu Nghề nghiệp (Slide 03)</h3></div>
                 <div class="form-group form-group--full"><label class="form-label">Mục tiêu ngắn hạn</label><textarea class="form-textarea" id="pg_ptShortTerm" rows="3">${Admin.esc(portfolio.aboutShortTerm||'')}</textarea></div>
                 <div class="form-group form-group--full"><label class="form-label">Mục tiêu dài hạn</label><textarea class="form-textarea" id="pg_ptLongTerm" rows="3">${Admin.esc(portfolio.aboutLongTerm||'')}</textarea></div>
                 
-                <div class="form-group form-group--full"><h3>Thông tin Cá nhân (Slide 03 - Liên hệ)</h3></div>
+                <div class="form-group form-group--full"><h3>Thông tin Cá nhân & Giới thiệu (Slide 03)</h3></div>
                 <div class="form-group"><label class="form-label">Ngày sinh</label><input class="form-input" id="pg_ptBirthday" value="${Admin.esc(portfolio.aboutBirthday||'')}"></div>
                 <div class="form-group"><label class="form-label">Điện thoại</label><input class="form-input" id="pg_ptPhone" value="${Admin.esc(portfolio.aboutPhone||'')}"></div>
                 <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="pg_ptEmail" value="${Admin.esc(portfolio.aboutEmail||'')}"></div>
                 <div class="form-group"><label class="form-label">Địa chỉ</label><input class="form-input" id="pg_ptAddress" value="${Admin.esc(portfolio.aboutAddress||'')}"></div>
+                ${Admin.imageField('pg_ptAboutImageTop', 'Ảnh Giới thiệu 1 (Góc trên phải)', portfolio.aboutImageTop || '')}
+                ${Admin.imageField('pg_ptAboutImageBottom', 'Ảnh Giới thiệu 2 (Phía dưới/Văn phòng)', portfolio.aboutImageBottom || '')}
                 
                 <div class="form-group form-group--full"><h3>Kênh TikTok @chamchiontap (Slide 04)</h3></div>
                 <div class="form-group form-group--full"><label class="form-label">Định hướng kênh</label><textarea class="form-textarea" id="pg_ptEduBio" rows="2">${Admin.esc(portfolio.tiktokEduBio||'')}</textarea></div>
                 <div class="form-group form-group--full"><label class="form-label">Tệp khán giả</label><textarea class="form-textarea" id="pg_ptEduAudience" rows="2">${Admin.esc(portfolio.tiktokEduAudience||'')}</textarea></div>
                 <div class="form-group form-group--full"><label class="form-label">Chỉ số nổi bật 1 (Tìm kiếm)</label><textarea class="form-textarea" id="pg_ptEduStat1" rows="3">${Admin.esc(portfolio.tiktokEduStat1||'')}</textarea></div>
                 <div class="form-group form-group--full"><label class="form-label">Chỉ số nổi bật 2 (Chuyển đổi)</label><textarea class="form-textarea" id="pg_ptEduStat2" rows="3">${Admin.esc(portfolio.tiktokEduStat2||'')}</textarea></div>
+                ${Admin.imageField('pg_ptTiktokEduProof1', 'Ảnh Proof TikTok (Hồ sơ)', portfolio.tiktokEduProof1 || '')}
+                ${Admin.imageField('pg_ptTiktokEduProof2', 'Ảnh Proof TikTok (Tăng trưởng)', portfolio.tiktokEduProof2 || '')}
     
                 <div class="form-group form-group--full"><h3>Kênh TikTok @tham_hoc_ai (Slide 05)</h3></div>
                 <div class="form-group form-group--full"><label class="form-label">Định hướng kênh</label><textarea class="form-textarea" id="pg_ptPersonalBio" rows="2">${Admin.esc(portfolio.tiktokPersonalBio||'')}</textarea></div>
@@ -210,10 +218,17 @@ Admin.registerRoute('portfolio', async (main, param) => {
                 <div class="form-group form-group--full"><label class="form-label">Học vấn</label><textarea class="form-textarea" id="pg_ptEduText" rows="2">${Admin.esc(portfolio.eduText||'')}</textarea></div>
                 <div class="form-group form-group--full"><label class="form-label">Chứng chỉ</label><textarea class="form-textarea" id="pg_ptCertText" rows="2">${Admin.esc(portfolio.certText||'')}</textarea></div>
     
+                <div class="form-group form-group--full"><h3>Kinh nghiệm & Đối tác (Slide 07)</h3></div>
+                ${Admin.imageField('pg_ptExperienceImageDecor', 'Ảnh Decor CLICK Agency', portfolio.experienceImageDecor || '')}
+
                 <div class="form-group form-group--full"><h3>Phản hồi từ quản lý & khách hàng (Slide 09)</h3></div>
                 <div class="form-group form-group--full"><label class="form-label">Đánh giá 1 (Quản lý)</label><textarea class="form-textarea" id="pg_ptFeedback1" rows="2">${Admin.esc(portfolio.feedback1||'')}</textarea></div>
                 <div class="form-group form-group--full"><label class="form-label">Đánh giá 2 (Khách hàng 1)</label><textarea class="form-textarea" id="pg_ptFeedback2" rows="2">${Admin.esc(portfolio.feedback2||'')}</textarea></div>
                 <div class="form-group form-group--full"><label class="form-label">Đánh giá 3 (Khách hàng 2)</label><textarea class="form-textarea" id="pg_ptFeedback3" rows="2">${Admin.esc(portfolio.feedback3||'')}</textarea></div>
+                ${Admin.imageField('pg_ptFeedbackImage', 'Ảnh Feedback Zalo Mockup', portfolio.feedbackImage || '')}
+
+                <div class="form-group form-group--full"><h3>Liên hệ & Hợp tác (Slide 13)</h3></div>
+                ${Admin.imageField('pg_ptContactAvatar', 'Ảnh đại diện liên hệ (Avatar)', portfolio.contactAvatar || '')}
             </div>
             
             <div class="form-actions" style="margin-top:20px;">
@@ -221,22 +236,32 @@ Admin.registerRoute('portfolio', async (main, param) => {
             </div>
         `;
         
+        Admin.bindImageFields(Admin.$('#portfolioSlidesForm'));
+        
         // Save slide content logic
         Admin.$('#btnSavePortfolioSlides').onclick = async () => {
             const updatedPortfolio = {
                 coverTitle: Admin.$('#pg_ptCoverTitle').value.trim(),
                 coverName: Admin.$('#pg_ptCoverName').value.trim(),
                 coverRole: Admin.$('#pg_ptCoverRole').value.trim(),
+                coverImage1: Admin.$('#pg_ptCoverImage1').value.trim(),
+                coverImage2: Admin.$('#pg_ptCoverImage2').value.trim(),
+                coverImage3: Admin.$('#pg_ptCoverImage3').value.trim(),
+                coverImage4: Admin.$('#pg_ptCoverImage4').value.trim(),
                 aboutShortTerm: Admin.$('#pg_ptShortTerm').value.trim(),
                 aboutLongTerm: Admin.$('#pg_ptLongTerm').value.trim(),
                 aboutBirthday: Admin.$('#pg_ptBirthday').value.trim(),
                 aboutPhone: Admin.$('#pg_ptPhone').value.trim(),
                 aboutEmail: Admin.$('#pg_ptEmail').value.trim(),
                 aboutAddress: Admin.$('#pg_ptAddress').value.trim(),
+                aboutImageTop: Admin.$('#pg_ptAboutImageTop').value.trim(),
+                aboutImageBottom: Admin.$('#pg_ptAboutImageBottom').value.trim(),
                 tiktokEduBio: Admin.$('#pg_ptEduBio').value.trim(),
                 tiktokEduAudience: Admin.$('#pg_ptEduAudience').value.trim(),
                 tiktokEduStat1: Admin.$('#pg_ptEduStat1').value.trim(),
                 tiktokEduStat2: Admin.$('#pg_ptEduStat2').value.trim(),
+                tiktokEduProof1: Admin.$('#pg_ptTiktokEduProof1').value.trim(),
+                tiktokEduProof2: Admin.$('#pg_ptTiktokEduProof2').value.trim(),
                 tiktokPersonalBio: Admin.$('#pg_ptPersonalBio').value.trim(),
                 tiktokPersonalAudience: Admin.$('#pg_ptPersonalAudience').value.trim(),
                 tiktokPersonalStat1: Admin.$('#pg_ptPersonalStat1').value.trim(),
@@ -247,9 +272,12 @@ Admin.registerRoute('portfolio', async (main, param) => {
                 skillSoft: Admin.$('#pg_ptSkillSoft').value.trim(),
                 eduText: Admin.$('#pg_ptEduText').value.trim(),
                 certText: Admin.$('#pg_ptCertText').value.trim(),
+                experienceImageDecor: Admin.$('#pg_ptExperienceImageDecor').value.trim(),
                 feedback1: Admin.$('#pg_ptFeedback1').value.trim(),
                 feedback2: Admin.$('#pg_ptFeedback2').value.trim(),
-                feedback3: Admin.$('#pg_ptFeedback3').value.trim()
+                feedback3: Admin.$('#pg_ptFeedback3').value.trim(),
+                feedbackImage: Admin.$('#pg_ptFeedbackImage').value.trim(),
+                contactAvatar: Admin.$('#pg_ptContactAvatar').value.trim()
             };
             
             try {

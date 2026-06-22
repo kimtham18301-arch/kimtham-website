@@ -412,6 +412,19 @@ async function initPortfolio() {
             setText("#cms-pt-feedback1", portfolioData.feedback1);
             setText("#cms-pt-feedback2", portfolioData.feedback2);
             setText("#cms-pt-feedback3", portfolioData.feedback3);
+            
+            // Slide Images
+            setImage("#cms-pt-coverImage1", portfolioData.coverImage1);
+            setImage("#cms-pt-coverImage2", portfolioData.coverImage2);
+            setImage("#cms-pt-coverImage3", portfolioData.coverImage3);
+            setImage("#cms-pt-coverImage4", portfolioData.coverImage4);
+            setImage("#cms-pt-aboutImageTop", portfolioData.aboutImageTop);
+            setImage("#cms-pt-aboutImageBottom", portfolioData.aboutImageBottom);
+            setImage("#cms-pt-experienceImageDecor", portfolioData.experienceImageDecor);
+            setImage("#cms-pt-tiktokEduProof1", portfolioData.tiktokEduProof1);
+            setImage("#cms-pt-tiktokEduProof2", portfolioData.tiktokEduProof2);
+            setImage("#cms-pt-contactAvatar", portfolioData.contactAvatar);
+            setImage("#cms-pt-feedbackImage", portfolioData.feedbackImage);
         }
     } catch (err) {
         console.warn("Portfolio page data binding error:", err);

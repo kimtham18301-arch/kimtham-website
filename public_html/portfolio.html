@@ -877,6 +877,23 @@
             box-shadow: 0 10px 25px rgba(74, 53, 59, 0.04);
         }
         
+        /* Dynamic image overlay rules */
+        .slide-image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 5;
+            display: block;
+        }
+        .slide-image-placeholder img:not([src]), 
+        .slide-image-placeholder img[src=""],
+        .slide-image-placeholder img[src="null"] {
+            display: none;
+        }
+        
         /* Stats & metrics styles */
         .metric-badge {
             background: rgba(255, 255, 255, 0.65);
@@ -1184,9 +1201,6 @@
             .slide-card h2 {
                 font-size: 1.8rem;
             }
-            .slide-header-nav {
-                margin-bottom: 20px;
-            }
         }
     </style>
 
@@ -1229,16 +1243,16 @@
                 <!-- Gallery of 4 vertical photos side-by-side -->
                 <div class="cover-collage-grid">
                     <div class="collage-item">
-                        <img src="images/kim_tham_portrait.png" alt="Kim Thắm">
+                        <img src="images/kim_tham_portrait.png" alt="Kim Thắm" id="cms-pt-coverImage1">
                     </div>
                     <div class="collage-item">
-                        <img src="images/marketing_workspace.png" alt="Workspace">
+                        <img src="images/marketing_workspace.png" alt="Workspace" id="cms-pt-coverImage2">
                     </div>
                     <div class="collage-item">
-                        <img src="images/shortform_video_creator.png" alt="Studio Setup">
+                        <img src="images/shortform_video_creator.png" alt="Studio Setup" id="cms-pt-coverImage3">
                     </div>
                     <div class="collage-item">
-                        <img src="images/brand_product_display.png" alt="Retail Fragrance">
+                        <img src="images/brand_product_display.png" alt="Retail Fragrance" id="cms-pt-coverImage4">
                     </div>
                 </div>
 
@@ -1322,10 +1336,12 @@
                             </div>
                         </div>
                         <div style="display: flex; flex-direction: column; gap: 16px;">
-                            <div class="slide-image-placeholder" style="aspect-ratio: 16/9;">
+                            <div class="slide-image-placeholder" style="aspect-ratio: 16/9; padding: 0;">
+                                <img id="cms-pt-aboutImageTop" src="" alt="Top image">
                                 <span>Góc Trên Phải (Ảnh Kim Thắm)</span>
                             </div>
-                            <div class="slide-image-placeholder" style="aspect-ratio: 4/3;">
+                            <div class="slide-image-placeholder" style="aspect-ratio: 4/3; padding: 0;">
+                                <img id="cms-pt-aboutImageBottom" src="" alt="Bottom image">
                                 <span>Ảnh Chính Phía Dưới (Hoạt động/Văn phòng)</span>
                             </div>
                         </div>
@@ -1409,13 +1425,13 @@
                             <div class="proof-card">
                                 <h4>Kênh @chamchiontap</h4>
                                 <div class="proof-img-container">
-                                    <img src="images/chamchiontap_profile_proof.png" alt="TikTok Profile Mockup">
+                                    <img src="images/chamchiontap_profile_proof.png" alt="TikTok Profile Mockup" id="cms-pt-tiktokEduProof1">
                                 </div>
                             </div>
                             <div class="proof-card">
                                 <h4>Tăng trưởng 28 ngày</h4>
                                 <div class="proof-img-container">
-                                    <img src="images/growth_chart_proof.png" alt="Growth Graph Mockup">
+                                    <img src="images/growth_chart_proof.png" alt="Growth Graph Mockup" id="cms-pt-tiktokEduProof2">
                                 </div>
                             </div>
                         </div>
@@ -1675,7 +1691,8 @@
                             </div>
                         </div>
                         
-                        <div class="slide-image-placeholder" style="aspect-ratio: 4/3;">
+                        <div class="slide-image-placeholder" style="aspect-ratio: 4/3; padding: 0;">
+                            <img id="cms-pt-experienceImageDecor" src="" alt="Decor CLICK Agency">
                             <span>Ảnh Decor CLICK Agency</span>
                         </div>
                     </div>
@@ -1782,7 +1799,8 @@
                             </div>
                         </div>
                         
-                        <div class="slide-image-placeholder" style="aspect-ratio: 4/5;">
+                        <div class="slide-image-placeholder" style="aspect-ratio: 4/5; padding: 0;">
+                            <img id="cms-pt-feedbackImage" src="" alt="Feedback Zalo Mockup">
                             <span>URL_Mockup_Tin_Nhan_Zalo_Feedback</span>
                         </div>
                     </div>
@@ -1804,7 +1822,7 @@
                     <p style="color: var(--slide-dusty-rose); font-weight: 700; margin-bottom: 24px; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase;">Bạn có thể liên hệ với tôi qua:</p>
                     
                                         <div class="cover-profile-container" style="width: 120px; height: 120px; margin-bottom: 28px;">
-                        <img class="cover-profile-img" src="images/kim-tham.svg" alt="Nguyễn Kim Thắm">
+                        <img class="cover-profile-img" src="images/kim-tham.svg" alt="Nguyễn Kim Thắm" id="cms-pt-contactAvatar">
                     </div>
                     
                     <div style="display: flex; flex-direction: column; gap: 12px; max-width: 400px; margin: 0 auto; text-align: center; font-size: 0.95rem; font-weight: 600; color: var(--slide-primary);">
