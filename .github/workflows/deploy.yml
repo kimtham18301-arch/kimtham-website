@@ -43,5 +43,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./storage/
           server-dir: /domains/kimtham.id.vn/storage/
+          exclude: |
+            *.json
 
 
