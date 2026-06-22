@@ -382,6 +382,41 @@ async function initPortfolio() {
     const grid = document.getElementById("caseGrid");
     const container = document.getElementById("additionalProjectsBlock");
 
+    // Fetch and bind static page fields from CMS pages
+    try {
+        const portfolioData = await loadPageData("portfolio");
+        if (portfolioData) {
+            setText("#cms-pt-coverTitle", portfolioData.coverTitle);
+            setText("#cms-pt-coverName", portfolioData.coverName);
+            setText("#cms-pt-coverRole", portfolioData.coverRole);
+            setText("#cms-pt-tiktokEduBio", portfolioData.tiktokEduBio);
+            setText("#cms-pt-tiktokPersonalBio", portfolioData.tiktokPersonalBio);
+            setText("#cms-pt-aboutShortTerm", portfolioData.aboutShortTerm);
+            setText("#cms-pt-aboutLongTerm", portfolioData.aboutLongTerm);
+            setText("#cms-pt-aboutBirthday", portfolioData.aboutBirthday);
+            setText("#cms-pt-aboutPhone", portfolioData.aboutPhone);
+            setText("#cms-pt-aboutPhone-2", portfolioData.aboutPhone);
+            setText("#cms-pt-aboutEmail", portfolioData.aboutEmail);
+            setText("#cms-pt-aboutEmail-2", portfolioData.aboutEmail);
+            setText("#cms-pt-aboutAddress", portfolioData.aboutAddress);
+            setText("#cms-pt-tiktokEduBio-2", portfolioData.tiktokEduBio);
+            setText("#cms-pt-tiktokEduAudience", portfolioData.tiktokEduAudience);
+            setText("#cms-pt-skillAI", portfolioData.skillAI);
+            setText("#cms-pt-skillSEO", portfolioData.skillSEO);
+            setText("#cms-pt-skillCreative", portfolioData.skillCreative);
+            setText("#cms-pt-skillSoft", portfolioData.skillSoft);
+            setText("#cms-pt-tiktokEduStat1", portfolioData.tiktokEduStat1);
+            setText("#cms-pt-tiktokEduStat2", portfolioData.tiktokEduStat2);
+            setText("#cms-pt-eduText", portfolioData.eduText);
+            setText("#cms-pt-certText", portfolioData.certText);
+            setText("#cms-pt-feedback1", portfolioData.feedback1);
+            setText("#cms-pt-feedback2", portfolioData.feedback2);
+            setText("#cms-pt-feedback3", portfolioData.feedback3);
+        }
+    } catch (err) {
+        console.warn("Portfolio page data binding error:", err);
+    }
+
     try {
         const cases = await loadPortfolioCases();
         if (!cases || !cases.length) {

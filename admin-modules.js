@@ -246,6 +246,7 @@ Admin.registerRoute('pages', async (main) => {
         const store = pages.store || {};
         const perfume = pages.perfume || {};
         const contact = pages.contact || {};
+        const portfolio = pages.portfolio || {};
         Admin.$('#pagesForm').innerHTML = `<h2>Trang chủ – Hero</h2>
         <div class="form-grid">
             <div class="form-group"><label class="form-label">Eyebrow</label><input class="form-input" id="pg_heroEyebrow" value="${Admin.esc(home.heroEyebrow||'')}"></div>
@@ -270,6 +271,47 @@ Admin.registerRoute('pages', async (main) => {
             <div class="form-group"><label class="form-label">SĐT</label><input class="form-input" id="pg_phone" value="${Admin.esc(contact.phone||'')}"></div>
             <div class="form-group"><label class="form-label">Zalo URL</label><input class="form-input" id="pg_zaloUrl" value="${Admin.esc(contact.zaloUrl||'')}"></div>
         </div>
+        
+        <h2 style="margin-top:28px">Trang Portfolio</h2>
+        <div class="form-grid">
+            <div class="form-group"><label class="form-label">Cover Title</label><input class="form-input" id="pg_ptCoverTitle" value="${Admin.esc(portfolio.coverTitle||'')}"></div>
+            <div class="form-group"><label class="form-label">Cover Name</label><input class="form-input" id="pg_ptCoverName" value="${Admin.esc(portfolio.coverName||'')}"></div>
+            <div class="form-group"><label class="form-label">Cover Role</label><input class="form-input" id="pg_ptCoverRole" value="${Admin.esc(portfolio.coverRole||'')}"></div>
+            <div class="form-group form-group--full"><label class="form-label">Mục tiêu ngắn hạn</label><textarea class="form-textarea" id="pg_ptShortTerm" rows="2">${Admin.esc(portfolio.aboutShortTerm||'')}</textarea></div>
+            <div class="form-group form-group--full"><label class="form-label">Mục tiêu dài hạn</label><textarea class="form-textarea" id="pg_ptLongTerm" rows="2">${Admin.esc(portfolio.aboutLongTerm||'')}</textarea></div>
+            <div class="form-group"><label class="form-label">Ngày sinh</label><input class="form-input" id="pg_ptBirthday" value="${Admin.esc(portfolio.aboutBirthday||'')}"></div>
+            <div class="form-group"><label class="form-label">Điện thoại</label><input class="form-input" id="pg_ptPhone" value="${Admin.esc(portfolio.aboutPhone||'')}"></div>
+            <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="pg_ptEmail" value="${Admin.esc(portfolio.aboutEmail||'')}"></div>
+            <div class="form-group"><label class="form-label">Địa chỉ</label><input class="form-input" id="pg_ptAddress" value="${Admin.esc(portfolio.aboutAddress||'')}"></div>
+            
+            <div class="form-group form-group--full"><h3>Kênh TikTok @chamchiontap</h3></div>
+            <div class="form-group form-group--full"><label class="form-label">Định hướng kênh</label><textarea class="form-textarea" id="pg_ptEduBio" rows="2">${Admin.esc(portfolio.tiktokEduBio||'')}</textarea></div>
+            <div class="form-group form-group--full"><label class="form-label">Tệp khán giả</label><textarea class="form-textarea" id="pg_ptEduAudience" rows="2">${Admin.esc(portfolio.tiktokEduAudience||'')}</textarea></div>
+            <div class="form-group form-group--full"><label class="form-label">Chỉ số nổi bật 1 (Tìm kiếm)</label><textarea class="form-textarea" id="pg_ptEduStat1" rows="2">${Admin.esc(portfolio.tiktokEduStat1||'')}</textarea></div>
+            <div class="form-group form-group--full"><label class="form-label">Chỉ số nổi bật 2 (Chuyển đổi)</label><textarea class="form-textarea" id="pg_ptEduStat2" rows="2">${Admin.esc(portfolio.tiktokEduStat2||'')}</textarea></div>
+
+            <div class="form-group form-group--full"><h3>Kênh TikTok @tham_hoc_ai</h3></div>
+            <div class="form-group form-group--full"><label class="form-label">Định hướng kênh</label><textarea class="form-textarea" id="pg_ptPersonalBio" rows="2">${Admin.esc(portfolio.tiktokPersonalBio||'')}</textarea></div>
+            <div class="form-group form-group--full"><label class="form-label">Tệp khán giả</label><textarea class="form-textarea" id="pg_ptPersonalAudience" rows="2">${Admin.esc(portfolio.tiktokPersonalAudience||'')}</textarea></div>
+            <div class="form-group form-group--full"><label class="form-label">Chỉ số nổi bật 1</label><textarea class="form-textarea" id="pg_ptPersonalStat1" rows="2">${Admin.esc(portfolio.tiktokPersonalStat1||'')}</textarea></div>
+            <div class="form-group form-group--full"><label class="form-label">Chỉ số nổi bật 2</label><textarea class="form-textarea" id="pg_ptPersonalStat2" rows="2">${Admin.esc(portfolio.tiktokPersonalStat2||'')}</textarea></div>
+            
+            <div class="form-group form-group--full"><h3>Kỹ năng chuyên môn</h3></div>
+            <div class="form-group form-group--full"><label class="form-label">AI Tools & Automation</label><textarea class="form-textarea" id="pg_ptSkillAI" rows="2">${Admin.esc(portfolio.skillAI||'')}</textarea></div>
+            <div class="form-group form-group--full"><label class="form-label">Data Analysis & SEO</label><textarea class="form-textarea" id="pg_ptSkillSEO" rows="2">${Admin.esc(portfolio.skillSEO||'')}</textarea></div>
+            <div class="form-group form-group--full"><label class="form-label">Creative Content & Production</label><textarea class="form-textarea" id="pg_ptSkillCreative" rows="2">${Admin.esc(portfolio.skillCreative||'')}</textarea></div>
+            <div class="form-group form-group--full"><label class="form-label">Soft Skills</label><textarea class="form-textarea" id="pg_ptSkillSoft" rows="2">${Admin.esc(portfolio.skillSoft||'')}</textarea></div>
+
+            <div class="form-group form-group--full"><h3>Học vấn & Chứng chỉ</h3></div>
+            <div class="form-group form-group--full"><label class="form-label">Học vấn</label><textarea class="form-textarea" id="pg_ptEduText" rows="2">${Admin.esc(portfolio.eduText||'')}</textarea></div>
+            <div class="form-group form-group--full"><label class="form-label">Chứng chỉ</label><textarea class="form-textarea" id="pg_ptCertText" rows="2">${Admin.esc(portfolio.certText||'')}</textarea></div>
+
+            <div class="form-group form-group--full"><h3>Phản hồi từ quản lý & khách hàng</h3></div>
+            <div class="form-group form-group--full"><label class="form-label">Đánh giá 1 (Quản lý)</label><textarea class="form-textarea" id="pg_ptFeedback1" rows="2">${Admin.esc(portfolio.feedback1||'')}</textarea></div>
+            <div class="form-group form-group--full"><label class="form-label">Đánh giá 2 (Khách hàng 1)</label><textarea class="form-textarea" id="pg_ptFeedback2" rows="2">${Admin.esc(portfolio.feedback2||'')}</textarea></div>
+            <div class="form-group form-group--full"><label class="form-label">Đánh giá 3 (Khách hàng 2)</label><textarea class="form-textarea" id="pg_ptFeedback3" rows="2">${Admin.esc(portfolio.feedback3||'')}</textarea></div>
+        </div>
+        
         <div class="form-actions"><button class="btn btn--primary" id="btnSavePages">Lưu thay đổi</button></div>`;
         Admin.bindImageFields(Admin.$('#pagesForm'));
         Admin.$('#btnSavePages').onclick = async () => {
@@ -294,12 +336,42 @@ Admin.registerRoute('pages', async (main) => {
             updated.contact.email = Admin.$('#pg_email').value.trim();
             updated.contact.phone = Admin.$('#pg_phone').value.trim();
             updated.contact.zaloUrl = Admin.$('#pg_zaloUrl').value.trim();
+            
+            updated.portfolio = updated.portfolio || {};
+            updated.portfolio.coverTitle = Admin.$('#pg_ptCoverTitle').value.trim();
+            updated.portfolio.coverName = Admin.$('#pg_ptCoverName').value.trim();
+            updated.portfolio.coverRole = Admin.$('#pg_ptCoverRole').value.trim();
+            updated.portfolio.aboutShortTerm = Admin.$('#pg_ptShortTerm').value.trim();
+            updated.portfolio.aboutLongTerm = Admin.$('#pg_ptLongTerm').value.trim();
+            updated.portfolio.aboutBirthday = Admin.$('#pg_ptBirthday').value.trim();
+            updated.portfolio.aboutPhone = Admin.$('#pg_ptPhone').value.trim();
+            updated.portfolio.aboutEmail = Admin.$('#pg_ptEmail').value.trim();
+            updated.portfolio.aboutAddress = Admin.$('#pg_ptAddress').value.trim();
+            updated.portfolio.tiktokEduBio = Admin.$('#pg_ptEduBio').value.trim();
+            updated.portfolio.tiktokEduAudience = Admin.$('#pg_ptEduAudience').value.trim();
+            updated.portfolio.tiktokEduStat1 = Admin.$('#pg_ptEduStat1').value.trim();
+            updated.portfolio.tiktokEduStat2 = Admin.$('#pg_ptEduStat2').value.trim();
+            updated.portfolio.tiktokPersonalBio = Admin.$('#pg_ptPersonalBio').value.trim();
+            updated.portfolio.tiktokPersonalAudience = Admin.$('#pg_ptPersonalAudience').value.trim();
+            updated.portfolio.tiktokPersonalStat1 = Admin.$('#pg_ptPersonalStat1').value.trim();
+            updated.portfolio.tiktokPersonalStat2 = Admin.$('#pg_ptPersonalStat2').value.trim();
+            updated.portfolio.skillAI = Admin.$('#pg_ptSkillAI').value.trim();
+            updated.portfolio.skillSEO = Admin.$('#pg_ptSkillSEO').value.trim();
+            updated.portfolio.skillCreative = Admin.$('#pg_ptSkillCreative').value.trim();
+            updated.portfolio.skillSoft = Admin.$('#pg_ptSkillSoft').value.trim();
+            updated.portfolio.eduText = Admin.$('#pg_ptEduText').value.trim();
+            updated.portfolio.certText = Admin.$('#pg_ptCertText').value.trim();
+            updated.portfolio.feedback1 = Admin.$('#pg_ptFeedback1').value.trim();
+            updated.portfolio.feedback2 = Admin.$('#pg_ptFeedback2').value.trim();
+            updated.portfolio.feedback3 = Admin.$('#pg_ptFeedback3').value.trim();
+            
             try {
                 await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'home', data: updated.home }) });
                 await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'about', data: updated.about }) });
                 await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'store', data: updated.store }) });
                 await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'perfume', data: updated.perfume }) });
                 await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'contact', data: updated.contact }) });
+                await Admin.api('pages.php', { method:'POST', body: JSON.stringify({ page: 'portfolio', data: updated.portfolio }) });
                 Admin.toast('Đã lưu trang','success');
             } catch(e) { Admin.toast(e.message,'error'); }
         };

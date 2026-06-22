@@ -58,5 +58,33 @@
   "footer": {
     "copyright": "© 2026 Kim Thắm. Marketer sống có gu.",
     "domain": "kimtham.id.vn"
+  },
+  "portfolio": {
+    "coverTitle": "PORTFOLIO",
+    "coverName": "Nguyễn Kim Thắm",
+    "coverRole": "DIGITAL MARKETING",
+    "aboutShortTerm": "Đảm nhận vị trí Nhân viên Digital Marketing / Thực thi & Quản lý Kênh Social, trực tiếp tham gia sâu vào quy trình lập kế hoạch, tối ưu chi phí phân phối nội dung, và làm chủ các mô hình tăng trưởng tự nhiên (Organic Reach) dựa trên phân tích dữ liệu chuyên sâu.",
+    "aboutLongTerm": "Trở thành Digital Marketing Leader / Growth Hacker, tiên phong trong việc tích hợp các giải pháp tự động hóa (Automation) và trí tuệ nhân tạo (AI) vào hệ thống quản trị Marketing tổng thể, giúp doanh nghiệp cắt giảm 40% chi phí vận hành và bứt phá doanh thu.",
+    "aboutBirthday": "03/01/2004",
+    "aboutPhone": "0972 295 710",
+    "aboutEmail": "kimtham18301@gmail.com",
+    "aboutAddress": "Vườn Lài, An Phú Đông, Q.12, TP.HCM",
+    "tiktokEduBio": "Chia sẻ phương pháp học tập, giải bài tập Toán lớp 6 bằng phương pháp trực quan, tạo phễu chuyển đổi kéo user vào cộng đồng học tập kín.",
+    "tiktokEduAudience": "Học sinh THCS và Phụ huynh có con độ tuổi chuyển cấp (62% Nữ, 36% Nam).",
+    "tiktokEduStat1": "Hơn 87.4% lượng traffic đến từ nguồn Tìm kiếm (Search). Nhờ việc nghiên cứu chính xác 'nỗi đau' của học sinh qua các truy vấn như 'toán hình lớp 6', 'toán lớp 6', nội dung video đã leo Top tìm kiếm bền vững, mang lại lượng user mới liên tục (89% người xem mới) mà hoàn toàn không tốn chi phí quảng cáo (Paid Ads).",
+    "tiktokEduStat2": "Điều hướng thành công lượng traffic khổng lồ từ Bio Link chuyển đổi vào nhóm học tập kín (Đạt 114 thành viên chất lượng cao và đang tăng trưởng đều đặn).",
+    "tiktokPersonalBio": "Nhật ký tự học, chia sẻ kiến thức ứng dụng AI trong công việc, tối ưu hóa quy trình thiết kế website và Portfolio cá nhân B2B.",
+    "tiktokPersonalAudience": "Nhà tuyển dụng, Doanh nghiệp & Cộng đồng Marketer tự học AI (81% Nam, 18% Nữ).",
+    "tiktokPersonalStat1": "Video 'Thiết kế website / Portfolio giao diện' đạt 1,307 lượt xem ngay sau khi lên kênh, thời gian xem trung bình ấn tượng 11.2 giây và tỷ lệ xem hết đạt 5.49%, mang về những followers đầu tiên thuộc đúng tệp mục tiêu chỉ trong vài ngày đầu vận hành.",
+    "tiktokPersonalStat2": "Xây dựng hình ảnh cá nhân chuyên nghiệp, tiếp cận trực tiếp nhà tuyển dụng qua sản phẩm thực tế và case studies trực quan.",
+    "skillAI": "Thành thạo việc ứng dụng các mô hình ngôn ngữ lớn và công cụ AI thế hệ mới (NotebookLM, ChatGPT, Grok, Gemini, Copilot) để nghiên cứu insights, lên kịch bản hàng loạt và tự động hóa quy trình xuất bản nội dung. Thiết lập và vận hành hệ thống Telegram Bot tự động tương tác và bán hàng 24/7.",
+    "skillSEO": "Sử dụng nhạy bén các công cụ đo lường dữ liệu và tối ưu hóa tìm kiếm (Google Analytics, SEMrush, Similarweb, SEOquake) áp dụng cho cả nền tảng Website truyền thống lẫn SEO TikTok, Shopee.",
+    "skillCreative": "Tự tay thiết kế ấn phẩm truyền thông, bộ nhận diện visual thương hiệu trên Canva và xử lý hậu kỳ, dựng short-form video chuyên nghiệp chuẩn xu hướng thông qua CapCut.",
+    "skillSoft": "Tư duy logic dựa trên số liệu, lập kế hoạch và bám đuổi KPI, kỹ năng giao tiếp điều hướng khách hàng, thấu hiểu tâm lý hành vi để tối ưu tỷ lệ chốt đơn (CRO).",
+    "eduText": "Cử nhân chuyên ngành Digital Marketing – Trường Đại học Văn Lang. GPA tích lũy: 3.29 / 4.0 (Nằm trong nhóm sinh viên khá giỏi của khoa).",
+    "certText": "Google Course Certificate: 'Use AI Responsibly' (Chứng chỉ quốc tế từ Google về việc ứng dụng AI có trách nhiệm và hiệu quả trong công việc).",
+    "feedback1": "\"Thắm là một thực tập sinh có tư duy rất chủ động, đặc biệt nhạy bén với các công nghệ mới và có tính tự học cao. Em hoàn thành rất tốt các task công việc liên quan đến SEO, quản trị TMĐT và luôn chủ động đề xuất giải pháp tối ưu số liệu.\"",
+    "feedback2": "\"Dùng nhiều lần rồi nên tin tưởng chứ, chủ cũ quá tận tâm 🥰\"",
+    "feedback3": "\"Khách hàng chủ động giới thiệu thêm người mua mới vì chất lượng dịch vụ chu đáo.\""
   }
 }
