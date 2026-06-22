@@ -389,6 +389,11 @@ async function initPortfolio() {
             setText("#cms-pt-coverTitle", portfolioData.coverTitle);
             setText("#cms-pt-coverName", portfolioData.coverName);
             setText("#cms-pt-coverRole", portfolioData.coverRole);
+            setText("#cms-pt-aboutBio", portfolioData.aboutBio);
+            setText("#cms-pt-tiktokEduName", portfolioData.tiktokEduName);
+            setLink("#cms-pt-tiktokEduLink", null, portfolioData.tiktokEduLink);
+            setText("#cms-pt-tiktokPersonalName", portfolioData.tiktokPersonalName);
+            setLink("#cms-pt-tiktokPersonalLink", null, portfolioData.tiktokPersonalLink);
             setText("#cms-pt-tiktokEduBio", portfolioData.tiktokEduBio);
             setText("#cms-pt-tiktokPersonalBio", portfolioData.tiktokPersonalBio);
             setText("#cms-pt-aboutShortTerm", portfolioData.aboutShortTerm);
