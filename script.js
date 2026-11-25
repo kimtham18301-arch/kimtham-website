@@ -223,21 +223,55 @@ async function initHomePage() {
     const home = await loadPageData("home");
     if (!home) return;
 
+    const setVis = (sel, show) => {
+        const el = document.querySelector(sel);
+        if (el) el.style.display = show === false ? "none" : "";
+    };
+
     setText(".hero .eyebrow", home.heroEyebrow);
+    setVis(".hero .eyebrow", home.showHeroEyebrow);
+
     setText(".hero h1", home.heroTitle);
+    setVis(".hero h1", home.showHeroTitle);
+
     setText(".hero-content .hero-lead:nth-of-type(2)", home.heroSubtitle);
+    setVis(".hero-content .hero-lead:nth-of-type(2)", home.showHeroSubtitle);
+
     setText(".hero-content .hero-lead:nth-of-type(3)", home.heroLead);
+    setVis(".hero-content .hero-lead:nth-of-type(3)", home.showHeroLead);
+
     setText(".hero-content .hero-lead:nth-of-type(4)", home.heroOutro);
+    setVis(".hero-content .hero-lead:nth-of-type(4)", home.showHeroOutro);
 
     const introList = document.querySelector(".hero-intro-list");
-    if (introList && Array.isArray(home.heroList)) {
-        introList.innerHTML = home.heroList.map(item => `<li>${esc(item)}</li>`).join("");
+    if (introList) {
+        if (Array.isArray(home.heroList) && home.heroList.length > 0) {
+            introList.innerHTML = home.heroList.map(item => {
+                const parts = String(item).split(': ');
+                if (parts.length > 1) {
+                    return `<li><strong>${esc(parts[0])}:</strong> ${esc(parts.slice(1).join(': '))}</li>`;
+                }
+                return `<li>${esc(item)}</li>`;
+            }).join("");
+        }
+        setVis(".hero-intro-list", home.showHeroList);
     }
 
     setLink('.hero-actions a[data-track="cta-start"]', home.primaryCta, home.primaryCtaUrl);
+    setVis('.hero-actions a[data-track="cta-start"]', home.showPrimaryCta);
+
     setLink('.hero-actions a[data-track="cta-blog"]', home.secondaryCta, home.secondaryCtaUrl);
+    setVis('.hero-actions a[data-track="cta-blog"]', home.showSecondaryCta);
+
     setLink('.hero-actions a[data-track="cta-portfolio"]', home.ghostCta, home.ghostCtaUrl);
+    setVis('.hero-actions a[data-track="cta-portfolio"]', home.showGhostCta);
+
+    const anyBtnVis = (home.showPrimaryCta !== false) || (home.showSecondaryCta !== false) || (home.showGhostCta !== false);
+    setVis('.hero-actions', home.showHeroActions !== false && anyBtnVis);
+
     setImage(".hero-portrait img", home.heroImage, "Ảnh Kim Thắm");
+    setVis(".hero-portrait", home.showHeroImage);
+
     setText("#dashboard .section-heading .eyebrow", home.dashboardEyebrow);
     setText("#dashboard .section-heading h2", home.dashboardTitle);
     setText(".bento-card--scent p", home.scentOfDay);
@@ -248,7 +282,32 @@ async function initHomePage() {
 async function initAboutPage() {
     const about = await loadPageData("about");
     if (!about) return;
-    setImage(".about-portrait img", about.heroImage, "Kim Thắm portrait");
+
+    if (about.eyebrow) setText(".about-hero .eyebrow", about.eyebrow);
+    if (about.title) setText(".about-hero h1", about.title);
+
+    if (about.story1 || about.story2 || about.story3) {
+        const storyContainer = document.querySelector(".about-story");
+        if (storyContainer) {
+            const formatStory = (text) => {
+                if (!text) return "";
+                if (text.includes("<strong") || text.includes("<b>")) return text;
+                return esc(text)
+                    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+                    .replace(/(cử nhân Digital Marketing đã tốt nghiệp)/g, "<strong>$1</strong>")
+                    .replace(/(11\.000\+ người theo dõi)/g, "<strong>$1</strong>")
+                    .replace(/(709\.000\+ lượt xem\/tháng)/g, "<strong>$1</strong>")
+                    .replace(/(Content &amp; Inbound B2B|Content & Inbound B2B)/g, "<strong>$1</strong>")
+                    .replace(/(AI-first)/g, "<strong>$1</strong>");
+            };
+            const p1 = about.story1 ? `<p>${formatStory(about.story1)}</p>` : "";
+            const p2 = about.story2 ? `<p>${formatStory(about.story2)}</p>` : "";
+            const p3 = about.story3 ? `<p>${formatStory(about.story3)}</p>` : "";
+            storyContainer.innerHTML = [p1, p2, p3].filter(Boolean).join("");
+        }
+    }
+
+    setImage(".about-portrait img", about.heroImage || "images/kim_tham_portrait.png", "Kim Thắm portrait");
 }
 
 async function initPerfumePage() {

@@ -444,32 +444,205 @@ Admin.registerRoute('pages', async (main) => {
         const perfume = pages.perfume || {};
         const contact = pages.contact || {};
         const portfolio = pages.portfolio || {};
-        Admin.$('#pagesForm').innerHTML = `<h2>Trang chủ – Hero</h2>
-        <div class="form-grid">
-            <div class="form-group"><label class="form-label">Eyebrow</label><input class="form-input" id="pg_heroEyebrow" value="${Admin.esc(home.heroEyebrow||'')}"></div>
-            <div class="form-group"><label class="form-label">Title</label><input class="form-input" id="pg_heroTitle" value="${Admin.esc(home.heroTitle||'')}"></div>
-            <div class="form-group"><label class="form-label">Subtitle</label><input class="form-input" id="pg_heroSubtitle" value="${Admin.esc(home.heroSubtitle||'')}"></div>
-            ${Admin.imageField('pg_homeHeroImage', 'Anh trang chu', home.heroImage || 'images/kim-tham.svg')}
-            <div class="form-group form-group--full"><label class="form-label">Hero Lead</label><textarea class="form-textarea" id="pg_heroLead" rows="2">${Admin.esc(home.heroLead||'')}</textarea></div>
-            <div class="form-group form-group--full"><label class="form-label">Hero Outro</label><textarea class="form-textarea" id="pg_heroOutro" rows="2">${Admin.esc(home.heroOutro||'')}</textarea></div>
+        Admin.$('#pagesForm').innerHTML = `<h2>Trang chủ – Phần giới thiệu (Hero)</h2>
+        <p style="color:var(--a-muted);margin-bottom:20px;font-size:0.9rem;">
+            Bạn có thể chỉnh sửa nội dung hoặc bấm công tắc <strong>Bật / Tắt</strong> bên cạnh để ẩn hoặc hiện bất kỳ phần tử nào trên website.
+        </p>
+
+        <!-- Dòng trên cùng Eyebrow -->
+        <div class="hero-block-item" id="block_heroEyebrow">
+            <div class="hero-block-head">
+                <span class="hero-block-title">🏷️ Dòng trên cùng (Eyebrow)</span>
+                <label class="switch-control">
+                    <input type="checkbox" id="pg_showHeroEyebrow" ${home.showHeroEyebrow !== false ? 'checked' : ''}>
+                    <span class="switch-track"></span>
+                    <span class="switch-text">${home.showHeroEyebrow !== false ? 'Hiển thị' : 'Đã ẩn'}</span>
+                </label>
+            </div>
+            <div class="form-group">
+                <input class="form-input" id="pg_heroEyebrow" value="${Admin.esc(home.heroEyebrow||'')}" placeholder="Marketing – Lifestyle – Scent">
+            </div>
         </div>
-        <h2 style="margin-top:28px">Anh cac trang</h2>
-        <div class="form-grid">
-            ${Admin.imageField('pg_aboutImage', 'Anh trang gioi thieu', about.heroImage || 'images/kim-tham.svg')}
-            ${Admin.imageField('pg_storeImage', 'Anh Store', store.heroImage || 'images/perfume-service-hero.png')}
-            ${Admin.imageField('pg_perfumeImage', 'Anh trang nuoc hoa', perfume.heroImage || 'images/perfume-service-hero.png')}
+
+        <!-- Tiêu đề Title -->
+        <div class="hero-block-item" id="block_heroTitle">
+            <div class="hero-block-head">
+                <span class="hero-block-title">✍️ Tiêu đề chính (Title)</span>
+                <label class="switch-control">
+                    <input type="checkbox" id="pg_showHeroTitle" ${home.showHeroTitle !== false ? 'checked' : ''}>
+                    <span class="switch-track"></span>
+                    <span class="switch-text">${home.showHeroTitle !== false ? 'Hiển thị' : 'Đã ẩn'}</span>
+                </label>
+            </div>
+            <div class="form-group">
+                <input class="form-input" id="pg_heroTitle" value="${Admin.esc(home.heroTitle||'')}" placeholder="Kim Thắm">
+            </div>
         </div>
-        <h2 style="margin-top:28px">Liên hệ</h2>
+
+        <!-- Phụ đề Subtitle -->
+        <div class="hero-block-item" id="block_heroSubtitle">
+            <div class="hero-block-head">
+                <span class="hero-block-title">✨ Phụ đề / Định vị (Subtitle)</span>
+                <label class="switch-control">
+                    <input type="checkbox" id="pg_showHeroSubtitle" ${home.showHeroSubtitle !== false ? 'checked' : ''}>
+                    <span class="switch-track"></span>
+                    <span class="switch-text">${home.showHeroSubtitle !== false ? 'Hiển thị' : 'Đã ẩn'}</span>
+                </label>
+            </div>
+            <div class="form-group">
+                <input class="form-input" id="pg_heroSubtitle" value="${Admin.esc(home.heroSubtitle||'')}" placeholder="Marketing Student | Lifestyle Creator">
+            </div>
+        </div>
+
+        <!-- Ảnh chân dung tròn -->
+        <div class="hero-block-item" id="block_heroImage">
+            <div class="hero-block-head">
+                <span class="hero-block-title">🖼️ Ảnh chân dung tròn</span>
+                <label class="switch-control">
+                    <input type="checkbox" id="pg_showHeroImage" ${home.showHeroImage !== false ? 'checked' : ''}>
+                    <span class="switch-track"></span>
+                    <span class="switch-text">${home.showHeroImage !== false ? 'Hiển thị' : 'Đã ẩn'}</span>
+                </label>
+            </div>
+            ${Admin.imageField('pg_homeHeroImage', 'Chọn hoặc tải ảnh chân dung', home.heroImage || 'images/kim-tham.svg')}
+        </div>
+
+        <!-- Lời dẫn chủ đề Lead -->
+        <div class="hero-block-item" id="block_heroLead">
+            <div class="hero-block-head">
+                <span class="hero-block-title">💬 Lời dẫn chủ đề (Lead)</span>
+                <label class="switch-control">
+                    <input type="checkbox" id="pg_showHeroLead" ${home.showHeroLead !== false ? 'checked' : ''}>
+                    <span class="switch-track"></span>
+                    <span class="switch-text">${home.showHeroLead !== false ? 'Hiển thị' : 'Đã ẩn'}</span>
+                </label>
+            </div>
+            <div class="form-group">
+                <input class="form-input" id="pg_heroLead" value="${Admin.esc(home.heroLead||'')}" placeholder="Mình chia sẻ về một số chủ đề:">
+            </div>
+        </div>
+
+        <!-- Danh sách các gạch đầu dòng Hero List -->
+        <div class="hero-block-item" id="block_heroList">
+            <div class="hero-block-head">
+                <span class="hero-block-title">📋 Danh sách chủ đề chia sẻ (Gạch đầu dòng)</span>
+                <label class="switch-control">
+                    <input type="checkbox" id="pg_showHeroList" ${home.showHeroList !== false ? 'checked' : ''}>
+                    <span class="switch-track"></span>
+                    <span class="switch-text">${home.showHeroList !== false ? 'Hiển thị' : 'Đã ẩn'}</span>
+                </label>
+            </div>
+            <div class="form-group">
+                <textarea class="form-textarea" id="pg_heroList" rows="3" placeholder="Marketing dễ hiểu&#10;Hành trình sống healthy (yoga & mindset)&#10;Và cách chọn mùi hương đúng gu">${Admin.esc(Array.isArray(home.heroList) ? home.heroList.join('\n') : (home.heroList || ''))}</textarea>
+                <div class="form-hint">Mỗi dòng là một mục gạch đầu dòng trên website. Bấm tắt ở góc trên nếu bạn muốn ẩn danh sách này.</div>
+            </div>
+        </div>
+
+        <!-- Châm ngôn Outro -->
+        <div class="hero-block-item" id="block_heroOutro">
+            <div class="hero-block-head">
+                <span class="hero-block-title">🌸 Châm ngôn / Lời kết (Outro & #NKT)</span>
+                <label class="switch-control">
+                    <input type="checkbox" id="pg_showHeroOutro" ${home.showHeroOutro !== false ? 'checked' : ''}>
+                    <span class="switch-track"></span>
+                    <span class="switch-text">${home.showHeroOutro !== false ? 'Hiển thị' : 'Đã ẩn'}</span>
+                </label>
+            </div>
+            <div class="form-group">
+                <textarea class="form-textarea" id="pg_heroOutro" rows="2" placeholder="Hãy đi đi, nào mỏi chân thì dừng lại nghỉ mệt. Hãy làm đi, nào mệt thì úp mặt xuống ngủ. #NKT">${Admin.esc(home.heroOutro||'')}</textarea>
+            </div>
+        </div>
+
+        <!-- Cụm các nút bấm CTA -->
+        <div class="hero-block-item" id="block_heroActions">
+            <div class="hero-block-head">
+                <span class="hero-block-title">🔘 Cụm các nút bấm hành động (CTA)</span>
+                <label class="switch-control">
+                    <input type="checkbox" id="pg_showHeroActions" ${home.showHeroActions !== false ? 'checked' : ''}>
+                    <span class="switch-track"></span>
+                    <span class="switch-text">${home.showHeroActions !== false ? 'Hiển thị cụm nút' : 'Đã ẩn cụm nút'}</span>
+                </label>
+            </div>
+            <div class="form-grid" style="margin-top:12px;">
+                <div class="form-group" style="grid-column: 1 / -1; border-top: 1px dashed var(--a-line); padding-top: 12px; display:flex; justify-content:space-between; align-items:center;">
+                    <strong>Nút 1: Bắt đầu từ đây (Chính)</strong>
+                    <label class="switch-control">
+                        <input type="checkbox" id="pg_showPrimaryCta" ${home.showPrimaryCta !== false ? 'checked' : ''}>
+                        <span class="switch-track"></span>
+                        <span class="switch-text">${home.showPrimaryCta !== false ? 'Bật nút 1' : 'Tắt'}</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tên nút 1</label>
+                    <input class="form-input" id="pg_primaryCta" value="${Admin.esc(home.primaryCta||'')}" placeholder="Bắt đầu từ đây">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Đường dẫn nút 1 (Link)</label>
+                    <input class="form-input" id="pg_primaryCtaUrl" value="${Admin.esc(home.primaryCtaUrl||'')}" placeholder="about.html">
+                </div>
+
+                <div class="form-group" style="grid-column: 1 / -1; border-top: 1px dashed var(--a-line); padding-top: 12px; display:flex; justify-content:space-between; align-items:center;">
+                    <strong>Nút 2: Đọc blog (Phụ)</strong>
+                    <label class="switch-control">
+                        <input type="checkbox" id="pg_showSecondaryCta" ${home.showSecondaryCta !== false ? 'checked' : ''}>
+                        <span class="switch-track"></span>
+                        <span class="switch-text">${home.showSecondaryCta !== false ? 'Bật nút 2' : 'Tắt'}</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tên nút 2</label>
+                    <input class="form-input" id="pg_secondaryCta" value="${Admin.esc(home.secondaryCta||'')}" placeholder="Đọc blog">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Đường dẫn nút 2 (Link)</label>
+                    <input class="form-input" id="pg_secondaryCtaUrl" value="${Admin.esc(home.secondaryCtaUrl||'')}" placeholder="blog.html">
+                </div>
+
+                <div class="form-group" style="grid-column: 1 / -1; border-top: 1px dashed var(--a-line); padding-top: 12px; display:flex; justify-content:space-between; align-items:center;">
+                    <strong>Nút 3: Xem mình làm gì (Ghost)</strong>
+                    <label class="switch-control">
+                        <input type="checkbox" id="pg_showGhostCta" ${home.showGhostCta !== false ? 'checked' : ''}>
+                        <span class="switch-track"></span>
+                        <span class="switch-text">${home.showGhostCta !== false ? 'Bật nút 3' : 'Tắt'}</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tên nút 3</label>
+                    <input class="form-input" id="pg_ghostCta" value="${Admin.esc(home.ghostCta||'')}" placeholder="Xem mình làm gì">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Đường dẫn nút 3 (Link)</label>
+                    <input class="form-input" id="pg_ghostCtaUrl" value="${Admin.esc(home.ghostCtaUrl||'')}" placeholder="portfolio.html">
+                </div>
+            </div>
+        </div>
+
+        <h2 style="margin-top:32px">Trang Giới thiệu (About)</h2>
+        <div class="form-grid">
+            <div class="form-group"><label class="form-label">Eyebrow</label><input class="form-input" id="pg_aboutEyebrow" value="${Admin.esc(about.eyebrow||'Về mình')}"></div>
+            <div class="form-group"><label class="form-label">Tiêu đề trang</label><input class="form-input" id="pg_aboutTitle" value="${Admin.esc(about.title||'Mình là Kim Thắm')}"></div>
+            <div class="form-group form-group--full"><label class="form-label">Giới thiệu - Đoạn 1 (Chuyên môn & Bằng cấp)</label><textarea class="form-textarea" id="pg_aboutStory1" rows="3">${Admin.esc(about.story1||'')}</textarea></div>
+            <div class="form-group form-group--full"><label class="form-label">Giới thiệu - Đoạn 2 (Thành tích & Kênh thực tế)</label><textarea class="form-textarea" id="pg_aboutStory2" rows="3">${Admin.esc(about.story2||'')}</textarea></div>
+            <div class="form-group form-group--full"><label class="form-label">Giới thiệu - Đoạn 3 (Ứng dụng AI & Định hướng)</label><textarea class="form-textarea" id="pg_aboutStory3" rows="3">${Admin.esc(about.story3||'')}</textarea></div>
+            ${Admin.imageField('pg_aboutImage', 'Ảnh chân dung', about.heroImage || 'images/kim_tham_portrait.png')}
+        </div>
+
+        <h2 style="margin-top:32px">Ảnh các trang khác</h2>
+        <div class="form-grid">
+            ${Admin.imageField('pg_storeImage', 'Ảnh Store', store.heroImage || 'images/perfume-service-hero.png')}
+            ${Admin.imageField('pg_perfumeImage', 'Ảnh trang nước hoa', perfume.heroImage || 'images/perfume-service-hero.png')}
+        </div>
+        <h2 style="margin-top:32px">Thông tin Liên hệ</h2>
         <div class="form-grid">
             <div class="form-group"><label class="form-label">Eyebrow</label><input class="form-input" id="pg_contactEyebrow" value="${Admin.esc(contact.eyebrow||'')}"></div>
-            <div class="form-group"><label class="form-label">Tieu de lien he</label><input class="form-input" id="pg_contactTitle" value="${Admin.esc(contact.title||'')}"></div>
-            <div class="form-group form-group--full"><label class="form-label">Mo ta lien he</label><textarea class="form-textarea" id="pg_contactSubtitle" rows="2">${Admin.esc(contact.subtitle||'')}</textarea></div>
+            <div class="form-group"><label class="form-label">Tiêu đề liên hệ</label><input class="form-input" id="pg_contactTitle" value="${Admin.esc(contact.title||'')}"></div>
+            <div class="form-group form-group--full"><label class="form-label">Mô tả liên hệ</label><textarea class="form-textarea" id="pg_contactSubtitle" rows="2">${Admin.esc(contact.subtitle||'')}</textarea></div>
             <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="pg_email" value="${Admin.esc(contact.email||'')}"></div>
-            <div class="form-group"><label class="form-label">SĐT</label><input class="form-input" id="pg_phone" value="${Admin.esc(contact.phone||'')}"></div>
+            <div class="form-group"><label class="form-label">Số điện thoại</label><input class="form-input" id="pg_phone" value="${Admin.esc(contact.phone||'')}"></div>
             <div class="form-group"><label class="form-label">Zalo URL</label><input class="form-input" id="pg_zaloUrl" value="${Admin.esc(contact.zaloUrl||'')}"></div>
         </div>
         
-        <h2 style="margin-top:28px">Trang Portfolio</h2>
+        <h2 style="margin-top:32px">Trang Portfolio</h2>
         <div class="form-grid">
             <div class="form-group form-group--full">
                 <div style="background: var(--a-primary-soft); color: var(--a-primary); border-radius: var(--a-radius); padding: 16px; font-weight: 500; border-left: 4px solid var(--a-primary);">
@@ -481,16 +654,65 @@ Admin.registerRoute('pages', async (main) => {
         
         <div class="form-actions"><button class="btn btn--primary" id="btnSavePages">Lưu thay đổi</button></div>`;
         Admin.bindImageFields(Admin.$('#pagesForm'));
+
+        // Bind interactive switches
+        const setupSwitch = (inputEl, blockEl, onText = 'Hiển thị', offText = 'Đã ẩn') => {
+            if (!inputEl) return;
+            const txt = inputEl.closest('.switch-control')?.querySelector('.switch-text');
+            const refresh = () => {
+                if (txt) txt.textContent = inputEl.checked ? onText : offText;
+                if (blockEl) blockEl.classList.toggle('is-disabled', !inputEl.checked);
+            };
+            inputEl.addEventListener('change', refresh);
+            refresh();
+        };
+
+        setupSwitch(Admin.$('#pg_showHeroEyebrow'), Admin.$('#block_heroEyebrow'));
+        setupSwitch(Admin.$('#pg_showHeroTitle'), Admin.$('#block_heroTitle'));
+        setupSwitch(Admin.$('#pg_showHeroSubtitle'), Admin.$('#block_heroSubtitle'));
+        setupSwitch(Admin.$('#pg_showHeroImage'), Admin.$('#block_heroImage'));
+        setupSwitch(Admin.$('#pg_showHeroLead'), Admin.$('#block_heroLead'));
+        setupSwitch(Admin.$('#pg_showHeroList'), Admin.$('#block_heroList'));
+        setupSwitch(Admin.$('#pg_showHeroOutro'), Admin.$('#block_heroOutro'));
+        setupSwitch(Admin.$('#pg_showHeroActions'), Admin.$('#block_heroActions'), 'Hiển thị cụm nút', 'Đã ẩn cụm nút');
+        setupSwitch(Admin.$('#pg_showPrimaryCta'), null, 'Bật nút 1', 'Tắt');
+        setupSwitch(Admin.$('#pg_showSecondaryCta'), null, 'Bật nút 2', 'Tắt');
+        setupSwitch(Admin.$('#pg_showGhostCta'), null, 'Bật nút 3', 'Tắt');
+
         Admin.$('#btnSavePages').onclick = async () => {
             const updated = JSON.parse(JSON.stringify(pages));
             updated.home = updated.home || {};
+            updated.home.showHeroEyebrow = Admin.$('#pg_showHeroEyebrow').checked;
             updated.home.heroEyebrow = Admin.$('#pg_heroEyebrow').value.trim();
+            updated.home.showHeroTitle = Admin.$('#pg_showHeroTitle').checked;
             updated.home.heroTitle = Admin.$('#pg_heroTitle').value.trim();
+            updated.home.showHeroSubtitle = Admin.$('#pg_showHeroSubtitle').checked;
             updated.home.heroSubtitle = Admin.$('#pg_heroSubtitle').value.trim();
+            updated.home.showHeroImage = Admin.$('#pg_showHeroImage').checked;
             updated.home.heroImage = Admin.$('#pg_homeHeroImage').value.trim();
+            updated.home.showHeroLead = Admin.$('#pg_showHeroLead').checked;
             updated.home.heroLead = Admin.$('#pg_heroLead').value.trim();
+            updated.home.showHeroList = Admin.$('#pg_showHeroList').checked;
+            const rawHeroList = Admin.$('#pg_heroList').value.trim();
+            updated.home.heroList = rawHeroList ? rawHeroList.split('\n').map(s => s.trim()).filter(Boolean) : [];
+            updated.home.showHeroOutro = Admin.$('#pg_showHeroOutro').checked;
             updated.home.heroOutro = Admin.$('#pg_heroOutro').value.trim();
+            updated.home.showHeroActions = Admin.$('#pg_showHeroActions').checked;
+            updated.home.showPrimaryCta = Admin.$('#pg_showPrimaryCta').checked;
+            updated.home.primaryCta = Admin.$('#pg_primaryCta').value.trim();
+            updated.home.primaryCtaUrl = Admin.$('#pg_primaryCtaUrl').value.trim();
+            updated.home.showSecondaryCta = Admin.$('#pg_showSecondaryCta').checked;
+            updated.home.secondaryCta = Admin.$('#pg_secondaryCta').value.trim();
+            updated.home.secondaryCtaUrl = Admin.$('#pg_secondaryCtaUrl').value.trim();
+            updated.home.showGhostCta = Admin.$('#pg_showGhostCta').checked;
+            updated.home.ghostCta = Admin.$('#pg_ghostCta').value.trim();
+            updated.home.ghostCtaUrl = Admin.$('#pg_ghostCtaUrl').value.trim();
             updated.about = updated.about || {};
+            updated.about.eyebrow = Admin.$('#pg_aboutEyebrow').value.trim();
+            updated.about.title = Admin.$('#pg_aboutTitle').value.trim();
+            updated.about.story1 = Admin.$('#pg_aboutStory1').value.trim();
+            updated.about.story2 = Admin.$('#pg_aboutStory2').value.trim();
+            updated.about.story3 = Admin.$('#pg_aboutStory3').value.trim();
             updated.about.heroImage = Admin.$('#pg_aboutImage').value.trim();
             updated.store = updated.store || {};
             updated.store.heroImage = Admin.$('#pg_storeImage').value.trim();
