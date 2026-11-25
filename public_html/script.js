@@ -212,10 +212,40 @@ function setLink(selector, text, href) {
     if (href != null) el.setAttribute("href", href);
 }
 
+function optimizeImageSrc(src) {
+    if (!src) return src;
+    const knownLocalPngs = [
+        "images/brand_product_display.png",
+        "images/chamchiontap_profile_proof.png",
+        "images/growth_chart_proof.png",
+        "images/kim_tham_portrait.png",
+        "images/marketing_workspace.png",
+        "images/office_aesthetic.png",
+        "images/perfume-service-hero.png",
+        "images/shortform_video_creator.png",
+        "images/studio_aesthetic.png",
+        "images/timeline_ai_tools.png",
+        "images/timeline_chamchiontap.png",
+        "images/timeline_click_agency.png",
+        "images/timeline_tham_hoc_ai.png"
+    ];
+    if (knownLocalPngs.includes(src)) {
+        return src.replace(/\.png$/i, ".webp");
+    }
+    return src;
+}
+
 function setImage(selector, src, alt) {
     const img = document.querySelector(selector);
     if (!img || !src) return;
-    img.src = src;
+    const optimized = optimizeImageSrc(src);
+    if (optimized !== src) {
+        img.onerror = () => {
+            img.onerror = null;
+            img.src = src;
+        };
+    }
+    img.src = optimized;
     if (alt) img.alt = alt;
 }
 
@@ -505,7 +535,13 @@ async function initPortfolio() {
         const updateTimeline = (id, caseData) => {
             if (!caseData) return;
             const imgEl = document.getElementById(`cms-timeline-${id}-img`);
-            if (imgEl && caseData.image) imgEl.src = caseData.image;
+            if (imgEl && caseData.image) {
+                const optimized = optimizeImageSrc(caseData.image);
+                if (optimized !== caseData.image) {
+                    imgEl.onerror = () => { imgEl.onerror = null; imgEl.src = caseData.image; };
+                }
+                imgEl.src = optimized;
+            }
             const titleEl = document.getElementById(`cms-timeline-${id}-title`);
             if (titleEl && caseData.title) titleEl.textContent = caseData.title;
             const tagEl = document.getElementById(`cms-timeline-${id}-tag`);
@@ -780,7 +816,12 @@ function initContactIntent() {
         if (active) active.classList.add("active");
         if (intentField) intentField.value = intent;
         if (serviceSelect) {
-            const map = { marketing: "Học marketing", perfume: "Tư vấn nước hoa", general: "Hỏi chung" };
+            const map = {
+                hiring: "Tuyển dụng / Phỏng vấn",
+                marketing: "Hợp tác marketing",
+                perfume: "Tư vấn nước hoa",
+                general: "Hỏi chung"
+            };
             serviceSelect.value = map[intent] || "Hỏi chung";
         }
         trackEvent("intent-select", { intent });

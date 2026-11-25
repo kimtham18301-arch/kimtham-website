@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Liên hệ Kim Thắm – Học marketing, chọn nước hoa, hoặc hỏi chung. Mình sẵn sàng hỗ trợ bạn.">
-    <meta name="author" content="Kim Thắm">
-    <meta property="og:title" content="Liên hệ | Kim Thắm">
+    <meta name="description" content="Liên hệ Nguyễn Kim Thắm – Tuyển dụng Digital Marketing, hợp tác dự án AI Automation, tư vấn mùi hương hoặc trao đổi công việc.">
+    <meta name="author" content="Nguyễn Kim Thắm">
+    <meta property="og:title" content="Liên hệ | Nguyễn Kim Thắm">
+    <meta property="og:description" content="Kết nối phỏng vấn, hợp tác dự án Digital Marketing & AI Automation, hoặc tư vấn mùi hương cùng Kim Thắm.">
+    <meta property="og:image" content="https://kimtham.id.vn/images/kim_tham_portrait.png">
     <link rel="canonical" href="https://kimtham.id.vn/contact.html">
     <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
-    <title>Liên hệ | Kim Thắm</title>
+    <title>Liên hệ | Nguyễn Kim Thắm</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=20260501-contact-sync">
+    <link rel="stylesheet" href="style.css?v=20261125-projects-opt">
 </head>
 <body data-page="contact">
     <header class="site-header">
@@ -24,8 +26,9 @@
             <ul class="nav-links" id="primary-menu">
                 <li><a href="index.html">Trang chủ</a></li>
                 <li><a href="about.html">Về mình</a></li>
-                <li><a href="blog.html">Blog</a></li>
+                <li><a href="projects.html" class="nav-tab-featured">🚀 Dự án</a></li>
                 <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="blog.html">Blog</a></li>
                 <li><a href="store.html">Store</a></li>
                 <li><a href="contact.html" class="active">Liên hệ</a></li>
             </ul>
@@ -36,56 +39,62 @@
         <section class="section">
             <div class="section-heading reveal">
                 <p class="eyebrow">Liên hệ</p>
-                <h1>Bạn đang cần gì?</h1>
-                <p style="color:var(--muted);">Chọn một chủ đề bên dưới, mình sẽ hỗ trợ nhanh nhất có thể.</p>
+                <h1>Kết nối cùng Kim Thắm</h1>
+                <p style="color:var(--muted);">Chọn chủ đề bạn quan tâm bên dưới — mình luôn phản hồi nhanh trong vòng 24 giờ.</p>
             </div>
 
-            <div class="intent-grid" id="intentGrid">
+            <div class="intent-grid intent-grid--4" id="intentGrid">
+                <div class="intent-card" data-intent="hiring" tabindex="0">
+                    <div class="intent-icon">💼</div>
+                    <h3>Tuyển dụng / Phỏng vấn</h3>
+                    <p>Trao đổi cơ hội việc làm, nhận CV hoặc xem demo dự án</p>
+                </div>
                 <div class="intent-card" data-intent="marketing" tabindex="0">
                     <div class="intent-icon">📚</div>
-                    <h3>Học marketing</h3>
-                    <p>Tư vấn, gia sư, hoặc hợp tác marketing</p>
+                    <h3>Hợp tác Marketing &amp; AI</h3>
+                    <p>Content, SEO, Chatbot AI hoặc gia sư học tập</p>
                 </div>
                 <div class="intent-card" data-intent="perfume" tabindex="0">
                     <div class="intent-icon">🌸</div>
                     <h3>Chọn nước hoa</h3>
-                    <p>Tư vấn mùi hương theo gu và dịp sử dụng</p>
+                    <p>Tư vấn mùi hương theo gu, dịp dùng &amp; ngân sách</p>
                 </div>
                 <div class="intent-card" data-intent="general" tabindex="0">
                     <div class="intent-icon">💬</div>
                     <h3>Hỏi chung</h3>
-                    <p>Chat, hỏi thăm, hoặc đơn giản là chào</p>
+                    <p>Trò chuyện, góp ý hoặc đơn giản là gửi lời chào</p>
                 </div>
             </div>
 
             <div class="contact-grid">
                 <form class="contact-form reveal" id="contactForm">
                     <label class="hp-field" aria-hidden="true">Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
-                    <input type="hidden" name="intent" id="intentField" value="general">
+                    <input type="hidden" name="intent" id="intentField" value="hiring">
                     <label>Họ và tên<input type="text" name="name" autocomplete="name" required></label>
                     <label>Email<input type="email" name="email" autocomplete="email" required></label>
                     <div class="form-row">
                         <label>Số điện thoại<input type="tel" name="phone" autocomplete="tel"></label>
                         <label>Chủ đề
                             <select name="service" id="serviceSelect">
-                                <option value="Hỏi chung">Hỏi chung</option>
+                                <option value="Tuyển dụng / Phỏng vấn">Tuyển dụng / Phỏng vấn</option>
+                                <option value="Hợp tác marketing">Hợp tác Marketing &amp; AI</option>
                                 <option value="Học marketing">Học marketing</option>
                                 <option value="Gia sư">Gia sư</option>
-                                <option value="Hợp tác marketing">Hợp tác marketing</option>
                                 <option value="Tư vấn nước hoa">Tư vấn nước hoa</option>
                                 <option value="Mua nước hoa">Mua nước hoa</option>
+                                <option value="Hỏi chung">Hỏi chung</option>
                             </select>
                         </label>
                     </div>
-                    <label>Nội dung<textarea name="message" rows="5" required placeholder="Bạn muốn mình hỗ trợ điều gì?"></textarea></label>
+                    <label>Nội dung<textarea name="message" rows="5" required placeholder="Bạn muốn trao đổi về vị trí tuyển dụng, dự án hay cần mình hỗ trợ điều gì?"></textarea></label>
                     <button class="btn primary" type="submit" data-track="contact-submit">Gửi liên hệ</button>
                     <p class="form-status" id="contactStatus" role="status"></p>
                 </form>
 
                 <div class="contact-info reveal reveal-delay-1">
-                    <a href="mailto:hello@kimtham.id.vn" class="contact-info-card" data-contact-card="email">
+                    <a href="mailto:kimtham18301@gmail.com" class="contact-info-card" data-contact-card="email">
                         <div class="contact-info-icon">✉️</div>
-                        <div class="contact-info-text">Email<small>hello@kimtham.id.vn</small></div>
+                        <div class="contact-info-text">Email<small>kimtham18301@gmail.com</small></div>
                     </a>
                     <a href="tel:0972295710" class="contact-info-card" data-contact-card="phone">
                         <div class="contact-info-icon">📞</div>
@@ -95,9 +104,13 @@
                         <div class="contact-info-icon">💬</div>
                         <div class="contact-info-text">Zalo<small>Chat nhanh với mình</small></div>
                     </a>
+                    <a href="https://github.com/kimtham18301-arch" target="_blank" rel="noopener" class="contact-info-card">
+                        <div class="contact-info-icon">💻</div>
+                        <div class="contact-info-text">GitHub<small>github.com/kimtham18301-arch</small></div>
+                    </a>
                     <div class="contact-info-card" style="cursor:default;">
                         <div class="contact-info-icon">⏰</div>
-                        <div class="contact-info-text">Phản hồi<small>Trong vòng 24h</small></div>
+                        <div class="contact-info-text">Thời gian phản hồi<small>Trong vòng 24 giờ</small></div>
                     </div>
                 </div>
             </div>
@@ -105,10 +118,10 @@
     </main>
 
     <footer class="site-footer">
-        <p>© 2026 Kim Thắm. Marketer sống có gu.</p>
+        <p>© 2026 Nguyễn Kim Thắm. Digital Marketer AI-First &amp; Product Builder.</p>
         <p>kimtham.id.vn</p>
     </footer>
 
-    <script src="script.js?v=20260501-contact-sync"></script>
+    <script src="script.js?v=20261125-projects-opt"></script>
 </body>
 </html>

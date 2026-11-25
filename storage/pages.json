@@ -1,38 +1,38 @@
 {
   "home": {
     "showHeroEyebrow": true,
-    "heroEyebrow": "🧭 Digital Marketer & Travel Explorer",
+    "heroEyebrow": "🚀 Digital Marketer AI-First & Product Builder",
     "showHeroTitle": true,
     "heroTitle": "Kim Thắm",
     "showHeroSubtitle": true,
-    "heroSubtitle": "Khám phá thế giới bằng đôi chân — Kể câu chuyện thương hiệu bằng tư duy dữ liệu",
+    "heroSubtitle": "Tư duy dữ liệu sắc bén — Biến ý tưởng thành sản phẩm & tăng trưởng thực tế",
     "showHeroImage": true,
-    "heroImage": "images/kim_tham_portrait.png",
+    "heroImage": "images/kim_tham_portrait.webp",
     "showHeroLead": true,
-    "heroLead": "Kết hợp góc nhìn xê dịch phóng khoáng với sự sắc bén của tư duy tiếp thị số:",
+    "heroLead": "Cử nhân Digital Marketing (ĐH Văn Lang) kết hợp thực chiến tăng trưởng tự nhiên và ứng dụng công nghệ AI:",
     "showHeroList": true,
     "heroList": [
-      "Nghiên cứu thực địa & đúc kết Customer Insights từ muôn nẻo đường",
-      "Chiến lược Organic Growth & Tự động hóa nội dung bằng AI",
-      "Visual Storytelling, phong cách sống cân bằng & nghệ thuật mùi hương"
+      "Content & Organic Growth: Xây dựng kênh TikTok đạt 11.000+ followers, 709.000+ lượt xem/tháng và 87.4% lưu lượng tìm kiếm tự nhiên (0đ Ads).",
+      "AI Automation & CRM Ops: Tự triển khai Chatbot AI (Gemini + Botcake + Google Sheets), Telegram Bot 24/7 và luồng điều phối lead trên Lark Base.",
+      "Web Product & Phong cách sống: Xây dựng Web App giáo dục, Landing Page & Mini CMS, song hành cùng lối sống cân bằng và nghệ thuật mùi hương có gu."
     ],
     "showHeroOutro": true,
     "heroOutro": "Đi để thấu hiểu con người sâu sắc hơn, làm để tạo ra chuyển đổi thực tế. #NKT",
     "showHeroActions": true,
     "showPrimaryCta": true,
-    "primaryCta": "Khám phá Portfolio",
-    "primaryCtaUrl": "portfolio.html",
+    "primaryCta": "Xem 10 Dự án thực chiến",
+    "primaryCtaUrl": "projects.html",
     "showSecondaryCta": true,
-    "secondaryCta": "Nhật ký Xê dịch & Case Study",
-    "secondaryCtaUrl": "blog.html",
+    "secondaryCta": "Xem Portfolio Slide Deck",
+    "secondaryCtaUrl": "portfolio.html",
     "showGhostCta": true,
-    "ghostCta": "Về Kim Thắm",
-    "ghostCtaUrl": "about.html",
+    "ghostCta": "Liên hệ phỏng vấn",
+    "ghostCtaUrl": "contact.html?intent=hiring",
     "dashboardEyebrow": "Hệ sinh thái trải nghiệm",
     "dashboardTitle": "Khám phá thế giới đa chiều của mình",
-    "scentOfDay": "Mùi hương của sự xê dịch: Cam bergamot & gỗ tuyết tùng – mang tinh thần tự do của những chuyến đi xa.",
+    "scentOfDay": "Mùi hương của sự xê dịch: Cam bergamot tươi mát & gỗ tuyết tùng trầm ấm – tinh thần tự do cho những khởi đầu mới.",
     "statNumber": "87.4%",
-    "statLabel": "Organic Search Traffic bền vững không tốn chi phí quảng cáo"
+    "statLabel": "Organic Search Traffic bền vững hoàn toàn không tốn chi phí quảng cáo"
   },
   "about": {
     "eyebrow": "Về mình",
@@ -102,6 +102,11 @@
     "certText": "Google Course Certificate: 'Use AI Responsibly' (Chứng chỉ quốc tế từ Google về việc ứng dụng AI có trách nhiệm và hiệu quả trong công việc).",
     "feedback1": "\"Thắm là một thực tập sinh có tư duy rất chủ động, đặc biệt nhạy bén với các công nghệ mới và có tính tự học cao. Em hoàn thành rất tốt các task công việc liên quan đến SEO, quản trị TMĐT và luôn chủ động đề xuất giải pháp tối ưu số liệu.\"",
     "feedback2": "\"Dùng nhiều lần rồi nên tin tưởng chứ, chủ cũ quá tận tâm 🥰\"",
-    "feedback3": "\"Khách hàng chủ động giới thiệu thêm người mua mới vì chất lượng dịch vụ chu đáo.\""
+    "feedback3": "\"Khách hàng chủ động giới thiệu thêm người mua mới vì chất lượng dịch vụ chu đáo.\"",
+    "aboutImageTop": "images/studio_aesthetic.webp",
+    "aboutImageBottom": "images/office_aesthetic.webp",
+    "experienceImageDecor": "images/timeline_click_agency.webp",
+    "feedbackImage": "images/marketing_workspace.webp",
+    "contactAvatar": "images/kim_tham_portrait.webp"
   }
 }
